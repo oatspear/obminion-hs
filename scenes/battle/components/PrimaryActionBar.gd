@@ -8,6 +8,8 @@ signal show_army()
 signal hide_army()
 signal show_support()
 signal hide_support()
+signal surrender_pressed()
+signal end_turn_pressed()
 
 ################################################################################
 # Variables
@@ -74,3 +76,13 @@ func _on_Support_Button_toggled(button_pressed: bool):
         select_support_toggle(true)
     else:
         deselect_support_toggle(true)
+
+
+func _on_Surrender_Button_pressed():
+    deselect_toggles()
+    emit_signal("surrender_pressed")
+
+
+func _on_EndTurn_Button_pressed():
+    deselect_toggles()
+    emit_signal("end_turn_pressed")

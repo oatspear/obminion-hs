@@ -79,5 +79,7 @@ margin_bottom = 38.0
 size_flags_vertical = 4
 icon = ExtResource( 3 )
 
+[connection signal="pressed" from="Surrender/Button" to="." method="_on_Surrender_Button_pressed"]
 [connection signal="toggled" from="Army/Button" to="." method="_on_Army_Button_toggled"]
 [connection signal="toggled" from="Support/Button" to="." method="_on_Support_Button_toggled"]
+[connection signal="pressed" from="EndTurn/Button" to="." method="_on_EndTurn_Button_pressed"]
