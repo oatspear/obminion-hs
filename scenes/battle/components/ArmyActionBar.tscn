@@ -35,3 +35,10 @@ margin_right = 283.0
 [node name="Button6" parent="." instance=ExtResource( 1 )]
 margin_left = 288.0
 margin_right = 336.0
+
+[connection signal="toggled" from="Button1" to="." method="_on_Button1_toggled"]
+[connection signal="toggled" from="Button2" to="." method="_on_Button2_toggled"]
+[connection signal="toggled" from="Button3" to="." method="_on_Button3_toggled"]
+[connection signal="toggled" from="Button4" to="." method="_on_Button4_toggled"]
+[connection signal="toggled" from="Button5" to="." method="_on_Button5_toggled"]
+[connection signal="toggled" from="Button6" to="." method="_on_Button6_toggled"]

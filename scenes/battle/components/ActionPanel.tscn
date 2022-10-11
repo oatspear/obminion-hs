@@ -85,6 +85,7 @@ margin_top = 548.0
 margin_right = 346.0
 margin_bottom = 618.0
 
+[connection signal="selected_unit" from="Margin/VBox/ArmyActionBar" to="." method="_on_ArmyActionBar_selected_unit"]
 [connection signal="end_turn_pressed" from="Margin/VBox/PrimaryActionBar" to="." method="_on_PrimaryActionBar_end_turn_pressed"]
 [connection signal="hide_army" from="Margin/VBox/PrimaryActionBar" to="." method="_on_PrimaryActionBar_hide_army"]
 [connection signal="hide_support" from="Margin/VBox/PrimaryActionBar" to="." method="_on_PrimaryActionBar_hide_support"]

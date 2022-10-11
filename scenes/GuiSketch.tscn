@@ -1,12 +1,14 @@
-[gd_scene load_steps=4 format=2]
+[gd_scene load_steps=5 format=2]
 
 [ext_resource path="res://icon.png" type="Texture" id=1]
+[ext_resource path="res://scenes/GuiSketch.gd" type="Script" id=2]
 [ext_resource path="res://scenes/battle/components/MinionRow.tscn" type="PackedScene" id=3]
 [ext_resource path="res://scenes/battle/components/ActionPanel.tscn" type="PackedScene" id=4]
 
 [node name="GUISketch" type="MarginContainer"]
 anchor_right = 1.0
 anchor_bottom = 1.0
+script = ExtResource( 2 )
 __meta__ = {
 "_edit_use_anchors_": false
 }
@@ -164,6 +166,7 @@ size_flags_vertical = 3
 [node name="Layer2" type="VBoxContainer" parent="."]
 margin_right = 360.0
 margin_bottom = 640.0
+mouse_filter = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3
 alignment = 2
@@ -174,3 +177,25 @@ anchor_bottom = 0.0
 margin_top = 404.0
 margin_right = 360.0
 margin_bottom = 640.0
+
+[node name="Layer3" type="CenterContainer" parent="."]
+margin_right = 360.0
+margin_bottom = 640.0
+mouse_filter = 2
+
+[node name="Confirm" type="ConfirmationDialog" parent="Layer3"]
+margin_left = 80.0
+margin_top = 285.0
+margin_right = 280.0
+margin_bottom = 355.0
+popup_exclusive = true
+window_title = "End Turn"
+dialog_text = "End your turn?"
+dialog_autowrap = true
+
+[connection signal="selected_left" from="Layer1/BattleField/MinionField/VBoxContainer/Bottom" to="." method="_on_MinionRow_player_selected_left"]
+[connection signal="selected_right" from="Layer1/BattleField/MinionField/VBoxContainer/Bottom" to="." method="_on_MinionRow_player_selected_right"]
+[connection signal="end_turn" from="Layer2/ActionPanel" to="." method="_on_ActionPanel_end_turn"]
+[connection signal="forfeit_game" from="Layer2/ActionPanel" to="." method="_on_ActionPanel_forfeit_game"]
+[connection signal="spawn_minion" from="Layer2/ActionPanel" to="." method="_on_ActionPanel_spawn_minion"]
+[connection signal="use_support" from="Layer2/ActionPanel" to="." method="_on_ActionPanel_use_support"]

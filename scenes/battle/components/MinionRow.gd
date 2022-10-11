@@ -55,7 +55,6 @@ func _on_Left_gui_input(event: InputEvent):
         if event.pressed and event.button_index == BUTTON_LEFT:
             disable_slot_selectors()
             emit_signal("selected_left")
-            print("selected left")
 
 
 func _on_Right_gui_input(event: InputEvent):
@@ -65,4 +64,3 @@ func _on_Right_gui_input(event: InputEvent):
         if event.pressed and event.button_index == BUTTON_LEFT:
             disable_slot_selectors()
             emit_signal("selected_right")
-            print("selected right")
