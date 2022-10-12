@@ -1,13 +1,15 @@
-[gd_scene load_steps=5 format=2]
+[gd_scene load_steps=6 format=2]
 
 [ext_resource path="res://icon.png" type="Texture" id=1]
 [ext_resource path="res://scenes/GuiSketch.gd" type="Script" id=2]
 [ext_resource path="res://scenes/battle/components/MinionRow.tscn" type="PackedScene" id=3]
 [ext_resource path="res://scenes/battle/components/ActionPanel.tscn" type="PackedScene" id=4]
+[ext_resource path="res://scenes/battle/components/ResourcePanel.tscn" type="PackedScene" id=5]
 
 [node name="GUISketch" type="MarginContainer"]
 anchor_right = 1.0
 anchor_bottom = 1.0
+rect_min_size = Vector2( 360, 640 )
 script = ExtResource( 2 )
 __meta__ = {
 "_edit_use_anchors_": false
@@ -168,12 +170,30 @@ margin_bottom = 640.0
 mouse_filter = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3
+custom_constants/separation = 0
 alignment = 2
+
+[node name="EnemyResources" parent="Layer2" instance=ExtResource( 5 )]
+anchor_right = 0.0
+margin_right = 360.0
+
+[node name="Spacer" type="Control" parent="Layer2"]
+margin_top = 38.0
+margin_right = 360.0
+margin_bottom = 510.0
+mouse_filter = 2
+size_flags_vertical = 3
 
 [node name="ActionPanel" parent="Layer2" instance=ExtResource( 4 )]
 anchor_right = 0.0
 anchor_bottom = 0.0
-margin_top = 404.0
+margin_top = 510.0
+margin_right = 360.0
+margin_bottom = 602.0
+
+[node name="PlayerResources" parent="Layer2" instance=ExtResource( 5 )]
+anchor_right = 0.0
+margin_top = 602.0
 margin_right = 360.0
 margin_bottom = 640.0
 

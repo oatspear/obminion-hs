@@ -27,12 +27,14 @@ custom_constants/separation = 12
 alignment = 2
 
 [node name="ArmyActionBar" parent="Margin/VBox" instance=ExtResource( 3 )]
+visible = false
 anchor_right = 0.0
-margin_top = 404.0
+margin_top = 476.0
 margin_right = 346.0
-margin_bottom = 464.0
+margin_bottom = 536.0
 
 [node name="SupportBar" type="HBoxContainer" parent="Margin/VBox"]
+visible = false
 margin_top = 476.0
 margin_right = 346.0
 margin_bottom = 536.0
