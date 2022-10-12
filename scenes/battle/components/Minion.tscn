@@ -1,0 +1,67 @@
+[gd_scene load_steps=2 format=2]
+
+[ext_resource path="res://assets/icons/user.png" type="Texture" id=1]
+
+[node name="Minion" type="PanelContainer"]
+margin_right = 48.0
+margin_bottom = 82.0
+size_flags_vertical = 4
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="VBox" type="VBoxContainer" parent="."]
+margin_left = 7.0
+margin_top = 7.0
+margin_right = 41.0
+margin_bottom = 75.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+custom_constants/separation = 4
+
+[node name="Sprite" type="TextureRect" parent="VBox"]
+margin_left = 1.0
+margin_right = 33.0
+margin_bottom = 32.0
+rect_min_size = Vector2( 32, 32 )
+size_flags_horizontal = 4
+size_flags_vertical = 4
+texture = ExtResource( 1 )
+expand = true
+stretch_mode = 5
+
+[node name="Power" type="HBoxContainer" parent="VBox"]
+margin_top = 36.0
+margin_right = 34.0
+margin_bottom = 50.0
+size_flags_horizontal = 3
+
+[node name="Label" type="Label" parent="VBox/Power"]
+margin_right = 14.0
+margin_bottom = 14.0
+size_flags_horizontal = 3
+text = "P:"
+
+[node name="Value" type="Label" parent="VBox/Power"]
+margin_left = 18.0
+margin_right = 34.0
+margin_bottom = 14.0
+text = "10"
+
+[node name="Health" type="HBoxContainer" parent="VBox"]
+margin_top = 54.0
+margin_right = 34.0
+margin_bottom = 68.0
+size_flags_horizontal = 3
+
+[node name="Label" type="Label" parent="VBox/Health"]
+margin_right = 14.0
+margin_bottom = 14.0
+size_flags_horizontal = 3
+text = "H:"
+
+[node name="Value" type="Label" parent="VBox/Health"]
+margin_left = 18.0
+margin_right = 34.0
+margin_bottom = 14.0
+text = "10"

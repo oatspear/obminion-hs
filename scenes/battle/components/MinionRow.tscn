@@ -5,7 +5,12 @@
 
 [node name="MinionRow" type="HBoxContainer"]
 anchor_right = 1.0
+margin_right = -320.0
+margin_bottom = 16.0
+rect_min_size = Vector2( 0, 96 )
+size_flags_horizontal = 3
 custom_constants/separation = 4
+alignment = 1
 script = ExtResource( 2 )
 __meta__ = {
 "_edit_use_anchors_": false
@@ -14,24 +19,24 @@ __meta__ = {
 [node name="Left" parent="." instance=ExtResource( 1 )]
 anchor_right = 0.0
 anchor_bottom = 0.0
-margin_right = 176.0
-margin_bottom = 16.0
+margin_right = 16.0
+margin_bottom = 96.0
 
 [node name="Minions" type="HBoxContainer" parent="."]
-margin_left = 180.0
-margin_right = 180.0
-margin_bottom = 16.0
+margin_left = 20.0
+margin_right = 20.0
+margin_bottom = 96.0
 size_flags_horizontal = 5
 size_flags_vertical = 3
-custom_constants/separation = 4
+custom_constants/separation = 2
 alignment = 1
 
 [node name="Right" parent="." instance=ExtResource( 1 )]
 anchor_right = 0.0
 anchor_bottom = 0.0
-margin_left = 184.0
-margin_right = 360.0
-margin_bottom = 16.0
+margin_left = 24.0
+margin_right = 40.0
+margin_bottom = 96.0
 
 [connection signal="gui_input" from="Left" to="." method="_on_Left_gui_input"]
 [connection signal="gui_input" from="Right" to="." method="_on_Right_gui_input"]
