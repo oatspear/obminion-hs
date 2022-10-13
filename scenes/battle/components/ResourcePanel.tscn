@@ -13,19 +13,56 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="HBox" type="HBoxContainer" parent="."]
+[node name="Margin" type="MarginContainer" parent="."]
 margin_left = 7.0
 margin_top = 7.0
 margin_right = 353.0
 margin_bottom = 31.0
+custom_constants/margin_right = 8
 
-[node name="Food" type="HBoxContainer" parent="HBox"]
-margin_right = 171.0
+[node name="HBox" type="HBoxContainer" parent="Margin"]
+margin_right = 338.0
 margin_bottom = 24.0
+custom_constants/separation = 8
+
+[node name="PlayerName" type="Label" parent="Margin/HBox"]
+margin_top = 2.0
+margin_right = 199.0
+margin_bottom = 21.0
 size_flags_horizontal = 3
+custom_fonts/font = ExtResource( 3 )
+text = "Player Faction Name"
+
+[node name="Gold" type="HBoxContainer" parent="Margin/HBox"]
+margin_left = 207.0
+margin_right = 268.0
+margin_bottom = 24.0
+size_flags_vertical = 3
+alignment = 2
+
+[node name="Icon" type="TextureRect" parent="Margin/HBox/Gold"]
+margin_right = 24.0
+margin_bottom = 24.0
+rect_min_size = Vector2( 24, 24 )
+texture = ExtResource( 1 )
+expand = true
+stretch_mode = 5
+
+[node name="Label" type="Label" parent="Margin/HBox/Gold"]
+margin_left = 28.0
+margin_top = 2.0
+margin_right = 61.0
+margin_bottom = 21.0
+custom_fonts/font = ExtResource( 3 )
+text = "0 / 8"
+
+[node name="Food" type="HBoxContainer" parent="Margin/HBox"]
+margin_left = 276.0
+margin_right = 338.0
+margin_bottom = 24.0
 size_flags_vertical = 3
 
-[node name="Icon" type="TextureRect" parent="HBox/Food"]
+[node name="Icon" type="TextureRect" parent="Margin/HBox/Food"]
 margin_right = 24.0
 margin_bottom = 24.0
 rect_min_size = Vector2( 24, 24 )
@@ -33,35 +70,10 @@ texture = ExtResource( 2 )
 expand = true
 stretch_mode = 5
 
-[node name="Label" type="Label" parent="HBox/Food"]
+[node name="Label" type="Label" parent="Margin/HBox/Food"]
 margin_left = 28.0
 margin_top = 2.0
 margin_right = 62.0
 margin_bottom = 21.0
 custom_fonts/font = ExtResource( 3 )
 text = "0 / 6"
-
-[node name="Gold" type="HBoxContainer" parent="HBox"]
-margin_left = 175.0
-margin_right = 346.0
-margin_bottom = 24.0
-size_flags_horizontal = 3
-size_flags_vertical = 3
-alignment = 2
-
-[node name="Icon" type="TextureRect" parent="HBox/Gold"]
-margin_left = 110.0
-margin_right = 134.0
-margin_bottom = 24.0
-rect_min_size = Vector2( 24, 24 )
-texture = ExtResource( 1 )
-expand = true
-stretch_mode = 5
-
-[node name="Label" type="Label" parent="HBox/Gold"]
-margin_left = 138.0
-margin_top = 2.0
-margin_right = 171.0
-margin_bottom = 21.0
-custom_fonts/font = ExtResource( 3 )
-text = "0 / 8"
