@@ -7,7 +7,7 @@
 [node name="Resource" type="HBoxContainer"]
 margin_right = 38.0
 margin_bottom = 24.0
-size_flags_vertical = 3
+size_flags_vertical = 4
 script = ExtResource( 1 )
 __meta__ = {
 "_edit_use_anchors_": false
@@ -17,6 +17,8 @@ __meta__ = {
 margin_right = 24.0
 margin_bottom = 24.0
 rect_min_size = Vector2( 24, 24 )
+size_flags_horizontal = 5
+size_flags_vertical = 5
 texture = ExtResource( 3 )
 expand = true
 stretch_mode = 5
