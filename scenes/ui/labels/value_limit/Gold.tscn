@@ -1,6 +1,6 @@
 [gd_scene load_steps=3 format=2]
 
-[ext_resource path="res://scenes/ui/labels/XYIconLabel.tscn" type="PackedScene" id=1]
+[ext_resource path="res://scenes/ui/labels/value_limit/Label.tscn" type="PackedScene" id=1]
 [ext_resource path="res://assets/icons/crystal.png" type="Texture" id=2]
 
 [node name="Gold" instance=ExtResource( 1 )]
