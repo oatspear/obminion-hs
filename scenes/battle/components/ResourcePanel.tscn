@@ -1,8 +1,9 @@
 [gd_scene load_steps=4 format=2]
 
-[ext_resource path="res://scenes/ui/labels/GoldIndicator.tscn" type="PackedScene" id=1]
-[ext_resource path="res://scenes/ui/labels/FoodIndicator.tscn" type="PackedScene" id=2]
+[ext_resource path="res://scenes/ui/labels/GoldXYIconLabel.tscn" type="PackedScene" id=1]
+[ext_resource path="res://scenes/ui/labels/FoodXYIconLabel.tscn" type="PackedScene" id=2]
 [ext_resource path="res://assets/fonts/roboto_bold_16.tres" type="DynamicFont" id=3]
+
 
 [node name="ResourcePanel" type="PanelContainer"]
 anchor_right = 1.0

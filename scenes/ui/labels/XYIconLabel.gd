@@ -4,7 +4,7 @@ extends HBoxContainer
 # Constants
 ################################################################################
 
-const STR_RESOURCE_FORMAT = "%d / %d"
+const STR_RESOURCE_FORMAT = "%d/%d"
 
 ################################################################################
 # Variables
