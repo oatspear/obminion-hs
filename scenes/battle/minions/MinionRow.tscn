@@ -8,39 +8,39 @@ anchor_right = 1.0
 margin_bottom = 65.0
 rect_min_size = Vector2( 0, 96 )
 size_flags_horizontal = 3
-custom_constants/separation = 2
+custom_constants/separation = 5
 alignment = 1
 script = ExtResource( 2 )
 __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="Minion1" parent="." instance=ExtResource( 3 )]
-margin_left = 13.0
-margin_right = 67.0
+[node name="MinionSlot1" parent="." instance=ExtResource( 3 )]
+margin_left = 23.0
+margin_right = 71.0
 margin_bottom = 96.0
 
-[node name="Minion2" parent="." instance=ExtResource( 3 )]
-margin_left = 69.0
-margin_right = 123.0
+[node name="MinionSlot2" parent="." instance=ExtResource( 3 )]
+margin_left = 76.0
+margin_right = 124.0
 margin_bottom = 96.0
 
-[node name="Minion3" parent="." instance=ExtResource( 3 )]
-margin_left = 125.0
-margin_right = 179.0
+[node name="MinionSlot3" parent="." instance=ExtResource( 3 )]
+margin_left = 129.0
+margin_right = 177.0
 margin_bottom = 96.0
 
-[node name="Minion4" parent="." instance=ExtResource( 3 )]
-margin_left = 181.0
-margin_right = 235.0
+[node name="MinionSlot4" parent="." instance=ExtResource( 3 )]
+margin_left = 182.0
+margin_right = 230.0
 margin_bottom = 96.0
 
-[node name="Minion5" parent="." instance=ExtResource( 3 )]
-margin_left = 237.0
-margin_right = 291.0
+[node name="MinionSlot5" parent="." instance=ExtResource( 3 )]
+margin_left = 235.0
+margin_right = 283.0
 margin_bottom = 96.0
 
-[node name="Minion6" parent="." instance=ExtResource( 3 )]
-margin_left = 293.0
-margin_right = 347.0
+[node name="MinionSlot6" parent="." instance=ExtResource( 3 )]
+margin_left = 288.0
+margin_right = 336.0
 margin_bottom = 96.0

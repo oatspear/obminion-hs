@@ -17,6 +17,7 @@ signal selected()
 # Variables
 ################################################################################
 
+var minion_data = null setget set_minion_data
 var selectable: bool = false setget set_selectable
 
 onready var sprite: TextureRect = $Elements/Sprite
@@ -26,6 +27,14 @@ onready var animation = $Animation
 ################################################################################
 # Interface
 ################################################################################
+
+
+func has_minion_data() -> bool:
+    return minion_data != null
+
+
+func set_minion_data(data):
+    minion_data = data
 
 
 func get_power() -> int:
