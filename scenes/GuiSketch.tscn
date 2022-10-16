@@ -179,8 +179,6 @@ window_title = "End Turn"
 dialog_text = "End your turn?"
 dialog_autowrap = true
 
-[connection signal="selected_left" from="Layer1/BattleField/MinionField/VBoxContainer/Bottom" to="." method="_on_MinionRow_player_selected_left"]
-[connection signal="selected_right" from="Layer1/BattleField/MinionField/VBoxContainer/Bottom" to="." method="_on_MinionRow_player_selected_right"]
 [connection signal="end_turn" from="Layer2/ActionPanel" to="." method="_on_ActionPanel_end_turn"]
 [connection signal="forfeit_game" from="Layer2/ActionPanel" to="." method="_on_ActionPanel_forfeit_game"]
 [connection signal="spawn_minion" from="Layer2/ActionPanel" to="." method="_on_ActionPanel_spawn_minion"]

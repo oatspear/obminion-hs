@@ -1,11 +1,25 @@
 extends HBoxContainer
 
 ################################################################################
+# Constants
+################################################################################
+
+const MAX_MINIONS: int = 6
+
+const MINION_DATA = {
+    "name": "Minion",
+    "power": 10,
+    "health": 10,
+    "faction": "Faction",
+    "tribe": "Tribe",
+    "supply": 1,
+    "abilities": [],
+}
+
+################################################################################
 # Signals
 ################################################################################
 
-signal selected_left()
-signal selected_right()
 
 ################################################################################
 # Variables
@@ -43,42 +57,19 @@ func get_minion_count() -> int:
     return _minion_count
 
 
-func enable_slot_selectors():
-    _selecting = true
-    match get_minion_count():
-        0:
-            minion4.set_selectable(true)
-            minion4.show()
-        1:
-            minion3.set_selectable(true)
-            minion3.show()
-            minion5.set_selectable(true)
-            minion5.show()
-        2:
-            pass
-        3:
-            pass
-        4:
-            pass
-        5:
-            pass
-        _:
-            pass
-
-
-func disable_slot_selectors():
-    _selecting = false
-
-
-func preprend_minion(minion: Control):
-    pass
+func preprend_minion() -> bool:
     #minion_container.add_child(minion)
     #minion_container.move_child(minion, 0)
+    return false
 
 
-func append_minion(minion: Control):
-    pass
-    #minion_container.add_child(minion)
+func append_minion() -> bool:
+    if get_minion_count() >= MAX_MINIONS:
+        return false
+    var minion = minions[_minion_count]
+    minion.set_minion_data(MINION_DATA)
+    minion.show()
+    return true
 
 
 ################################################################################
@@ -90,21 +81,3 @@ func _ready():
     for minion in minions:
         minion.set_minion_data(null)
         minion.visible = false
-
-
-func _on_Left_gui_input(event: InputEvent):
-    if not _selecting:
-        return
-    if event is InputEventMouseButton:
-        if event.pressed and event.button_index == BUTTON_LEFT:
-            disable_slot_selectors()
-            emit_signal("selected_left")
-
-
-func _on_Right_gui_input(event: InputEvent):
-    if not _selecting:
-        return
-    if event is InputEventMouseButton:
-        if event.pressed and event.button_index == BUTTON_LEFT:
-            disable_slot_selectors()
-            emit_signal("selected_right")

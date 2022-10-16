@@ -4,8 +4,6 @@ extends MarginContainer
 # Constants
 ################################################################################
 
-const SCN_MINION = preload("res://scenes/battle/components/Minion.tscn")
-
 const STR_POPUP_TITLE_END_TURN = "End Turn"
 const STR_POPUP_TEXT_END_TURN = "End your turn?"
 
@@ -28,9 +26,9 @@ var _num_minions = 0
 
 
 func _on_ActionPanel_spawn_minion(index):
-    if _num_minions < 6:
-        minion_row_player.enable_slot_selectors()
-    else:
+    action_panel.reset_all_inputs()
+    var ok = minion_row_player.append_minion()
+    if not ok:
         print("The minion board is full.")
 
 
@@ -48,21 +46,3 @@ func _on_ActionPanel_forfeit_game():
     dialog_confirm.window_title = STR_POPUP_TITLE_FORFEIT
     dialog_confirm.dialog_text = STR_POPUP_TEXT_FORFEIT
     dialog_confirm.popup()
-
-
-func _on_MinionRow_player_selected_left():
-    minion_row_player.disable_slot_selectors()
-    action_panel.reset_all_inputs()
-    if _num_minions < 6:
-        var card = SCN_MINION.instance()
-        minion_row_player.preprend_minion(card)
-        _num_minions += 1
-
-
-func _on_MinionRow_player_selected_right():
-    minion_row_player.disable_slot_selectors()
-    action_panel.reset_all_inputs()
-    if _num_minions < 6:
-        var card = SCN_MINION.instance()
-        minion_row_player.append_minion(card)
-        _num_minions += 1
