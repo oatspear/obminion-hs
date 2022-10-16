@@ -81,5 +81,6 @@ func _set_select_style():
 func _on_gui_input(event: InputEvent):
     if event is InputEventMouseButton:
         if event.pressed and event.button_index == BUTTON_LEFT:
-            set_selectable(not selectable)
-            emit_signal("selected")
+            # set_selectable(not selectable)
+            if selectable:
+                emit_signal("selected")
