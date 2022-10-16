@@ -53,6 +53,8 @@ expand = true
 stretch_mode = 5
 
 [node name="Stats" parent="Elements" instance=ExtResource( 2 )]
+margin_top = 36.0
+margin_bottom = 51.0
 
 [node name="Animation" type="AnimationPlayer" parent="."]
 anims/pulse = SubResource( 1 )
