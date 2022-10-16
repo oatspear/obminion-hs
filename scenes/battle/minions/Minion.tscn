@@ -1,0 +1,60 @@
+[gd_scene load_steps=6 format=2]
+
+[ext_resource path="res://assets/icons/user.png" type="Texture" id=1]
+[ext_resource path="res://scenes/ui/labels/StatsLabel.tscn" type="PackedScene" id=2]
+[ext_resource path="res://data/ui/minions/style_normal.tres" type="StyleBox" id=3]
+[ext_resource path="res://scenes/battle/minions/Minion.gd" type="Script" id=4]
+
+[sub_resource type="Animation" id=1]
+resource_name = "pulse"
+length = 1.5
+loop = true
+tracks/0/type = "value"
+tracks/0/path = NodePath(".:modulate")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 0.6, 1.2, 1.5 ),
+"transitions": PoolRealArray( 1, 1, 1, 1 ),
+"update": 0,
+"values": [ Color( 1, 1, 1, 1 ), Color( 1, 1, 1, 0 ), Color( 1, 1, 1, 1 ), Color( 1, 1, 1, 1 ) ]
+}
+
+[node name="Minion" type="PanelContainer"]
+modulate = Color( 1, 1, 1, 0.941359 )
+margin_right = 54.0
+margin_bottom = 65.0
+size_flags_vertical = 4
+custom_styles/panel = ExtResource( 3 )
+script = ExtResource( 4 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Elements" type="VBoxContainer" parent="."]
+margin_left = 5.0
+margin_top = 5.0
+margin_right = 49.0
+margin_bottom = 63.0
+size_flags_horizontal = 3
+custom_constants/separation = 4
+
+[node name="Sprite" type="TextureRect" parent="Elements"]
+margin_left = 6.0
+margin_right = 38.0
+margin_bottom = 32.0
+rect_min_size = Vector2( 32, 32 )
+size_flags_horizontal = 4
+size_flags_vertical = 4
+texture = ExtResource( 1 )
+expand = true
+stretch_mode = 5
+
+[node name="Stats" parent="Elements" instance=ExtResource( 2 )]
+
+[node name="Animation" type="AnimationPlayer" parent="."]
+anims/pulse = SubResource( 1 )
+
+[connection signal="gui_input" from="." to="." method="_on_gui_input"]

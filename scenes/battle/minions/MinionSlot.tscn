@@ -1,0 +1,16 @@
+[gd_scene load_steps=2 format=2]
+
+[ext_resource path="res://scenes/battle/minions/Minion.tscn" type="PackedScene" id=1]
+
+[node name="MinionSlot" type="CenterContainer"]
+margin_right = 54.0
+margin_bottom = 65.0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Minion" parent="." instance=ExtResource( 1 )]
+margin_left = 2.0
+margin_top = 3.0
+margin_right = 52.0
+margin_bottom = 61.0

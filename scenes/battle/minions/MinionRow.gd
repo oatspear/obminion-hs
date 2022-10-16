@@ -13,9 +13,7 @@ signal selected_right()
 
 var _selecting: bool = false
 
-onready var minion_container: HBoxContainer = $Minions
-onready var left_reinforcement: Control = $Left
-onready var right_reinforcement: Control = $Right
+onready var minions: Array = get_children()
 
 ################################################################################
 # Interface
@@ -46,6 +44,11 @@ func append_minion(minion: Control):
 ################################################################################
 # Event Handlers
 ################################################################################
+
+
+func _ready():
+    for minion in minions:
+        minion.visible = false
 
 
 func _on_Left_gui_input(event: InputEvent):

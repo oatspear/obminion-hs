@@ -1,0 +1,38 @@
+[gd_scene load_steps=3 format=2]
+
+[ext_resource path="res://assets/fonts/roboto_bold_12.tres" type="DynamicFont" id=1]
+[ext_resource path="res://scenes/ui/labels/StatsLabel.gd" type="Script" id=2]
+
+[node name="Stats" type="HBoxContainer"]
+margin_right = 44.0
+margin_bottom = 15.0
+size_flags_horizontal = 3
+custom_constants/separation = 2
+alignment = 1
+script = ExtResource( 2 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Stat1" type="Label" parent="."]
+margin_right = 18.0
+margin_bottom = 15.0
+size_flags_horizontal = 3
+custom_fonts/font = ExtResource( 1 )
+text = "10"
+align = 2
+
+[node name="Divider" type="Label" parent="."]
+margin_left = 20.0
+margin_right = 24.0
+margin_bottom = 15.0
+custom_fonts/font = ExtResource( 1 )
+text = "/"
+
+[node name="Stat2" type="Label" parent="."]
+margin_left = 26.0
+margin_right = 44.0
+margin_bottom = 15.0
+size_flags_horizontal = 3
+custom_fonts/font = ExtResource( 1 )
+text = "10"
