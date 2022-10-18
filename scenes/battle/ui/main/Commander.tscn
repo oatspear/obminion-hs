@@ -17,13 +17,13 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="VBoxContainer" type="VBoxContainer" parent="."]
+[node name="Elements" type="VBoxContainer" parent="."]
 margin_left = 5.0
 margin_top = 5.0
 margin_right = 123.0
 margin_bottom = 126.0
 
-[node name="TextureRect" type="TextureRect" parent="VBoxContainer"]
+[node name="Portrait" type="TextureRect" parent="Elements"]
 margin_right = 118.0
 margin_bottom = 70.0
 rect_min_size = Vector2( 64, 64 )
@@ -33,7 +33,7 @@ texture = ExtResource( 1 )
 expand = true
 stretch_mode = 6
 
-[node name="Label" type="Label" parent="VBoxContainer"]
+[node name="NameLabel" type="Label" parent="Elements"]
 margin_top = 74.0
 margin_right = 118.0
 margin_bottom = 93.0
@@ -42,19 +42,21 @@ text = "Player Faction"
 align = 1
 clip_text = true
 
-[node name="HBoxContainer" type="HBoxContainer" parent="VBoxContainer"]
+[node name="Resources" type="HBoxContainer" parent="Elements"]
 margin_top = 97.0
 margin_right = 118.0
 margin_bottom = 121.0
 alignment = 1
 
-[node name="Gold" parent="VBoxContainer/HBoxContainer" instance=ExtResource( 3 )]
+[node name="Gold" parent="Elements/Resources" instance=ExtResource( 3 )]
 margin_right = 57.0
 size_flags_horizontal = 3
 alignment = 1
+display_max = true
 
-[node name="Food" parent="VBoxContainer/HBoxContainer" instance=ExtResource( 2 )]
+[node name="Food" parent="Elements/Resources" instance=ExtResource( 2 )]
 margin_left = 61.0
 margin_right = 118.0
 size_flags_horizontal = 3
 alignment = 1
+display_max = true
