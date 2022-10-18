@@ -3,7 +3,7 @@
 [ext_resource path="res://icon.png" type="Texture" id=1]
 [ext_resource path="res://scenes/GuiSketch.gd" type="Script" id=2]
 [ext_resource path="res://scenes/battle/minions/MinionRow.tscn" type="PackedScene" id=3]
-[ext_resource path="res://scenes/battle/components/ActionPanel.tscn" type="PackedScene" id=4]
+[ext_resource path="res://scenes/battle/ui/actions/ActionPanel.tscn" type="PackedScene" id=4]
 [ext_resource path="res://scenes/battle/components/ResourcePanel.tscn" type="PackedScene" id=5]
 
 [node name="GUISketch" type="MarginContainer"]
@@ -147,14 +147,15 @@ margin_right = 360.0
 [node name="Spacer" type="Control" parent="Layer2"]
 margin_top = 38.0
 margin_right = 360.0
-margin_bottom = 510.0
+margin_bottom = 321.0
 mouse_filter = 2
 size_flags_vertical = 3
 
 [node name="ActionPanel" parent="Layer2" instance=ExtResource( 4 )]
+anchor_top = 0.0
 anchor_right = 0.0
 anchor_bottom = 0.0
-margin_top = 510.0
+margin_top = 321.0
 margin_right = 360.0
 margin_bottom = 602.0
 
@@ -178,8 +179,3 @@ popup_exclusive = true
 window_title = "End Turn"
 dialog_text = "End your turn?"
 dialog_autowrap = true
-
-[connection signal="end_turn" from="Layer2/ActionPanel" to="." method="_on_ActionPanel_end_turn"]
-[connection signal="forfeit_game" from="Layer2/ActionPanel" to="." method="_on_ActionPanel_forfeit_game"]
-[connection signal="spawn_minion" from="Layer2/ActionPanel" to="." method="_on_ActionPanel_spawn_minion"]
-[connection signal="use_support" from="Layer2/ActionPanel" to="." method="_on_ActionPanel_use_support"]
