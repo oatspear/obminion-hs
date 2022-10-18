@@ -2,7 +2,7 @@
 
 [ext_resource path="res://scenes/battle/minions/unused/MinionSelector.gd" type="Script" id=1]
 [ext_resource path="res://assets/icons/user.png" type="Texture" id=2]
-[ext_resource path="res://data/ui/minions/style_select.tres" type="StyleBox" id=3]
+[ext_resource path="res://data/ui/minions/style_selected.tres" type="StyleBox" id=3]
 [ext_resource path="res://scenes/ui/labels/StatsLabel.tscn" type="PackedScene" id=4]
 
 
