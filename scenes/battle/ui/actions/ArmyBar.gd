@@ -41,13 +41,6 @@ func reset_ui():
 ################################################################################
 
 
-func _is_click_event(event: InputEvent) -> bool:
-    if event is InputEventMouseButton:
-        if event.pressed and event.button_index == BUTTON_LEFT:
-            return true
-    return false
-
-
 func _select_minion(token):
     if _selected_minion != null:
         _selected_minion.set_selected(false)
@@ -56,7 +49,7 @@ func _select_minion(token):
         reset_ui()
     else:
         _selected_minion = token
-        _selected_minion.set_selected(true)
+        # _selected_minion.set_selected(true)
         # panel_info.set_minion_data(token.minion_data)
         button_info.disabled = false
         button_deploy.disabled = false
@@ -81,31 +74,26 @@ func _on_info_button_pressed():
         button_info.text = "Hide"
 
 
-func _on_minion1_gui_input(event: InputEvent):
-    if _is_click_event(event):
-        _select_minion(token_minion1)
+func _on_minion1_selected():
+    print('selected minion 1')
+    _select_minion(token_minion1)
 
 
-func _on_minion2_gui_input(event):
-    if _is_click_event(event):
-        _select_minion(token_minion2)
+func _on_minion2_selected():
+    _select_minion(token_minion2)
 
 
-func _on_minion3_gui_input(event):
-    if _is_click_event(event):
-        _select_minion(token_minion3)
+func _on_minion3_selected():
+    _select_minion(token_minion3)
 
 
-func _on_minion4_gui_input(event):
-    if _is_click_event(event):
-        _select_minion(token_minion4)
+func _on_minion4_selected():
+    _select_minion(token_minion4)
 
 
-func _on_minion5_gui_input(event):
-    if _is_click_event(event):
-        _select_minion(token_minion5)
+func _on_minion5_selected():
+    _select_minion(token_minion5)
 
 
-func _on_minion6_gui_input(event):
-    if _is_click_event(event):
-        _select_minion(token_minion6)
+func _on_minion6_selected():
+    _select_minion(token_minion6)

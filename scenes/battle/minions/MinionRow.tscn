@@ -16,31 +16,31 @@ __meta__ = {
 }
 
 [node name="Minion1" parent="." instance=ExtResource( 1 )]
-margin_left = 29.0
-margin_right = 75.0
+margin_left = 23.0
+margin_right = 71.0
 margin_bottom = 58.0
 
 [node name="Minion2" parent="." instance=ExtResource( 1 )]
-margin_left = 80.0
-margin_right = 126.0
+margin_left = 76.0
+margin_right = 124.0
 margin_bottom = 58.0
 
 [node name="Minion3" parent="." instance=ExtResource( 1 )]
-margin_left = 131.0
+margin_left = 129.0
 margin_right = 177.0
 margin_bottom = 58.0
 
 [node name="Minion4" parent="." instance=ExtResource( 1 )]
 margin_left = 182.0
-margin_right = 228.0
+margin_right = 230.0
 margin_bottom = 58.0
 
 [node name="Minion5" parent="." instance=ExtResource( 1 )]
-margin_left = 233.0
-margin_right = 279.0
+margin_left = 235.0
+margin_right = 283.0
 margin_bottom = 58.0
 
 [node name="Minion6" parent="." instance=ExtResource( 1 )]
-margin_left = 284.0
-margin_right = 330.0
+margin_left = 288.0
+margin_right = 336.0
 margin_bottom = 58.0
