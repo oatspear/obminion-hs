@@ -1,44 +1,32 @@
-tool
-extends "res://scenes/ui/SelectablePanel.gd"
+extends PanelContainer
+
+################################################################################
+# Constants
+################################################################################
+
+const STR_SHOW_INFO = "+ Info"
+const STR_HIDE_INFO = "- Info"
 
 ################################################################################
 # Variables
 ################################################################################
 
-export (Resource) var minion_data setget set_minion_data
-
-onready var portrait: TextureRect = $Elements/Portrait
-onready var label_supply = $Elements/Food
+onready var info_content = $Elements/MinionInfoContent
+onready var button_info: Button = $Elements/InfoButton
 
 ################################################################################
 # Interface
 ################################################################################
 
 
-func set_minion_data(data: MinionData):
-    minion_data = data
+func set_minion_data(data: Dictionary):
+    info_content.set_minion_data(data)
 
 
-func render():
-    .render()
-    _render_portrait()
-    _render_supply_label()
-
-
-################################################################################
-# Helper Functions
-################################################################################
-
-
-func _render_portrait():
-    pass
-
-
-func _render_supply_label():
-    var value = 0 if not minion_data else minion_data.supply
-    var label = $Elements/Food if Engine.editor_hint else label_supply
-    if label_supply:
-        label_supply.set_value(value)
+func reset_ui():
+    info_content.hide()
+    button_info.text = STR_SHOW_INFO
+    button_info.pressed = false
 
 
 ################################################################################
@@ -47,4 +35,12 @@ func _render_supply_label():
 
 
 func _ready():
-    ._ready()
+    reset_ui()
+
+
+func _on_info_button_toggled(button_pressed: bool):
+    if button_pressed:
+        info_content.show()
+        button_info.text = STR_HIDE_INFO
+    else:
+        reset_ui()

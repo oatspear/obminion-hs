@@ -1,14 +1,11 @@
 extends VBoxContainer
 
 ################################################################################
-# Constants
-################################################################################
-
-
-################################################################################
 # Signals
 ################################################################################
 
+signal action_canceled()
+signal show_info(minion_data)
 
 ################################################################################
 # Variables
@@ -22,8 +19,7 @@ onready var token_minion3 = $Minions/Minion3
 onready var token_minion4 = $Minions/Minion4
 onready var token_minion5 = $Minions/Minion5
 onready var token_minion6 = $Minions/Minion6
-onready var panel_info = $MinionCard
-onready var button_info = $Actions/Info
+onready var button_cancel = $Actions/Cancel
 onready var button_deploy = $Actions/Deploy
 
 ################################################################################
@@ -32,13 +28,11 @@ onready var button_deploy = $Actions/Deploy
 
 
 func reset_ui():
-    panel_info.hide()
-    button_info.disabled = true
+    button_cancel.disabled = true
     button_deploy.disabled = true
     if _selected_minion != null:
         _selected_minion.set_selected(false)
     _selected_minion = null
-    button_info.text = "Info"
 
 
 ################################################################################
@@ -50,12 +44,12 @@ func _select_minion(token):
     var previous = _selected_minion
     assert(previous != token, "'selected' should only trigger on toggle")
     _selected_minion = token
-    panel_info.set_minion_data(token.minion_data.as_dict())
-    button_info.disabled = false
+    button_cancel.disabled = false
     button_deploy.disabled = false
     if previous != null:
         # delay signal-emitting calls to the tail
         previous.set_selected(false)
+    emit_signal("show_info", token.minion_data.as_dict())
 
 
 func _on_minion_deselected(token):
@@ -73,14 +67,8 @@ func _ready():
     reset_ui()
 
 
-func _on_info_button_pressed():
-    assert(_selected_minion != null)
-    if panel_info.visible:
-        panel_info.hide()
-        button_info.text = "Info"
-    else:
-        panel_info.show()
-        button_info.text = "Hide"
+func _on_cancel_button_pressed():
+    emit_signal("action_canceled")
 
 
 func _on_minion1_selected():

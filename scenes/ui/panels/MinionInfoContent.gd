@@ -1,16 +1,16 @@
-extends PanelContainer
+extends VBoxContainer
 
 ################################################################################
 # Variables
 ################################################################################
 
-onready var label_name: Label = $Margin/VBox/NameTribeCost/NameTribe/Name
-onready var label_tribe: Label = $Margin/VBox/NameTribeCost/NameTribe/Tribe
-onready var label_supply = $Margin/VBox/NameTribeCost/Food
-onready var portrait: TextureRect = $Margin/VBox/PortraitStats/Portrait/Texture
-onready var label_power: Label = $Margin/VBox/PortraitStats/Stats/Power/Value
-onready var label_health: Label = $Margin/VBox/PortraitStats/Stats/Health/Value
-onready var label_ability: RichTextLabel = $Margin/VBox/Abilities
+onready var label_name: Label = $NameTribeCost/NameTribe/Name
+onready var label_tribe: Label = $NameTribeCost/NameTribe/Tribe
+onready var label_supply = $NameTribeCost/Food
+onready var portrait: TextureRect = $PortraitStats/Portrait/Texture
+onready var label_power: Label = $PortraitStats/Stats/Power/Value
+onready var label_health: Label = $PortraitStats/Stats/Health/Value
+onready var label_ability: RichTextLabel = $Abilities
 
 ################################################################################
 # Interface
