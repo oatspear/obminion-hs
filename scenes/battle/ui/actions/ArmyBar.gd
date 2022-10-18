@@ -1,6 +1,11 @@
 extends VBoxContainer
 
 ################################################################################
+# Constants
+################################################################################
+
+
+################################################################################
 # Signals
 ################################################################################
 
@@ -42,17 +47,21 @@ func reset_ui():
 
 
 func _select_minion(token):
-    if _selected_minion != null:
-        _selected_minion.set_selected(false)
+    var previous = _selected_minion
+    assert(previous != token, "'selected' should only trigger on toggle")
+    _selected_minion = token
+    panel_info.set_minion_data(token.minion_data.as_dict())
+    button_info.disabled = false
+    button_deploy.disabled = false
+    if previous != null:
+        # delay signal-emitting calls to the tail
+        previous.set_selected(false)
+
+
+func _on_minion_deselected(token):
     if _selected_minion == token:
         _selected_minion = null
         reset_ui()
-    else:
-        _selected_minion = token
-        # _selected_minion.set_selected(true)
-        # panel_info.set_minion_data(token.minion_data)
-        button_info.disabled = false
-        button_deploy.disabled = false
 
 
 ################################################################################
@@ -75,7 +84,6 @@ func _on_info_button_pressed():
 
 
 func _on_minion1_selected():
-    print('selected minion 1')
     _select_minion(token_minion1)
 
 
@@ -97,3 +105,27 @@ func _on_minion5_selected():
 
 func _on_minion6_selected():
     _select_minion(token_minion6)
+
+
+func _on_minion1_deselected():
+    _on_minion_deselected(token_minion1)
+
+
+func _on_minion2_deselected():
+    _on_minion_deselected(token_minion2)
+
+
+func _on_minion3_deselected():
+    _on_minion_deselected(token_minion3)
+
+
+func _on_minion4_deselected():
+    _on_minion_deselected(token_minion4)
+
+
+func _on_minion5_deselected():
+    _on_minion_deselected(token_minion5)
+
+
+func _on_minion6_deselected():
+    _on_minion_deselected(token_minion6)

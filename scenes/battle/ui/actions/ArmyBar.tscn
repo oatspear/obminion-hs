@@ -1,9 +1,15 @@
-[gd_scene load_steps=5 format=2]
+[gd_scene load_steps=11 format=2]
 
 [ext_resource path="res://scenes/ui/tokens/MinionFood.tscn" type="PackedScene" id=1]
 [ext_resource path="res://assets/fonts/roboto_bold_16.tres" type="DynamicFont" id=2]
 [ext_resource path="res://scenes/ui/cards/Minion.tscn" type="PackedScene" id=3]
 [ext_resource path="res://scenes/battle/ui/actions/ArmyBar.gd" type="Script" id=4]
+[ext_resource path="res://data/minions/Minion1.tres" type="Resource" id=5]
+[ext_resource path="res://data/minions/Minion2.tres" type="Resource" id=6]
+[ext_resource path="res://data/minions/Minion3.tres" type="Resource" id=7]
+[ext_resource path="res://data/minions/Minion4.tres" type="Resource" id=8]
+[ext_resource path="res://data/minions/Minion5.tres" type="Resource" id=9]
+[ext_resource path="res://data/minions/Minion6.tres" type="Resource" id=10]
 
 [node name="ArmyBar" type="VBoxContainer"]
 anchor_right = 1.0
@@ -30,31 +36,37 @@ alignment = 1
 margin_left = 26.0
 margin_right = 74.0
 margin_bottom = 64.0
+minion_data = ExtResource( 5 )
 
 [node name="Minion2" parent="Minions" instance=ExtResource( 1 )]
 margin_left = 78.0
 margin_right = 126.0
 margin_bottom = 64.0
+minion_data = ExtResource( 6 )
 
 [node name="Minion3" parent="Minions" instance=ExtResource( 1 )]
 margin_left = 130.0
 margin_right = 178.0
 margin_bottom = 64.0
+minion_data = ExtResource( 7 )
 
 [node name="Minion4" parent="Minions" instance=ExtResource( 1 )]
 margin_left = 182.0
 margin_right = 230.0
 margin_bottom = 64.0
+minion_data = ExtResource( 8 )
 
 [node name="Minion5" parent="Minions" instance=ExtResource( 1 )]
 margin_left = 234.0
 margin_right = 282.0
 margin_bottom = 64.0
+minion_data = ExtResource( 9 )
 
 [node name="Minion6" parent="Minions" instance=ExtResource( 1 )]
 margin_left = 286.0
 margin_right = 334.0
 margin_bottom = 64.0
+minion_data = ExtResource( 10 )
 
 [node name="Actions" type="HBoxContainer" parent="."]
 margin_top = 242.0
@@ -79,10 +91,16 @@ rect_min_size = Vector2( 96, 0 )
 custom_fonts/font = ExtResource( 2 )
 text = "Deploy"
 
+[connection signal="deselected" from="Minions/Minion1" to="." method="_on_minion1_deselected"]
 [connection signal="selected" from="Minions/Minion1" to="." method="_on_minion1_selected"]
+[connection signal="deselected" from="Minions/Minion2" to="." method="_on_minion2_deselected"]
 [connection signal="selected" from="Minions/Minion2" to="." method="_on_minion2_selected"]
+[connection signal="deselected" from="Minions/Minion3" to="." method="_on_minion3_deselected"]
 [connection signal="selected" from="Minions/Minion3" to="." method="_on_minion3_selected"]
+[connection signal="deselected" from="Minions/Minion4" to="." method="_on_minion4_deselected"]
 [connection signal="selected" from="Minions/Minion4" to="." method="_on_minion4_selected"]
+[connection signal="deselected" from="Minions/Minion5" to="." method="_on_minion5_deselected"]
 [connection signal="selected" from="Minions/Minion5" to="." method="_on_minion5_selected"]
+[connection signal="deselected" from="Minions/Minion6" to="." method="_on_minion6_deselected"]
 [connection signal="selected" from="Minions/Minion6" to="." method="_on_minion6_selected"]
 [connection signal="pressed" from="Actions/Info" to="." method="_on_info_button_pressed"]

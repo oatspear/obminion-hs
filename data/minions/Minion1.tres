@@ -1,0 +1,15 @@
+[gd_resource type="Resource" load_steps=2 format=2]
+
+[ext_resource path="res://scripts/MinionData.gd" type="Script" id=1]
+
+[resource]
+script = ExtResource( 1 )
+name = "Minion 1"
+faction = "Faction"
+tribe = "Tribe"
+species = 1
+power = 1
+health = 1
+supply = 1
+ability = 0
+ability_text = "Whenever this minion takes damage, gain [b]1 health[/b]."

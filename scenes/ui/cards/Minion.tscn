@@ -1,4 +1,4 @@
-[gd_scene load_steps=8 format=2]
+[gd_scene load_steps=9 format=2]
 
 [ext_resource path="res://assets/fonts/roboto_bold_12.tres" type="DynamicFont" id=1]
 [ext_resource path="res://assets/icons/user.png" type="Texture" id=2]
@@ -7,11 +7,13 @@
 [ext_resource path="res://assets/fonts/roboto_italic_12.tres" type="DynamicFont" id=5]
 [ext_resource path="res://assets/fonts/roboto_bold_italic_12.tres" type="DynamicFont" id=6]
 [ext_resource path="res://scenes/ui/labels/icon_value/Food.tscn" type="PackedScene" id=7]
+[ext_resource path="res://scenes/ui/cards/Minion.gd" type="Script" id=8]
 
 [node name="MinionCard" type="PanelContainer"]
 anchor_right = 1.0
 margin_bottom = 154.0
 size_flags_horizontal = 3
+script = ExtResource( 8 )
 __meta__ = {
 "_edit_use_anchors_": false
 }
