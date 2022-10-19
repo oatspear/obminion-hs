@@ -5,11 +5,12 @@
 
 [node name="MinionInfoToggle" instance=ExtResource( 1 )]
 margin_bottom = 171.0
+info_panel_path = NodePath("Elements/MinionInfo")
 
 [node name="Elements" parent="." index="0"]
 margin_bottom = 164.0
 
-[node name="InfoPanel" parent="Elements" index="0" instance=ExtResource( 2 )]
+[node name="MinionInfo" parent="Elements" index="0" instance=ExtResource( 2 )]
 anchor_right = 0.0
 margin_right = 346.0
 
