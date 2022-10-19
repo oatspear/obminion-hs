@@ -11,6 +11,8 @@ const STR_HIDE_INFO = "- Info"
 # Variables
 ################################################################################
 
+var minion_data: Dictionary = {}
+
 onready var info_content = $Elements/MinionInfoContent
 onready var button_info: Button = $Elements/InfoButton
 
@@ -20,13 +22,26 @@ onready var button_info: Button = $Elements/InfoButton
 
 
 func set_minion_data(data: Dictionary):
-    info_content.set_minion_data(data)
+    minion_data = data
+    render()
+
+
+func render():
+    if button_info.pressed:
+        button_info.text = STR_HIDE_INFO
+        if minion_data.empty():
+            info_content.hide()
+        else:
+            info_content.set_minion_data(minion_data)
+            info_content.show()
+    else:
+        button_info.text = STR_SHOW_INFO
+        info_content.hide()
 
 
 func reset_ui():
-    info_content.hide()
-    button_info.text = STR_SHOW_INFO
     button_info.pressed = false
+    render()
 
 
 ################################################################################
@@ -39,8 +54,4 @@ func _ready():
 
 
 func _on_info_button_toggled(button_pressed: bool):
-    if button_pressed:
-        info_content.show()
-        button_info.text = STR_HIDE_INFO
-    else:
-        reset_ui()
+    render()

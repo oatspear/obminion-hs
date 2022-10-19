@@ -33,4 +33,5 @@ margin_top = 175.0
 margin_right = 346.0
 margin_bottom = 276.0
 
-[connection signal="show_info" from="Elements/ArmyBar" to="." method="_on_army_show_info"]
+[connection signal="minion_deselected" from="Elements/ArmyBar" to="." method="_on_army_minion_deselected"]
+[connection signal="minion_selected" from="Elements/ArmyBar" to="." method="_on_army_minion_selected"]

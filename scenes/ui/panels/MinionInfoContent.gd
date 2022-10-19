@@ -18,10 +18,11 @@ onready var label_ability: RichTextLabel = $Abilities
 
 
 func set_minion_data(minion_data: Dictionary):
-    label_name.text = minion_data["name"]
-    label_tribe.text = minion_data["tribe"]
-    label_supply.set_value(minion_data["supply"])
-    # portrait
-    label_power.text = str(minion_data["power"])
-    label_health.text = str(minion_data["health"])
-    label_ability.bbcode_text = minion_data["ability_text"]
+    if minion_data:
+        label_name.text = minion_data["name"]
+        label_tribe.text = minion_data["tribe"]
+        label_supply.set_value(minion_data["supply"])
+        # portrait
+        label_power.text = str(minion_data["power"])
+        label_health.text = str(minion_data["health"])
+        label_ability.bbcode_text = minion_data["ability_text"]
