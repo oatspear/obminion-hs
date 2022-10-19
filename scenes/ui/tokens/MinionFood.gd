@@ -17,6 +17,7 @@ onready var label_supply = $Elements/Food
 
 func set_minion_data(data: MinionData):
     minion_data = data
+    render()
 
 
 func render():
@@ -36,7 +37,8 @@ func _render_portrait():
 
 func _render_supply_label():
     var value = 0 if not minion_data else minion_data.supply
-    var label = $Elements/Food if Engine.editor_hint else label_supply
+    if Engine.editor_hint and is_inside_tree():
+        label_supply = $Elements/Food
     if label_supply:
         label_supply.set_value(value)
 
