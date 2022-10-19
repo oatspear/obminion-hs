@@ -6,14 +6,12 @@
 [ext_resource path="res://assets/fonts/roboto_bold_12.tres" type="DynamicFont" id=4]
 [ext_resource path="res://assets/icons/user.png" type="Texture" id=5]
 [ext_resource path="res://assets/fonts/roboto_italic_12.tres" type="DynamicFont" id=6]
-[ext_resource path="res://scenes/ui/panels/MinionInfoContent.gd" type="Script" id=7]
+[ext_resource path="res://scenes/ui/panels/MinionInfo.gd" type="Script" id=7]
 [ext_resource path="res://scenes/ui/labels/icon_value/Food.tscn" type="PackedScene" id=8]
 
-[node name="MinionInfoContent" type="VBoxContainer"]
-margin_left = 4.0
-margin_top = 4.0
-margin_right = 338.0
-margin_bottom = 136.0
+[node name="MinionInfo" type="VBoxContainer"]
+anchor_right = 1.0
+margin_bottom = 132.0
 size_flags_horizontal = 3
 custom_constants/separation = 8
 script = ExtResource( 7 )
@@ -22,38 +20,38 @@ __meta__ = {
 }
 
 [node name="NameTribeCost" type="HBoxContainer" parent="."]
-margin_right = 334.0
+margin_right = 360.0
 margin_bottom = 38.0
 rect_min_size = Vector2( 300, 0 )
 custom_constants/separation = 32
 
 [node name="NameTribe" type="VBoxContainer" parent="NameTribeCost"]
-margin_right = 264.0
+margin_right = 290.0
 margin_bottom = 38.0
 size_flags_horizontal = 3
 
 [node name="Name" type="Label" parent="NameTribeCost/NameTribe"]
-margin_right = 264.0
+margin_right = 290.0
 margin_bottom = 19.0
 custom_fonts/font = ExtResource( 3 )
 text = "Minion Name"
 
 [node name="Tribe" type="Label" parent="NameTribeCost/NameTribe"]
 margin_top = 23.0
-margin_right = 264.0
+margin_right = 290.0
 margin_bottom = 38.0
 custom_fonts/font = ExtResource( 1 )
 text = "Minion Tribe"
 
 [node name="Food" parent="NameTribeCost" instance=ExtResource( 8 )]
-margin_left = 296.0
+margin_left = 322.0
 margin_top = 7.0
-margin_right = 334.0
+margin_right = 360.0
 margin_bottom = 31.0
 
 [node name="PortraitStats" type="HBoxContainer" parent="."]
 margin_top = 46.0
-margin_right = 334.0
+margin_right = 360.0
 margin_bottom = 92.0
 custom_constants/separation = 8
 
@@ -117,7 +115,7 @@ text = "X"
 
 [node name="Abilities" type="RichTextLabel" parent="."]
 margin_top = 100.0
-margin_right = 334.0
+margin_right = 360.0
 margin_bottom = 132.0
 rect_min_size = Vector2( 0, 32 )
 custom_fonts/bold_italics_font = ExtResource( 1 )

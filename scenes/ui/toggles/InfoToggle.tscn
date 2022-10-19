@@ -2,7 +2,7 @@
 
 [ext_resource path="res://assets/fonts/roboto_bold_12.tres" type="DynamicFont" id=1]
 [ext_resource path="res://scenes/ui/toggles/InfoToggle.gd" type="Script" id=2]
-[ext_resource path="res://scenes/ui/panels/MinionInfoContent.tscn" type="PackedScene" id=3]
+[ext_resource path="res://scenes/ui/panels/MinionInfo.tscn" type="PackedScene" id=3]
 
 [node name="InfoToggle" type="PanelContainer"]
 margin_right = 14.0
@@ -18,11 +18,9 @@ margin_top = 7.0
 margin_right = 307.0
 margin_bottom = 164.0
 
-[node name="MinionInfoContent" parent="Elements" instance=ExtResource( 3 )]
-margin_left = 0.0
-margin_top = 0.0
+[node name="MinionInfo" parent="Elements" instance=ExtResource( 3 )]
+anchor_right = 0.0
 margin_right = 300.0
-margin_bottom = 132.0
 
 [node name="InfoButton" type="Button" parent="Elements"]
 margin_top = 136.0
