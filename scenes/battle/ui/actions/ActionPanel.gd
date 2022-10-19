@@ -10,7 +10,7 @@ const NO_DATA: Dictionary = {}
 # Variables
 ################################################################################
 
-onready var panel_info = $Elements/InfoToggle
+onready var panel_info = $Elements/MinionInfoToggle
 
 ################################################################################
 # Event Handlers
@@ -18,8 +18,8 @@ onready var panel_info = $Elements/InfoToggle
 
 
 func _on_army_minion_selected(minion_data: Dictionary):
-    panel_info.set_minion_data(minion_data)
+    panel_info.set_display_data(minion_data)
 
 
 func _on_army_minion_deselected():
-    panel_info.set_minion_data(NO_DATA)
+    panel_info.set_display_data(NO_DATA)

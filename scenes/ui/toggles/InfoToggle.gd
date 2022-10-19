@@ -11,9 +11,9 @@ const STR_HIDE_INFO = "- Info"
 # Variables
 ################################################################################
 
-var minion_data: Dictionary = {}
+var display_data: Dictionary = {}
 
-onready var panel_info = $Elements/MinionInfo
+onready var panel_info = $Elements/InfoPanel
 onready var button_info: Button = $Elements/InfoButton
 
 ################################################################################
@@ -21,18 +21,18 @@ onready var button_info: Button = $Elements/InfoButton
 ################################################################################
 
 
-func set_minion_data(data: Dictionary):
-    minion_data = data
+func set_display_data(data: Dictionary):
+    display_data = data
     render()
 
 
 func render():
     if button_info.pressed:
         button_info.text = STR_HIDE_INFO
-        if minion_data.empty():
+        if display_data.empty():
             panel_info.hide()
         else:
-            panel_info.set_minion_data(minion_data)
+            panel_info.set_display_data(display_data)
             panel_info.show()
     else:
         button_info.text = STR_SHOW_INFO

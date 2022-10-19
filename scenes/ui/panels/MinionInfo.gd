@@ -17,7 +17,7 @@ onready var label_ability: RichTextLabel = $Abilities
 ################################################################################
 
 
-func set_minion_data(minion_data: Dictionary):
+func set_display_data(minion_data: Dictionary):
     if minion_data:
         label_name.text = minion_data["name"]
         label_tribe.text = minion_data["tribe"]

@@ -1,7 +1,7 @@
 [gd_scene load_steps=4 format=2]
 
 [ext_resource path="res://scenes/battle/ui/actions/ArmyActionBar.tscn" type="PackedScene" id=1]
-[ext_resource path="res://scenes/ui/toggles/InfoToggle.tscn" type="PackedScene" id=2]
+[ext_resource path="res://scenes/ui/toggles/MinionInfoToggle.tscn" type="PackedScene" id=2]
 [ext_resource path="res://scenes/battle/ui/actions/ActionPanel.gd" type="Script" id=3]
 
 [node name="ActionPanel" type="PanelContainer"]
@@ -23,9 +23,9 @@ margin_bottom = 283.0
 size_flags_vertical = 8
 alignment = 2
 
-[node name="InfoToggle" parent="Elements" instance=ExtResource( 2 )]
+[node name="MinionInfoToggle" parent="Elements" instance=ExtResource( 2 )]
+anchor_right = 0.0
 margin_right = 346.0
-margin_bottom = 171.0
 
 [node name="ArmyActionBar" parent="Elements" instance=ExtResource( 1 )]
 anchor_right = 0.0
