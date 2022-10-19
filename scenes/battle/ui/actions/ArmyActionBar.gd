@@ -20,12 +20,12 @@ signal cancel_action()
 var _selected_minion = null
 
 onready var panel_info = $MinionInfoToggle
-onready var token_minion1 = $Minions/Minion1
-onready var token_minion2 = $Minions/Minion2
-onready var token_minion3 = $Minions/Minion3
-onready var token_minion4 = $Minions/Minion4
-onready var token_minion5 = $Minions/Minion5
-onready var token_minion6 = $Minions/Minion6
+onready var token1 = $Minions/Minion1
+onready var token2 = $Minions/Minion2
+onready var token3 = $Minions/Minion3
+onready var token4 = $Minions/Minion4
+onready var token5 = $Minions/Minion5
+onready var token6 = $Minions/Minion6
 onready var button_cancel = $Actions/Cancel
 onready var button_deploy = $Actions/Deploy
 
@@ -48,7 +48,7 @@ func reset_ui():
 ################################################################################
 
 
-func _select_minion(token):
+func _select_token(token):
     var previous = _selected_minion
     assert(previous != token, "'selected' should only trigger on toggle")
     _selected_minion = token
@@ -60,7 +60,7 @@ func _select_minion(token):
     panel_info.set_display_data(token.minion_data.as_dict())
 
 
-func _on_minion_deselected(token):
+func _token_deselected(token):
     if _selected_minion == token:
         _selected_minion = null
         reset_ui()
@@ -84,49 +84,49 @@ func _on_cancel_button_pressed():
     emit_signal("cancel_action")
 
 
-func _on_minion1_selected():
-    _select_minion(token_minion1)
+func _on_token1_selected():
+    _select_token(token1)
 
 
-func _on_minion2_selected():
-    _select_minion(token_minion2)
+func _on_token2_selected():
+    _select_token(token2)
 
 
-func _on_minion3_selected():
-    _select_minion(token_minion3)
+func _on_token3_selected():
+    _select_token(token3)
 
 
-func _on_minion4_selected():
-    _select_minion(token_minion4)
+func _on_token4_selected():
+    _select_token(token4)
 
 
-func _on_minion5_selected():
-    _select_minion(token_minion5)
+func _on_token5_selected():
+    _select_token(token5)
 
 
-func _on_minion6_selected():
-    _select_minion(token_minion6)
+func _on_token6_selected():
+    _select_token(token6)
 
 
-func _on_minion1_deselected():
-    _on_minion_deselected(token_minion1)
+func _on_token1_deselected():
+    _token_deselected(token1)
 
 
-func _on_minion2_deselected():
-    _on_minion_deselected(token_minion2)
+func _on_token2_deselected():
+    _token_deselected(token2)
 
 
-func _on_minion3_deselected():
-    _on_minion_deselected(token_minion3)
+func _on_token3_deselected():
+    _token_deselected(token3)
 
 
-func _on_minion4_deselected():
-    _on_minion_deselected(token_minion4)
+func _on_token4_deselected():
+    _token_deselected(token4)
 
 
-func _on_minion5_deselected():
-    _on_minion_deselected(token_minion5)
+func _on_token5_deselected():
+    _token_deselected(token5)
 
 
-func _on_minion6_deselected():
-    _on_minion_deselected(token_minion6)
+func _on_token6_deselected():
+    _token_deselected(token6)
