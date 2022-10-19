@@ -113,7 +113,7 @@ margin_right = 360.0
 [node name="Spacer" type="Control" parent="Layer2"]
 margin_top = 38.0
 margin_right = 360.0
-margin_bottom = 312.0
+margin_bottom = 304.0
 mouse_filter = 2
 size_flags_vertical = 3
 
@@ -121,7 +121,7 @@ size_flags_vertical = 3
 anchor_top = 0.0
 anchor_right = 0.0
 anchor_bottom = 0.0
-margin_top = 312.0
+margin_top = 304.0
 margin_right = 360.0
 margin_bottom = 602.0
 

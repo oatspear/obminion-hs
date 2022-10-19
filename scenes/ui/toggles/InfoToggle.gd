@@ -53,5 +53,5 @@ func _ready():
     reset_ui()
 
 
-func _on_info_button_toggled(button_pressed: bool):
+func _on_info_button_toggled(_button_pressed: bool):
     render()

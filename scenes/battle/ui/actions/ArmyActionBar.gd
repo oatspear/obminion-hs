@@ -1,11 +1,17 @@
 extends VBoxContainer
 
 ################################################################################
+# Constants
+################################################################################
+
+const NO_DATA: Dictionary = {}
+
+################################################################################
 # Signals
 ################################################################################
 
 signal action_canceled()
-signal minion_selected(minion_data)
+signal minion_selected(token)
 signal minion_deselected()
 
 ################################################################################
@@ -14,6 +20,7 @@ signal minion_deselected()
 
 var _selected_minion = null
 
+onready var panel_info = $MinionInfoToggle
 onready var token_minion1 = $Minions/Minion1
 onready var token_minion2 = $Minions/Minion2
 onready var token_minion3 = $Minions/Minion3
@@ -34,6 +41,7 @@ func reset_ui():
     if _selected_minion != null:
         _selected_minion.set_selected(false)
     _selected_minion = null
+    panel_info.set_display_data(NO_DATA)
 
 
 ################################################################################
@@ -50,7 +58,8 @@ func _select_minion(token):
     if previous != null:
         # delay signal-emitting calls to the tail
         previous.set_selected(false)
-    emit_signal("minion_selected", token.minion_data.as_dict())
+    panel_info.set_display_data(token.minion_data.as_dict())
+    emit_signal("minion_selected", token)
 
 
 func _on_minion_deselected(token):

@@ -25,14 +25,14 @@ var _num_minions = 0
 ################################################################################
 
 
-func _on_ActionPanel_spawn_minion(index):
+func _on_ActionPanel_spawn_minion(_index):
     action_panel.reset_all_inputs()
     var ok = minion_row_player.append_minion()
     if not ok:
         print("The minion board is full.")
 
 
-func _on_ActionPanel_use_support(index):
+func _on_ActionPanel_use_support(_index):
     pass # Replace with function body.
 
 
