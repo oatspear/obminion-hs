@@ -46,3 +46,7 @@ func _on_ActionPanel_forfeit_game():
     dialog_confirm.window_title = STR_POPUP_TITLE_FORFEIT
     dialog_confirm.dialog_text = STR_POPUP_TEXT_FORFEIT
     dialog_confirm.popup()
+
+
+func _on_cancel_action():
+    action_panel.hide()
