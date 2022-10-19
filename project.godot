@@ -18,10 +18,16 @@ _global_script_classes=[ {
 "class": "MinionData",
 "language": "GDScript",
 "path": "res://scripts/MinionData.gd"
+}, {
+"base": "Resource",
+"class": "SupportData",
+"language": "GDScript",
+"path": "res://scripts/SupportData.gd"
 } ]
 _global_script_class_icons={
 "BattleMinion": "",
-"MinionData": ""
+"MinionData": "",
+"SupportData": ""
 }
 
 [application]
