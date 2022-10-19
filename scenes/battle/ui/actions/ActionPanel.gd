@@ -10,7 +10,7 @@ const NO_DATA: Dictionary = {}
 # Variables
 ################################################################################
 
-onready var panel_info = $Elements/MinionInfoPanel
+onready var panel_info = $Elements/InfoToggle
 
 ################################################################################
 # Event Handlers
