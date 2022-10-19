@@ -10,9 +10,8 @@ const NO_DATA: Dictionary = {}
 # Signals
 ################################################################################
 
-signal action_canceled()
-signal minion_selected(token)
-signal minion_deselected()
+signal deploy_minion(minion)
+signal cancel_action()
 
 ################################################################################
 # Variables
@@ -59,14 +58,12 @@ func _select_minion(token):
         # delay signal-emitting calls to the tail
         previous.set_selected(false)
     panel_info.set_display_data(token.minion_data.as_dict())
-    emit_signal("minion_selected", token)
 
 
 func _on_minion_deselected(token):
     if _selected_minion == token:
         _selected_minion = null
         reset_ui()
-        emit_signal("minion_deselected")
 
 
 ################################################################################
@@ -78,8 +75,13 @@ func _ready():
     reset_ui()
 
 
+func _on_deploy_button_pressed():
+    if _selected_minion:
+        emit_signal("deploy_minion", _selected_minion)
+
+
 func _on_cancel_button_pressed():
-    emit_signal("action_canceled")
+    emit_signal("cancel_action")
 
 
 func _on_minion1_selected():

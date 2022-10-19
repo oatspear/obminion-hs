@@ -10,9 +10,8 @@ const NO_DATA: Dictionary = {}
 # Signals
 ################################################################################
 
-signal action_canceled()
-signal support_selected(token)
-signal support_deselected()
+signal use_support(support)
+signal cancel_action()
 
 ################################################################################
 # Variables
@@ -59,14 +58,12 @@ func _select_token(token):
         # delay signal-emitting calls to the tail
         previous.set_selected(false)
     panel_info.set_display_data(token.support_data.as_dict())
-    emit_signal("support_selected", token)
 
 
 func _on_token_deselected(token):
     if _selected_support == token:
         _selected_support = null
         reset_ui()
-        emit_signal("support_deselected")
 
 
 ################################################################################
@@ -78,8 +75,13 @@ func _ready():
     reset_ui()
 
 
+func _on_use_button_pressed():
+    if _selected_support:
+        emit_signal("use_support", _selected_support)
+
+
 func _on_cancel_button_pressed():
-    emit_signal("action_canceled")
+    emit_signal("cancel_action")
 
 
 func _on_token1_selected():
