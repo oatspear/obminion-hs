@@ -35,7 +35,6 @@ onready var button_use = $Actions/Use
 
 
 func reset_ui():
-    button_cancel.disabled = true
     button_use.disabled = true
     if _selected_support != null:
         _selected_support.set_selected(false)
@@ -52,7 +51,6 @@ func _select_token(token):
     var previous = _selected_support
     assert(previous != token, "'selected' should only trigger on toggle")
     _selected_support = token
-    button_cancel.disabled = false
     button_use.disabled = false
     if previous != null:
         # delay signal-emitting calls to the tail

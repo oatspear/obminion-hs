@@ -35,7 +35,6 @@ onready var button_deploy = $Actions/Deploy
 
 
 func reset_ui():
-    button_cancel.disabled = true
     button_deploy.disabled = true
     if _selected_minion != null:
         _selected_minion.set_selected(false)
@@ -52,7 +51,6 @@ func _select_token(token):
     var previous = _selected_minion
     assert(previous != token, "'selected' should only trigger on toggle")
     _selected_minion = token
-    button_cancel.disabled = false
     button_deploy.disabled = false
     if previous != null:
         # delay signal-emitting calls to the tail
