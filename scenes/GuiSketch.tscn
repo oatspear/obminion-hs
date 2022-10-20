@@ -1,10 +1,11 @@
-[gd_scene load_steps=6 format=2]
+[gd_scene load_steps=7 format=2]
 
-[ext_resource path="res://scenes/battle/ui/main/Commander.tscn" type="PackedScene" id=1]
+[ext_resource path="res://scenes/battle/ui/main/EnemyCommandPanel.tscn" type="PackedScene" id=1]
 [ext_resource path="res://scenes/GuiSketch.gd" type="Script" id=2]
 [ext_resource path="res://scenes/battle/minions/MinionRow.tscn" type="PackedScene" id=3]
 [ext_resource path="res://scenes/battle/ui/actions/ActionPanel.tscn" type="PackedScene" id=4]
-[ext_resource path="res://scenes/battle/components/ResourcePanel.tscn" type="PackedScene" id=5]
+[ext_resource path="res://scenes/battle/ui/main/ResourcePanel.tscn" type="PackedScene" id=5]
+[ext_resource path="res://scenes/battle/ui/main/PlayerCommandPanel.tscn" type="PackedScene" id=6]
 
 [node name="GUISketch" type="MarginContainer"]
 anchor_right = 1.0
@@ -17,7 +18,7 @@ __meta__ = {
 
 [node name="Layer1" type="MarginContainer" parent="."]
 margin_right = 360.0
-margin_bottom = 640.0
+margin_bottom = 738.0
 size_flags_horizontal = 3
 size_flags_vertical = 3
 custom_constants/margin_right = 4
@@ -29,31 +30,17 @@ custom_constants/margin_bottom = 16
 margin_left = 4.0
 margin_top = 48.0
 margin_right = 356.0
-margin_bottom = 624.0
+margin_bottom = 722.0
 size_flags_horizontal = 3
 
-[node name="Hero1" type="PanelContainer" parent="Layer1/BattleField"]
+[node name="EnemyCommandPanel" parent="Layer1/BattleField" instance=ExtResource( 1 )]
+anchor_right = 0.0
 margin_right = 352.0
-margin_bottom = 142.0
-
-[node name="CenterContainer" type="CenterContainer" parent="Layer1/BattleField/Hero1"]
-margin_left = 7.0
-margin_top = 7.0
-margin_right = 345.0
-margin_bottom = 135.0
-__meta__ = {
-"_edit_use_anchors_": false
-}
-
-[node name="Commander" parent="Layer1/BattleField/Hero1/CenterContainer" instance=ExtResource( 1 )]
-margin_left = 105.0
-margin_right = 233.0
-margin_bottom = 128.0
 
 [node name="MinionField" type="PanelContainer" parent="Layer1/BattleField"]
-margin_top = 146.0
+margin_top = 168.0
 margin_right = 352.0
-margin_bottom = 356.0
+margin_bottom = 378.0
 size_flags_vertical = 3
 
 [node name="VBoxContainer" type="VBoxContainer" parent="Layer1/BattleField/MinionField"]
@@ -74,32 +61,22 @@ margin_top = 100.0
 margin_right = 338.0
 margin_bottom = 196.0
 
-[node name="Hero2" type="PanelContainer" parent="Layer1/BattleField"]
-margin_top = 360.0
+[node name="PlayerCommandPanel" parent="Layer1/BattleField" instance=ExtResource( 6 )]
+anchor_right = 0.0
+margin_top = 382.0
 margin_right = 352.0
-margin_bottom = 502.0
-
-[node name="CenterContainer" type="CenterContainer" parent="Layer1/BattleField/Hero2"]
-margin_left = 7.0
-margin_top = 7.0
-margin_right = 345.0
-margin_bottom = 135.0
-
-[node name="Commander" parent="Layer1/BattleField/Hero2/CenterContainer" instance=ExtResource( 1 )]
-margin_left = 105.0
-margin_right = 233.0
-margin_bottom = 128.0
+margin_bottom = 546.0
 
 [node name="Spacer" type="Control" parent="Layer1/BattleField"]
-margin_top = 506.0
+margin_top = 550.0
 margin_right = 352.0
-margin_bottom = 576.0
+margin_bottom = 674.0
 size_flags_horizontal = 3
 size_flags_vertical = 3
 
 [node name="Layer2" type="VBoxContainer" parent="."]
 margin_right = 360.0
-margin_bottom = 640.0
+margin_bottom = 738.0
 mouse_filter = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3
@@ -113,7 +90,7 @@ margin_right = 360.0
 [node name="Spacer" type="Control" parent="Layer2"]
 margin_top = 38.0
 margin_right = 360.0
-margin_bottom = 358.0
+margin_bottom = 456.0
 mouse_filter = 2
 size_flags_vertical = 3
 
@@ -121,26 +98,26 @@ size_flags_vertical = 3
 anchor_top = 0.0
 anchor_right = 0.0
 anchor_bottom = 0.0
-margin_top = 358.0
+margin_top = 456.0
 margin_right = 360.0
-margin_bottom = 602.0
+margin_bottom = 700.0
 
 [node name="PlayerResources" parent="Layer2" instance=ExtResource( 5 )]
 anchor_right = 0.0
-margin_top = 602.0
+margin_top = 700.0
 margin_right = 360.0
-margin_bottom = 640.0
+margin_bottom = 738.0
 
 [node name="Layer3" type="CenterContainer" parent="."]
 margin_right = 360.0
-margin_bottom = 640.0
+margin_bottom = 738.0
 mouse_filter = 2
 
 [node name="Confirm" type="ConfirmationDialog" parent="Layer3"]
 margin_left = 80.0
-margin_top = 285.0
+margin_top = 334.0
 margin_right = 280.0
-margin_bottom = 355.0
+margin_bottom = 404.0
 popup_exclusive = true
 window_title = "End Turn"
 dialog_text = "End your turn?"
