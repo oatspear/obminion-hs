@@ -5,9 +5,9 @@ extends PanelContainer
 # Constants
 ################################################################################
 
-const STYLE_NORMAL = preload("res://data/ui/minions/style_normal.tres")
-const STYLE_SELECTED = preload("res://data/ui/minions/style_selected.tres")
-const STYLE_DISABLED = preload("res://data/ui/minions/style_disabled.tres")
+const STYLE_NORMAL = preload("res://data/ui/styles/style_normal.tres")
+const STYLE_SELECTED = preload("res://data/ui/styles/style_selected.tres")
+const STYLE_DISABLED = preload("res://data/ui/styles/style_disabled.tres")
 
 ################################################################################
 # Signals
