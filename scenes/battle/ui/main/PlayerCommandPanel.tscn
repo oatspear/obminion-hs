@@ -1,4 +1,4 @@
-[gd_scene load_steps=8 format=2]
+[gd_scene load_steps=9 format=2]
 
 [ext_resource path="res://assets/icons/anvil.png" type="Texture" id=1]
 [ext_resource path="res://assets/icons/shield.png" type="Texture" id=2]
@@ -7,10 +7,12 @@
 [ext_resource path="res://assets/icons/castle.png" type="Texture" id=5]
 [ext_resource path="res://assets/fonts/roboto_bold_16.tres" type="DynamicFont" id=6]
 [ext_resource path="res://assets/icons/tomb.png" type="Texture" id=7]
+[ext_resource path="res://scenes/battle/ui/main/PlayerCommandPanel.gd" type="Script" id=8]
 
 [node name="PlayerCommandPanel" type="PanelContainer"]
 anchor_right = 1.0
 margin_bottom = 164.0
+script = ExtResource( 8 )
 __meta__ = {
 "_edit_use_anchors_": false
 }
@@ -55,7 +57,7 @@ custom_fonts/font = ExtResource( 6 )
 text = "Attack"
 expand_icon = true
 
-[node name="Button" type="Button" parent="HBox/Middle"]
+[node name="Commander" type="Button" parent="HBox/Middle"]
 margin_left = 43.0
 margin_top = 35.0
 margin_right = 119.0
@@ -99,3 +101,10 @@ margin_bottom = 150.0
 rect_min_size = Vector2( 0, 70 )
 icon = ExtResource( 7 )
 expand_icon = true
+
+[connection signal="pressed" from="HBox/Left/Army" to="." method="_on_left_army_pressed"]
+[connection signal="pressed" from="HBox/Left/Support" to="." method="_on_support_pressed"]
+[connection signal="pressed" from="HBox/Middle/Attack" to="." method="_on_attack_pressed"]
+[connection signal="pressed" from="HBox/Middle/Commander" to="." method="_on_commander_pressed"]
+[connection signal="pressed" from="HBox/Right/Army" to="." method="_on_right_army_pressed"]
+[connection signal="pressed" from="HBox/Right/Graveyard" to="." method="_on_graveyard_pressed"]

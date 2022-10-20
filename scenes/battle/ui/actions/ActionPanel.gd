@@ -9,6 +9,21 @@ signal use_support(support)
 signal cancel_action()
 
 ################################################################################
+# Interface
+################################################################################
+
+
+func show_army_bar():
+    $SupportActionBar.hide()
+    $ArmyActionBar.show()
+
+
+func show_support_bar():
+    $ArmyActionBar.hide()
+    $SupportActionBar.show()
+
+
+################################################################################
 # Event Handlers
 ################################################################################
 

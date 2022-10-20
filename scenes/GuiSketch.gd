@@ -50,3 +50,18 @@ func _on_ActionPanel_forfeit_game():
 
 func _on_cancel_action():
     action_panel.hide()
+
+
+func _on_PlayerCommandPanel_check_army_left():
+    action_panel.show_army_bar()
+    action_panel.show()
+
+
+func _on_PlayerCommandPanel_check_army_right():
+    action_panel.show_army_bar()
+    action_panel.show()
+
+
+func _on_PlayerCommandPanel_check_support():
+    action_panel.show_support_bar()
+    action_panel.show()
