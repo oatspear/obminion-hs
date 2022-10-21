@@ -9,18 +9,27 @@ signal use_support(support)
 signal cancel_action()
 
 ################################################################################
+# Variables
+################################################################################
+
+onready var army_action_bar = $ArmyActionBar
+onready var support_action_bar = $SupportActionBar
+
+################################################################################
 # Interface
 ################################################################################
 
 
 func show_army_bar():
-    $SupportActionBar.hide()
-    $ArmyActionBar.show()
+    support_action_bar.hide()
+    army_action_bar.reset_ui()
+    army_action_bar.show()
 
 
 func show_support_bar():
-    $ArmyActionBar.hide()
-    $SupportActionBar.show()
+    army_action_bar.hide()
+    support_action_bar.reset_ui()
+    support_action_bar.show()
 
 
 ################################################################################
