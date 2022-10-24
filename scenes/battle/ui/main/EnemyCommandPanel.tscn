@@ -1,71 +1,93 @@
-[gd_scene load_steps=5 format=2]
+[gd_scene load_steps=6 format=2]
 
 [ext_resource path="res://assets/icons/anvil.png" type="Texture" id=1]
 [ext_resource path="res://assets/icons/shield.png" type="Texture" id=2]
 [ext_resource path="res://scenes/battle/ui/main/Commander.tscn" type="PackedScene" id=3]
+[ext_resource path="res://scenes/ui/panels/CommanderNameplate.tscn" type="PackedScene" id=4]
 [ext_resource path="res://assets/icons/tomb.png" type="Texture" id=7]
 
 [node name="EnemyCommandPanel" type="PanelContainer"]
 anchor_right = 1.0
-margin_bottom = 164.0
+margin_bottom = 200.0
 __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="HBox" type="HBoxContainer" parent="."]
+[node name="Elements" type="VBoxContainer" parent="."]
 margin_left = 7.0
 margin_top = 7.0
 margin_right = 353.0
-margin_bottom = 157.0
+margin_bottom = 193.0
+
+[node name="Top" type="MarginContainer" parent="Elements"]
+margin_right = 346.0
+margin_bottom = 24.0
+custom_constants/margin_right = 12
+custom_constants/margin_left = 8
+
+[node name="Nameplate" parent="Elements/Top" instance=ExtResource( 4 )]
+anchor_right = 0.0
+margin_left = 8.0
+margin_right = 334.0
+
+[node name="HSeparator" type="HSeparator" parent="Elements"]
+margin_top = 28.0
+margin_right = 346.0
+margin_bottom = 32.0
+
+[node name="Bottom" type="HBoxContainer" parent="Elements"]
+margin_top = 36.0
+margin_right = 346.0
+margin_bottom = 186.0
 custom_constants/separation = 16
 alignment = 1
 
-[node name="Left" type="VBoxContainer" parent="HBox"]
+[node name="Left" type="VBoxContainer" parent="Elements/Bottom"]
 margin_right = 76.0
 margin_bottom = 150.0
 custom_constants/separation = 10
 alignment = 2
 
-[node name="Support" type="Button" parent="HBox/Left"]
+[node name="Support" type="Button" parent="Elements/Bottom/Left"]
 margin_right = 76.0
 margin_bottom = 70.0
 rect_min_size = Vector2( 0, 70 )
 icon = ExtResource( 1 )
 expand_icon = true
 
-[node name="Army" type="Button" parent="HBox/Left"]
+[node name="Army" type="Button" parent="Elements/Bottom/Left"]
 margin_top = 80.0
 margin_right = 76.0
 margin_bottom = 150.0
 icon = ExtResource( 2 )
 
-[node name="Middle" type="CenterContainer" parent="HBox"]
+[node name="Middle" type="CenterContainer" parent="Elements/Bottom"]
 margin_left = 92.0
 margin_right = 254.0
 margin_bottom = 150.0
 size_flags_horizontal = 3
 
-[node name="Commander" parent="HBox/Middle" instance=ExtResource( 3 )]
+[node name="Commander" parent="Elements/Bottom/Middle" instance=ExtResource( 3 )]
 margin_left = 17.0
 margin_top = 11.0
 margin_right = 145.0
 margin_bottom = 139.0
 
-[node name="Right" type="VBoxContainer" parent="HBox"]
+[node name="Right" type="VBoxContainer" parent="Elements/Bottom"]
 margin_left = 270.0
 margin_right = 346.0
 margin_bottom = 150.0
 custom_constants/separation = 10
 alignment = 2
 
-[node name="Graveyard" type="Button" parent="HBox/Right"]
+[node name="Graveyard" type="Button" parent="Elements/Bottom/Right"]
 margin_right = 76.0
 margin_bottom = 70.0
 rect_min_size = Vector2( 0, 70 )
 icon = ExtResource( 7 )
 expand_icon = true
 
-[node name="Army" type="Button" parent="HBox/Right"]
+[node name="Army" type="Button" parent="Elements/Bottom/Right"]
 margin_top = 80.0
 margin_right = 76.0
 margin_bottom = 150.0

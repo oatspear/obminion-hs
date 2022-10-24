@@ -1,0 +1,25 @@
+[gd_scene load_steps=3 format=2]
+
+[ext_resource path="res://assets/fonts/roboto_bold_16.tres" type="DynamicFont" id=1]
+[ext_resource path="res://scenes/ui/labels/icon_value/Label.tscn" type="PackedScene" id=2]
+
+[node name="Nameplate" type="HBoxContainer"]
+anchor_right = 1.0
+margin_bottom = 24.0
+custom_constants/separation = 8
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="PlayerName" type="Label" parent="."]
+margin_top = 2.0
+margin_right = 298.0
+margin_bottom = 21.0
+size_flags_horizontal = 3
+custom_fonts/font = ExtResource( 1 )
+text = "Player Faction Name"
+
+[node name="Resources" parent="." instance=ExtResource( 2 )]
+margin_left = 306.0
+margin_right = 360.0
+display_max = true
