@@ -9,7 +9,6 @@ signal check_army_right()
 signal check_support()
 signal check_graveyard()
 signal check_commander()
-signal attack()
 
 ################################################################################
 # Event Handlers
@@ -24,11 +23,7 @@ func _on_support_pressed():
     emit_signal("check_support")
 
 
-func _on_attack_pressed():
-    emit_signal("attack")
-
-
-func _on_commander_pressed():
+func _on_commander_selected():
     emit_signal("check_commander")
 
 

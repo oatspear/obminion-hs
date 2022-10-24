@@ -1,5 +1,7 @@
 extends PanelContainer
 
+class_name InfoToggle
+
 ################################################################################
 # Constants
 ################################################################################
@@ -11,11 +13,9 @@ const STR_HIDE_INFO = "- Info"
 # Variables
 ################################################################################
 
-export (NodePath) var info_panel_path: NodePath = NodePath("Elements/InfoPanel")
-
 var display_data: Dictionary = {}
 
-onready var panel_info = get_node(info_panel_path)
+onready var panel_info: InfoCard = $Elements/InfoCard
 onready var button_info: Button = $Elements/InfoButton
 
 ################################################################################

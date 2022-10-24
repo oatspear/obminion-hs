@@ -9,11 +9,11 @@
 [ext_resource path="res://data/minions/Minion6.tres" type="Resource" id=7]
 [ext_resource path="res://scenes/battle/ui/actions/ArmyActionBar.gd" type="Script" id=8]
 [ext_resource path="res://assets/fonts/roboto_bold_16.tres" type="DynamicFont" id=9]
-[ext_resource path="res://scenes/ui/toggles/MinionInfoToggle.tscn" type="PackedScene" id=10]
+[ext_resource path="res://scenes/ui/toggles/InfoToggle.tscn" type="PackedScene" id=10]
 
 [node name="ArmyActionBar" type="VBoxContainer"]
 anchor_right = 1.0
-margin_bottom = 101.0
+margin_bottom = 262.0
 size_flags_horizontal = 3
 size_flags_vertical = 8
 custom_constants/separation = 12
@@ -22,14 +22,15 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="MinionInfoToggle" parent="." instance=ExtResource( 10 )]
+[node name="InfoToggle" parent="." instance=ExtResource( 10 )]
 anchor_right = 0.0
 margin_right = 360.0
+margin_bottom = 149.0
 
 [node name="Minions" type="HBoxContainer" parent="."]
-margin_top = 183.0
+margin_top = 161.0
 margin_right = 360.0
-margin_bottom = 247.0
+margin_bottom = 225.0
 alignment = 1
 
 [node name="Minion1" parent="Minions" instance=ExtResource( 1 )]
@@ -69,9 +70,9 @@ margin_bottom = 64.0
 minion_data = ExtResource( 7 )
 
 [node name="Actions" type="HBoxContainer" parent="."]
-margin_top = 259.0
+margin_top = 237.0
 margin_right = 360.0
-margin_bottom = 284.0
+margin_bottom = 262.0
 custom_constants/separation = 16
 alignment = 1
 

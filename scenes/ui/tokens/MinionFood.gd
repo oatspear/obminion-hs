@@ -8,7 +8,7 @@ extends "res://scenes/ui/SelectablePanel.gd"
 export (Resource) var minion_data setget set_minion_data
 
 onready var portrait: TextureRect = $Elements/Portrait
-onready var label_supply = $Elements/Food
+onready var label_supply = $Elements/Cost
 
 ################################################################################
 # Interface
@@ -38,7 +38,7 @@ func _render_portrait():
 func _render_supply_label():
     var value = 0 if not minion_data else minion_data.supply
     if Engine.editor_hint and is_inside_tree():
-        label_supply = $Elements/Food
+        label_supply = $Elements/Cost
     if label_supply:
         label_supply.set_value(value)
 

@@ -24,10 +24,11 @@ export (String) var effect_text: String = ""
 func as_dict() -> Dictionary:
     return {
         "name": name,
+        "type": Global.CardType.TECH,
         "faction": faction,
-        "type": type,
         "species": species,
         "cost": cost,
+        "resource": Global.ValueType.RESOURCES,
         "effect": effect,
         "effect_text": effect_text,
     }

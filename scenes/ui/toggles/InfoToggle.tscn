@@ -1,7 +1,8 @@
-[gd_scene load_steps=3 format=2]
+[gd_scene load_steps=4 format=2]
 
 [ext_resource path="res://assets/fonts/roboto_bold_12.tres" type="DynamicFont" id=1]
 [ext_resource path="res://scenes/ui/toggles/InfoToggle.gd" type="Script" id=2]
+[ext_resource path="res://scenes/ui/panels/InfoCard.tscn" type="PackedScene" id=3]
 
 [node name="InfoToggle" type="PanelContainer"]
 anchor_right = 1.0
@@ -15,11 +16,17 @@ __meta__ = {
 margin_left = 7.0
 margin_top = 7.0
 margin_right = 353.0
-margin_bottom = 28.0
+margin_bottom = 142.0
+
+[node name="InfoCard" parent="Elements" instance=ExtResource( 3 )]
+anchor_right = 0.0
+margin_right = 346.0
+margin_bottom = 110.0
 
 [node name="InfoButton" type="Button" parent="Elements"]
+margin_top = 114.0
 margin_right = 346.0
-margin_bottom = 21.0
+margin_bottom = 135.0
 custom_fonts/font = ExtResource( 1 )
 toggle_mode = true
 text = "+ Info"

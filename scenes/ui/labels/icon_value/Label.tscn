@@ -2,7 +2,7 @@
 
 [ext_resource path="res://scenes/ui/labels/icon_value/Label.gd" type="Script" id=1]
 [ext_resource path="res://assets/fonts/roboto_bold_16.tres" type="DynamicFont" id=2]
-[ext_resource path="res://icon.png" type="Texture" id=3]
+[ext_resource path="res://assets/icons/crystal.png" type="Texture" id=3]
 
 [node name="Resource" type="HBoxContainer"]
 margin_right = 38.0

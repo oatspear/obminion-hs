@@ -26,12 +26,14 @@ export (String) var ability_text: String = ""
 func as_dict() -> Dictionary:
     return {
         "name": name,
+        "type": Global.CardType.MINION,
         "faction": faction,
         "tribe": tribe,
         "species": species,
         "power": power,
         "health": health,
-        "supply": supply,
-        "ability": ability,
-        "ability_text": ability_text,
+        "cost": supply,
+        "resource": Global.ValueType.RESOURCES,
+        "effect": ability,
+        "effect_text": ability_text,
     }
