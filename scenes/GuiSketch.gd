@@ -14,7 +14,7 @@ const STR_POPUP_TEXT_FORFEIT = "Forfeit the game?"
 # Variables
 ################################################################################
 
-onready var minion_row_player = $Layer1/BattleField/MinionField/VBoxContainer/Bottom
+onready var minion_row_player = $BattleField/Center/MinionField/Bottom
 onready var action_panel = $Layer2/ActionPanel
 onready var dialog_confirm: ConfirmationDialog = $Layer3/Confirm
 

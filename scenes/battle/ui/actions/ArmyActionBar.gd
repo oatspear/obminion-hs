@@ -19,7 +19,7 @@ signal cancel_action()
 
 var _selected_minion = null
 
-onready var panel_info: InfoToggle = $InfoToggle
+onready var panel_info = $InfoToggle
 onready var token1 = $Minions/Minion1
 onready var token2 = $Minions/Minion2
 onready var token3 = $Minions/Minion3

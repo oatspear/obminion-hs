@@ -22,6 +22,7 @@ signal deselected()
 
 export (bool) var selectable: bool = true setget set_selectable
 export (bool) var selected: bool = false setget set_selected
+export (bool) var retain_selection: bool = true setget set_retain_selection
 
 ################################################################################
 # Interface
@@ -41,6 +42,13 @@ func set_selected(is_selected: bool):
         emit_signal("selected")
     elif not selected and was_selected:
         emit_signal("deselected")
+
+
+func set_retain_selection(retain: bool):
+    retain_selection = retain
+    if selected and not retain_selection:
+        selected = false
+    render()
 
 
 func render():

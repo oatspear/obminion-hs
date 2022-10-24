@@ -19,7 +19,7 @@ signal cancel_action()
 
 var _selected_support = null
 
-onready var panel_info: InfoToggle = $InfoToggle
+onready var panel_info = $InfoToggle
 onready var token1 = $Supports/Support1
 onready var token2 = $Supports/Support2
 onready var token3 = $Supports/Support3
