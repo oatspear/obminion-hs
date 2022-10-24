@@ -1,7 +1,5 @@
 extends PanelContainer
 
-class_name InfoToggle
-
 ################################################################################
 # Constants
 ################################################################################
@@ -15,7 +13,7 @@ const STR_HIDE_INFO = "- Info"
 
 var display_data: Dictionary = {}
 
-onready var panel_info: InfoCard = $Elements/InfoCard
+onready var panel_info = $Elements/InfoCard
 onready var button_info: Button = $Elements/InfoButton
 
 ################################################################################

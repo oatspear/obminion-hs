@@ -33,7 +33,7 @@ func as_dict() -> Dictionary:
         "power": power,
         "health": health,
         "cost": supply,
-        "resource": Global.ValueType.RESOURCES,
+        "resource": Global.ResourceType.RESOURCES,
         "effect": ability,
         "effect_text": ability_text,
     }

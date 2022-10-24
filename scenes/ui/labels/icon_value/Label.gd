@@ -1,8 +1,6 @@
 tool
 extends HBoxContainer
 
-class_name IconLabel
-
 ################################################################################
 # Constants
 ################################################################################
@@ -13,7 +11,7 @@ const STR_USAGE = "%d/%d"
 # Variables
 ################################################################################
 
-export (Global.ValueType) var value_type: int = Global.ValueType.RESOURCES setget set_value_type
+export (Global.ResourceType) var value_type: int = Global.ResourceType.RESOURCES setget set_value_type
 export (int) var current_value: int = 0 setget set_value
 export (int) var max_value: int = 0 setget set_max_value
 export (bool) var display_max: bool = false setget set_display_max_value
@@ -27,7 +25,7 @@ onready var label: Label = $Label
 
 
 func set_value_type(t: int):
-    assert(t in Global.ValueType.values())
+    assert(t in Global.ResourceType.values())
     value_type = t
     _render_icon()
 

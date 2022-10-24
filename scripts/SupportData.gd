@@ -28,7 +28,7 @@ func as_dict() -> Dictionary:
         "faction": faction,
         "species": species,
         "cost": cost,
-        "resource": Global.ValueType.RESOURCES,
+        "resource": Global.ResourceType.RESOURCES,
         "effect": effect,
         "effect_text": effect_text,
     }

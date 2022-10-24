@@ -14,21 +14,6 @@ _global_script_classes=[ {
 "language": "GDScript",
 "path": "res://scripts/BattleMinion.gd"
 }, {
-"base": "HBoxContainer",
-"class": "IconLabel",
-"language": "GDScript",
-"path": "res://scenes/ui/labels/icon_value/Label.gd"
-}, {
-"base": "VBoxContainer",
-"class": "InfoCard",
-"language": "GDScript",
-"path": "res://scenes/ui/panels/InfoCard.gd"
-}, {
-"base": "PanelContainer",
-"class": "InfoToggle",
-"language": "GDScript",
-"path": "res://scenes/ui/toggles/InfoToggle.gd"
-}, {
 "base": "Resource",
 "class": "MinionData",
 "language": "GDScript",
@@ -41,9 +26,6 @@ _global_script_classes=[ {
 } ]
 _global_script_class_icons={
 "BattleMinion": "",
-"IconLabel": "",
-"InfoCard": "",
-"InfoToggle": "",
 "MinionData": "",
 "SupportData": ""
 }

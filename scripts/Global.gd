@@ -4,7 +4,7 @@ extends Node
 # Constants
 ################################################################################
 
-enum ValueType {
+enum ResourceType {
     NONE,
     RESOURCES,
     POWER,
@@ -12,9 +12,9 @@ enum ValueType {
 }
 
 const VALUE_ICONS = {
-    ValueType.RESOURCES: preload("res://assets/icons/crystal.png"),
-    ValueType.POWER: preload("res://assets/icons/sword.png"),
-    ValueType.HEALTH: preload("res://assets/icons/heart.png"),
+    ResourceType.RESOURCES: preload("res://assets/icons/crystal.png"),
+    ResourceType.POWER: preload("res://assets/icons/sword.png"),
+    ResourceType.HEALTH: preload("res://assets/icons/heart.png"),
 }
 
 

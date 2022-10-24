@@ -1,7 +1,5 @@
 extends VBoxContainer
 
-class_name InfoCard
-
 ################################################################################
 # Constants
 ################################################################################
@@ -10,7 +8,7 @@ const DEFAULT_DATA = {
     "name": "Card Name",
     "type": Global.CardType.NONE,
     "cost": 0,
-    "resource": Global.ValueType.NONE,
+    "resource": Global.ResourceType.NONE,
     "effect": 0,
     "effect_text": "",
 }
@@ -21,9 +19,9 @@ const DEFAULT_DATA = {
 
 onready var label_name: Label = $NameTypeCost/NameType/Name
 onready var label_type: Label = $NameTypeCost/NameType/Type
-onready var label_cost: IconLabel = $NameTypeCost/Cost
-onready var label_power: IconLabel = $Stats/Power
-onready var label_health: IconLabel = $Stats/Health
+onready var label_cost = $NameTypeCost/Cost
+onready var label_power = $Stats/Power
+onready var label_health = $Stats/Health
 onready var label_effect: RichTextLabel = $Effects
 
 ################################################################################
@@ -66,7 +64,7 @@ func _render_type(data: Dictionary):
 
 func _render_cost(data: Dictionary):
     label_cost.set_value(data.get("cost", 0))
-    label_cost.set_value_type(data.get("resource", Global.ValueType.RESOURCES))
+    label_cost.set_value_type(data.get("resource", Global.ResourceType.RESOURCES))
 
 
 func _render_stats(data: Dictionary):
