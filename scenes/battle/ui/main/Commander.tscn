@@ -8,6 +8,7 @@
 margin_right = 128.0
 margin_bottom = 131.0
 rect_min_size = Vector2( 128, 128 )
+retain_selection = false
 
 [node name="Elements" type="VBoxContainer" parent="." index="0"]
 margin_left = 5.0
