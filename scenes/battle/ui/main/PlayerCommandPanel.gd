@@ -4,32 +4,64 @@ extends PanelContainer
 # Signals
 ################################################################################
 
-signal check_army_left()
-signal check_army_right()
-signal check_support()
-signal check_graveyard()
-signal check_commander()
+
+################################################################################
+# Variables
+################################################################################
+
+onready var main_panel = $MainCommandCard
+onready var army_action_bar = $ArmyActionBar
+onready var support_action_bar = $SupportActionBar
+
+################################################################################
+# Interface
+################################################################################
+
+
+func show_main_command_card():
+    support_action_bar.hide()
+    army_action_bar.hide()
+    main_panel.show()
+
+
+func show_army_action_bar():
+    main_panel.hide()
+    support_action_bar.hide()
+    army_action_bar.reset_ui()
+    army_action_bar.show()
+
+
+func show_support_action_bar():
+    main_panel.hide()
+    army_action_bar.hide()
+    support_action_bar.reset_ui()
+    support_action_bar.show()
+
 
 ################################################################################
 # Event Handlers
 ################################################################################
 
 
-func _on_left_army_pressed():
-    emit_signal("check_army_left")
+func _on_check_army_left():
+    show_army_action_bar()
 
 
-func _on_support_pressed():
-    emit_signal("check_support")
+func _on_check_army_right():
+    show_army_action_bar()
 
 
-func _on_commander_selected():
-    emit_signal("check_commander")
+func _on_check_commander():
+    pass # Replace with function body.
 
 
-func _on_right_army_pressed():
-    emit_signal("check_army_right")
+func _on_check_graveyard():
+    pass # Replace with function body.
 
 
-func _on_graveyard_pressed():
-    emit_signal("check_graveyard")
+func _on_check_support():
+    show_support_action_bar()
+
+
+func _on_cancel_action():
+    show_main_command_card()

@@ -3,7 +3,7 @@
 [ext_resource path="res://scenes/battle/ui/main/EnemyCommandPanel.tscn" type="PackedScene" id=1]
 [ext_resource path="res://scenes/GuiSketch.gd" type="Script" id=2]
 [ext_resource path="res://scenes/battle/minions/MinionRow.tscn" type="PackedScene" id=3]
-[ext_resource path="res://scenes/battle/ui/actions/ActionPanel.tscn" type="PackedScene" id=4]
+[ext_resource path="res://scenes/ui/popups/InfoCardPopup.tscn" type="PackedScene" id=4]
 [ext_resource path="res://scenes/battle/ui/main/EnemyNameplate.tscn" type="PackedScene" id=5]
 [ext_resource path="res://scenes/battle/ui/main/PlayerCommandPanel.tscn" type="PackedScene" id=6]
 [ext_resource path="res://scenes/battle/ui/main/PlayerNameplate.tscn" type="PackedScene" id=7]
@@ -64,7 +64,9 @@ margin_right = 360.0
 margin_bottom = 196.0
 
 [node name="PlayerCommandPanel" parent="BattleField" instance=ExtResource( 6 )]
+anchor_top = 0.0
 anchor_right = 0.0
+anchor_bottom = 0.0
 margin_top = 442.0
 margin_right = 360.0
 margin_bottom = 608.0
@@ -75,37 +77,12 @@ margin_top = 608.0
 margin_right = 360.0
 margin_bottom = 640.0
 
-[node name="Layer2" type="VBoxContainer" parent="."]
-visible = false
-margin_right = 360.0
-margin_bottom = 640.0
-mouse_filter = 2
-size_flags_horizontal = 3
-size_flags_vertical = 3
-custom_constants/separation = 0
-alignment = 2
-
-[node name="Spacer" type="Control" parent="Layer2"]
-margin_right = 360.0
-margin_bottom = 361.0
-mouse_filter = 2
-size_flags_vertical = 3
-
-[node name="ActionPanel" parent="Layer2" instance=ExtResource( 4 )]
-anchor_top = 0.0
-anchor_right = 0.0
-anchor_bottom = 0.0
-margin_top = 361.0
-margin_right = 360.0
-margin_bottom = 640.0
-
-[node name="Layer3" type="CenterContainer" parent="."]
-visible = false
+[node name="Popups" type="CenterContainer" parent="."]
 margin_right = 360.0
 margin_bottom = 640.0
 mouse_filter = 2
 
-[node name="Confirm" type="ConfirmationDialog" parent="Layer3"]
+[node name="Confirm" type="ConfirmationDialog" parent="Popups"]
 margin_left = 80.0
 margin_top = 285.0
 margin_right = 280.0
@@ -115,7 +92,8 @@ window_title = "End Turn"
 dialog_text = "End your turn?"
 dialog_autowrap = true
 
-[connection signal="check_army_left" from="BattleField/PlayerCommandPanel" to="." method="_on_PlayerCommandPanel_check_army_left"]
-[connection signal="check_army_right" from="BattleField/PlayerCommandPanel" to="." method="_on_PlayerCommandPanel_check_army_right"]
-[connection signal="check_support" from="BattleField/PlayerCommandPanel" to="." method="_on_PlayerCommandPanel_check_support"]
-[connection signal="cancel_action" from="Layer2/ActionPanel" to="." method="_on_cancel_action"]
+[node name="InfoCardPopup" parent="Popups" instance=ExtResource( 4 )]
+margin_left = 20.0
+margin_top = 257.0
+margin_right = 340.0
+margin_bottom = 383.0

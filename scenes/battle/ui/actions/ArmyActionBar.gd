@@ -10,6 +10,8 @@ const NO_DATA: Dictionary = {}
 # Signals
 ################################################################################
 
+signal display_info(data)
+signal hide_info()
 signal deploy_minion(minion)
 signal cancel_action()
 
@@ -19,7 +21,7 @@ signal cancel_action()
 
 var _selected_minion = null
 
-onready var panel_info = $InfoToggle
+onready var button_info = $InfoToggle
 onready var token1 = $Minions/Minion1
 onready var token2 = $Minions/Minion2
 onready var token3 = $Minions/Minion3
@@ -39,7 +41,8 @@ func reset_ui():
     if _selected_minion != null:
         _selected_minion.set_selected(false)
     _selected_minion = null
-    panel_info.set_display_data(NO_DATA)
+    button_info.pressed = false
+    emit_signal("hide_info")
 
 
 ################################################################################
@@ -55,7 +58,7 @@ func _select_token(token):
     if previous != null:
         # delay signal-emitting calls to the tail
         previous.set_selected(false)
-    panel_info.set_display_data(token.minion_data.as_dict())
+    emit_signal("display_info", token.minion_data.as_dict())
 
 
 func _token_deselected(token):

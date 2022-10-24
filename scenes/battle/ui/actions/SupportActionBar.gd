@@ -10,6 +10,8 @@ const NO_DATA: Dictionary = {}
 # Signals
 ################################################################################
 
+signal display_info(data)
+signal hide_info()
 signal use_support(support)
 signal cancel_action()
 
@@ -19,7 +21,7 @@ signal cancel_action()
 
 var _selected_support = null
 
-onready var panel_info = $InfoToggle
+onready var button_info = $InfoToggle
 onready var token1 = $Supports/Support1
 onready var token2 = $Supports/Support2
 onready var token3 = $Supports/Support3
@@ -39,7 +41,8 @@ func reset_ui():
     if _selected_support != null:
         _selected_support.set_selected(false)
     _selected_support = null
-    panel_info.set_display_data(NO_DATA)
+    button_info.pressed = false
+    emit_signal("hide_info")
 
 
 ################################################################################
@@ -55,7 +58,7 @@ func _select_token(token):
     if previous != null:
         # delay signal-emitting calls to the tail
         previous.set_selected(false)
-    panel_info.set_display_data(token.support_data.as_dict())
+    emit_signal("display_info", token.support_data.as_dict())
 
 
 func _on_token_deselected(token):
