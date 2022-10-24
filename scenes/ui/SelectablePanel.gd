@@ -36,11 +36,11 @@ func set_selectable(is_selectable: bool):
 
 func set_selected(is_selected: bool):
     var was_selected = selected
-    selected = is_selected
+    selected = is_selected if retain_selection else false
     render()
-    if selected and not was_selected:
+    if is_selected and not was_selected:
         emit_signal("selected")
-    elif not selected and was_selected:
+    elif not is_selected and was_selected:
         emit_signal("deselected")
 
 
