@@ -6,6 +6,7 @@ extends PanelContainer
 
 signal show_card_info(data)
 signal hide_card_info()
+signal deploy_minion(minion, right_side)
 
 ################################################################################
 # Variables
@@ -14,6 +15,8 @@ signal hide_card_info()
 onready var main_panel = $MainCommandCard
 onready var army_action_bar = $ArmyActionBar
 onready var support_action_bar = $SupportActionBar
+
+var _deploy_right_side: bool = true
 
 ################################################################################
 # Interface
@@ -41,15 +44,17 @@ func show_support_action_bar():
 
 
 ################################################################################
-# Event Handlers
+# Event Handlers - Primary
 ################################################################################
 
 
 func _on_check_army_left():
+    _deploy_right_side = false
     show_army_action_bar()
 
 
 func _on_check_army_right():
+    _deploy_right_side = true
     show_army_action_bar()
 
 
@@ -65,6 +70,11 @@ func _on_check_support():
     show_support_action_bar()
 
 
+################################################################################
+# Event Handlers - Secondary
+################################################################################
+
+
 func _on_cancel_action():
     show_main_command_card()
     emit_signal("hide_card_info")
@@ -76,3 +86,7 @@ func _on_display_info(data: Dictionary):
 
 func _on_hide_info():
     emit_signal("hide_card_info")
+
+
+func _on_deploy_minion(minion):
+    emit_signal("deploy_minion", minion, _deploy_right_side)

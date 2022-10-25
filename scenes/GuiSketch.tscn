@@ -98,5 +98,6 @@ margin_top = 257.0
 margin_right = 340.0
 margin_bottom = 383.0
 
+[connection signal="deploy_minion" from="BattleField/PlayerCommandPanel" to="." method="_on_deploy_minion"]
 [connection signal="hide_card_info" from="BattleField/PlayerCommandPanel" to="." method="_on_hide_card_info"]
 [connection signal="show_card_info" from="BattleField/PlayerCommandPanel" to="." method="_on_show_card_info"]

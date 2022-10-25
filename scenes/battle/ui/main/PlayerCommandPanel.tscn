@@ -56,6 +56,7 @@ margin_bottom = 158.0
 [connection signal="check_graveyard" from="MainCommandCard" to="." method="_on_check_graveyard"]
 [connection signal="check_support" from="MainCommandCard" to="." method="_on_check_support"]
 [connection signal="cancel_action" from="ArmyActionBar" to="." method="_on_cancel_action"]
+[connection signal="deploy_minion" from="ArmyActionBar" to="." method="_on_deploy_minion"]
 [connection signal="display_info" from="ArmyActionBar" to="." method="_on_display_info"]
 [connection signal="hide_info" from="ArmyActionBar" to="." method="_on_hide_info"]
 [connection signal="cancel_action" from="SupportActionBar" to="." method="_on_cancel_action"]
