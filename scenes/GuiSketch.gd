@@ -53,13 +53,13 @@ func _on_hide_card_info():
         popup_card_info.hide()
 
 
-func _on_deploy_minion(minion, right_side: bool):
+func _on_deploy_minion(minion_data: Dictionary, right_side: bool):
     _on_hide_card_info()
     action_panel.show_main_command_card()
     var ok = true
     if right_side:
-        ok = minion_row_player.append_minion()
+        ok = minion_row_player.append_minion(minion_data)
     else:
-        ok = minion_row_player.preprend_minion()
+        ok = minion_row_player.preprend_minion(minion_data)
     if not ok:
         print("The minion board is full.")

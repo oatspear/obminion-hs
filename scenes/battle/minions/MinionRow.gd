@@ -6,16 +6,6 @@ extends HBoxContainer
 
 const MAX_MINIONS: int = 6
 
-const MINION_DATA = {
-    "name": "Minion",
-    "power": 10,
-    "health": 10,
-    "faction": "Faction",
-    "tribe": "Tribe",
-    "supply": 1,
-    "abilities": [],
-}
-
 ################################################################################
 # Signals
 ################################################################################
@@ -57,18 +47,25 @@ func get_minion_count() -> int:
     return _minion_count
 
 
-func preprend_minion() -> bool:
-    #minion_container.add_child(minion)
-    #minion_container.move_child(minion, 0)
-    return false
+func preprend_minion(minion_data: Dictionary) -> bool:
+    if get_minion_count() >= MAX_MINIONS:
+        return false
+    for i in range(_minion_count, 0, -1):
+        var prev = minions[i-1].minion_data
+        minions[i].set_minion_data(prev)
+    minions[0].set_minion_data(minion_data)
+    minions[_minion_count].show()
+    _minion_count += 1
+    return true
 
 
-func append_minion() -> bool:
+func append_minion(minion_data: Dictionary) -> bool:
     if get_minion_count() >= MAX_MINIONS:
         return false
     var minion = minions[_minion_count]
-    minion.set_minion_data(MINION_DATA)
+    minion.set_minion_data(minion_data)
     minion.show()
+    _minion_count += 1
     return true
 
 
@@ -79,5 +76,5 @@ func append_minion() -> bool:
 
 func _ready():
     for minion in minions:
-        minion.set_minion_data(null)
+        minion.set_minion_data({})
         minion.visible = false

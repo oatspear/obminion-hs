@@ -4,7 +4,7 @@ extends "res://scenes/ui/SelectablePanel.gd"
 # Variables
 ################################################################################
 
-var minion_data = null setget set_minion_data
+var minion_data: Dictionary = {} setget set_minion_data
 
 onready var portrait: TextureRect = $Elements/Portrait
 onready var label_stats = $Elements/Stats
@@ -16,11 +16,13 @@ onready var animation = $Animation
 
 
 func has_minion_data() -> bool:
-    return minion_data != null
+    return not minion_data.empty()
 
 
-func set_minion_data(data):
+func set_minion_data(data: Dictionary):
     minion_data = data
+    set_power(minion_data.get("power", 0))
+    set_health(minion_data.get("health", 0))
 
 
 func get_power() -> int:

@@ -12,7 +12,7 @@ const NO_DATA: Dictionary = {}
 
 signal display_info(data)
 signal hide_info()
-signal deploy_minion(minion)
+signal deploy_minion(minion_data)
 signal cancel_action()
 
 ################################################################################
@@ -81,7 +81,7 @@ func _ready():
 
 func _on_deploy_button_pressed():
     if _selected_minion:
-        emit_signal("deploy_minion", _selected_minion)
+        emit_signal("deploy_minion", _selected_minion.minion_data.as_dict())
 
 
 func _on_cancel_button_pressed():

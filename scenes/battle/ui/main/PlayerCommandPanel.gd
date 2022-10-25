@@ -6,7 +6,7 @@ extends PanelContainer
 
 signal show_card_info(data)
 signal hide_card_info()
-signal deploy_minion(minion, right_side)
+signal deploy_minion(minion_data, right_side)
 
 ################################################################################
 # Variables
@@ -96,5 +96,5 @@ func _on_hide_info():
     emit_signal("hide_card_info")
 
 
-func _on_deploy_minion(minion):
-    emit_signal("deploy_minion", minion, _deploy_right_side)
+func _on_deploy_minion(minion_data: Dictionary):
+    emit_signal("deploy_minion", minion_data, _deploy_right_side)
