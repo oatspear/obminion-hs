@@ -48,28 +48,6 @@ func _on_ActionPanel_forfeit_game():
     dialog_confirm.popup()
 
 
-func _on_cancel_action():
-    pass #action_panel.hide()
-
-
-func _on_PlayerCommandPanel_check_army_left():
-    #action_panel.show_army_bar()
-    #action_panel.show()
-    pass
-
-
-func _on_PlayerCommandPanel_check_army_right():
-    #action_panel.show_army_bar()
-    #action_panel.show()
-    pass
-
-
-func _on_PlayerCommandPanel_check_support():
-    #action_panel.show_support_bar()
-    #action_panel.show()
-    pass
-
-
 func _on_show_card_info(data):
     popup_card_info.set_display_data(data)
     #popup_card_info.popup_centered()
