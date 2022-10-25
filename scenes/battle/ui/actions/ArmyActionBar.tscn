@@ -94,6 +94,7 @@ rect_min_size = Vector2( 96, 0 )
 custom_fonts/font = ExtResource( 9 )
 text = "Deploy"
 
+[connection signal="toggled" from="InfoToggle" to="." method="_on_info_toggled"]
 [connection signal="deselected" from="Minions/Minion1" to="." method="_on_token1_deselected"]
 [connection signal="selected" from="Minions/Minion1" to="." method="_on_token1_selected"]
 [connection signal="deselected" from="Minions/Minion2" to="." method="_on_token2_deselected"]

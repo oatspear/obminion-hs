@@ -4,6 +4,8 @@ extends PanelContainer
 # Signals
 ################################################################################
 
+signal show_card_info(data)
+signal hide_card_info()
 
 ################################################################################
 # Variables
@@ -65,3 +67,12 @@ func _on_check_support():
 
 func _on_cancel_action():
     show_main_command_card()
+    emit_signal("hide_card_info")
+
+
+func _on_display_info(data: Dictionary):
+    emit_signal("show_card_info", data)
+
+
+func _on_hide_info():
+    emit_signal("hide_card_info")

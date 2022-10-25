@@ -58,13 +58,16 @@ func _select_token(token):
     if previous != null:
         # delay signal-emitting calls to the tail
         previous.set_selected(false)
-    emit_signal("display_info", token.support_data.as_dict())
+    if button_info.pressed:
+        emit_signal("display_info", token.support_data.as_dict())
 
 
 func _on_token_deselected(token):
     if _selected_support == token:
         _selected_support = null
-        reset_ui()
+        button_use.disabled = true
+        if button_info.pressed:
+            emit_signal("hide_info")
 
 
 ################################################################################
@@ -131,3 +134,11 @@ func _on_token5_deselected():
 
 func _on_token6_deselected():
     _on_token_deselected(token6)
+
+
+func _on_info_toggled(button_pressed: bool):
+    if _selected_support != null:
+        if button_pressed:
+            emit_signal("display_info", _selected_support.support_data.as_dict())
+        else:
+            emit_signal("hide_info")

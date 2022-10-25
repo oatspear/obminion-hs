@@ -16,6 +16,7 @@ const STR_POPUP_TEXT_FORFEIT = "Forfeit the game?"
 
 onready var minion_row_player = $BattleField/Center/MinionField/Bottom
 onready var dialog_confirm: ConfirmationDialog = $Popups/Confirm
+onready var popup_card_info = $Popups/InfoCardPopup
 
 var _num_minions = 0
 
@@ -67,3 +68,14 @@ func _on_PlayerCommandPanel_check_support():
     #action_panel.show_support_bar()
     #action_panel.show()
     pass
+
+
+func _on_show_card_info(data):
+    popup_card_info.set_display_data(data)
+    #popup_card_info.popup_centered()
+    popup_card_info.show()
+
+
+func _on_hide_card_info():
+    if popup_card_info:
+        popup_card_info.hide()
