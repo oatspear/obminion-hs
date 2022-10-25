@@ -15,6 +15,7 @@ signal deploy_minion(minion, right_side)
 onready var main_panel = $MainCommandCard
 onready var army_action_bar = $ArmyActionBar
 onready var support_action_bar = $SupportActionBar
+onready var minion_action_bar = $MinionActionBar
 
 var _deploy_right_side: bool = true
 
@@ -24,23 +25,30 @@ var _deploy_right_side: bool = true
 
 
 func show_main_command_card():
-    support_action_bar.hide()
-    army_action_bar.hide()
+    for action_bar in get_children():
+        action_bar.hide()
     main_panel.show()
 
 
 func show_army_action_bar():
-    main_panel.hide()
-    support_action_bar.hide()
+    for action_bar in get_children():
+        action_bar.hide()
     army_action_bar.reset_ui()
     army_action_bar.show()
 
 
 func show_support_action_bar():
-    main_panel.hide()
-    army_action_bar.hide()
+    for action_bar in get_children():
+        action_bar.hide()
     support_action_bar.reset_ui()
     support_action_bar.show()
+
+
+func show_minion_action_bar():
+    for action_bar in get_children():
+        action_bar.hide()
+    # minion_action_bar.reset_ui()
+    minion_action_bar.show()
 
 
 ################################################################################

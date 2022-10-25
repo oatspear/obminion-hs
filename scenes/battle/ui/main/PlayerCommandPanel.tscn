@@ -1,8 +1,9 @@
-[gd_scene load_steps=6 format=2]
+[gd_scene load_steps=7 format=2]
 
 [ext_resource path="res://scenes/battle/ui/actions/MainCommandCard.tscn" type="PackedScene" id=1]
 [ext_resource path="res://scenes/battle/ui/actions/ArmyActionBar.tscn" type="PackedScene" id=2]
 [ext_resource path="res://scenes/battle/ui/actions/SupportActionBar.tscn" type="PackedScene" id=3]
+[ext_resource path="res://scenes/battle/ui/actions/MinionActionBar.tscn" type="PackedScene" id=4]
 [ext_resource path="res://scenes/battle/ui/main/PlayerCommandPanel.gd" type="Script" id=8]
 
 [sub_resource type="StyleBoxFlat" id=1]
@@ -47,6 +48,14 @@ visible = false
 anchor_right = 0.0
 margin_left = 8.0
 margin_top = 21.0
+margin_right = 352.0
+margin_bottom = 158.0
+
+[node name="MinionActionBar" parent="." instance=ExtResource( 4 )]
+visible = false
+anchor_right = 0.0
+margin_left = 8.0
+margin_top = 8.0
 margin_right = 352.0
 margin_bottom = 158.0
 
