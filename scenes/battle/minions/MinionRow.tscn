@@ -44,3 +44,16 @@ margin_bottom = 58.0
 margin_left = 288.0
 margin_right = 336.0
 margin_bottom = 58.0
+
+[connection signal="deselected" from="Minion1" to="." method="_on_minion1_deselected"]
+[connection signal="selected" from="Minion1" to="." method="_on_minion1_selected"]
+[connection signal="deselected" from="Minion2" to="." method="_on_minion2_deselected"]
+[connection signal="selected" from="Minion2" to="." method="_on_minion2_selected"]
+[connection signal="deselected" from="Minion3" to="." method="_on_minion3_deselected"]
+[connection signal="selected" from="Minion3" to="." method="_on_minion3_selected"]
+[connection signal="deselected" from="Minion4" to="." method="_on_minion4_deselected"]
+[connection signal="selected" from="Minion4" to="." method="_on_minion4_selected"]
+[connection signal="deselected" from="Minion5" to="." method="_on_minion5_deselected"]
+[connection signal="selected" from="Minion5" to="." method="_on_minion5_selected"]
+[connection signal="deselected" from="Minion6" to="." method="_on_minion6_deselected"]
+[connection signal="selected" from="Minion6" to="." method="_on_minion6_selected"]

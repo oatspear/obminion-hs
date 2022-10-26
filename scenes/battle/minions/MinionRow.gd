@@ -10,6 +10,8 @@ const MAX_MINIONS: int = 6
 # Signals
 ################################################################################
 
+signal minion_selected(minion)
+signal minion_deselected(minion)
 
 ################################################################################
 # Variables
@@ -69,6 +71,19 @@ func append_minion(minion_data: Dictionary) -> bool:
     return true
 
 
+func enable_minion_selection(retain_selection: bool = true):
+    for minion in minions:
+        minion.set_selected(false)
+        minion.set_retain_selection(retain_selection)
+        minion.set_selectable(true)
+
+
+func disable_minion_selection():
+    for minion in minions:
+        minion.set_selected(false)
+        minion.set_selectable(false)
+
+
 ################################################################################
 # Event Handlers
 ################################################################################
@@ -77,4 +92,52 @@ func append_minion(minion_data: Dictionary) -> bool:
 func _ready():
     for minion in minions:
         minion.set_minion_data({})
-        minion.visible = false
+        minion.hide()
+
+
+func _on_minion1_selected():
+    emit_signal("minion_selected", minion1)
+
+
+func _on_minion2_selected():
+    emit_signal("minion_selected", minion2)
+
+
+func _on_minion3_selected():
+    emit_signal("minion_selected", minion3)
+
+
+func _on_minion4_selected():
+    emit_signal("minion_selected", minion4)
+
+
+func _on_minion5_selected():
+    emit_signal("minion_selected", minion5)
+
+
+func _on_minion6_selected():
+    emit_signal("minion_selected", minion6)
+
+
+func _on_minion1_deselected():
+    emit_signal("minion_deselected", minion1)
+
+
+func _on_minion2_deselected():
+    emit_signal("minion_deselected", minion2)
+
+
+func _on_minion3_deselected():
+    emit_signal("minion_deselected", minion3)
+
+
+func _on_minion4_deselected():
+    emit_signal("minion_deselected", minion4)
+
+
+func _on_minion5_deselected():
+    emit_signal("minion_deselected", minion5)
+
+
+func _on_minion6_deselected():
+    emit_signal("minion_deselected", minion6)
