@@ -8,6 +8,7 @@ signal show_card_info(data)
 signal hide_card_info()
 signal deselect_minions()
 signal deploy_minion(minion_data, right_side)
+signal select_targets(mode)
 
 ################################################################################
 # Variables
@@ -104,4 +105,4 @@ func _on_deploy_minion(minion_data: Dictionary):
 
 
 func _on_attack_target():
-    pass # Replace with function body.
+    emit_signal("select_targets", Global.TargetMode.ATTACK_TARGET)

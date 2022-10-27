@@ -26,3 +26,12 @@ enum CardType {
     SPELL,
     COMMANDER,
 }
+
+
+enum TargetMode {
+    NONE,
+    SELF,
+    ATTACK_TARGET,
+    HOSTILE_MINION,
+    FRIENDLY_MINION,
+}
