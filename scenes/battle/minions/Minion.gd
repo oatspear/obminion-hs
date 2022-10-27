@@ -75,7 +75,10 @@ func _set_style_selected():
 
 func _set_style_disabled():
     #._set_style_disabled()
-    ._set_style_normal()
+    if selected:
+        ._set_style_selected()
+    else:
+        ._set_style_normal()
     if animation and animation.is_playing():
         # animation.current_animation == "pulse"
         animation.seek(0, true)

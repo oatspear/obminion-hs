@@ -71,16 +71,19 @@ func append_minion(minion_data: Dictionary) -> bool:
     return true
 
 
-func enable_minion_selection(retain_selection: bool = true):
+func reset_minion_selection():
     for minion in minions:
         minion.set_selected(false)
+
+
+func enable_minion_selection(retain_selection: bool = true):
+    for minion in minions:
         minion.set_retain_selection(retain_selection)
         minion.set_selectable(true)
 
 
 func disable_minion_selection():
     for minion in minions:
-        minion.set_selected(false)
         minion.set_selectable(false)
 
 

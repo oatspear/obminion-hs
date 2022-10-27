@@ -27,6 +27,7 @@ onready var dialog_confirm: ConfirmationDialog = $Popups/Confirm
 onready var popup_card_info = $Popups/InfoCardPopup
 
 var _selected_minion: WeakRef = weakref(null)
+var _selection_targets: Array = []
 
 ################################################################################
 # Interface
@@ -35,17 +36,21 @@ var _selected_minion: WeakRef = weakref(null)
 
 func enter_main_phase():
     state = State.MAIN
+    minion_row_enemy.reset_minion_selection()
     minion_row_enemy.enable_minion_selection(true)
+    minion_row_player.reset_minion_selection()
     minion_row_player.enable_minion_selection(true)
 
 
-func enter_target_phase(minions):
-    state = State.TARGET
-    for minion in minions:
-        minion.set_selected(false)
-        minion.set_retain_selection(false)
-        minion.set_selectable(true)
-        minion.set_highlighted(true)
+func enter_target_phase(mode: int):
+    match mode:
+        Global.TargetMode.ATTACK_TARGET:
+            if minion_row_enemy.get_minion_count() == 0:
+                print("There are no targets to attack.")
+            else:
+                state = State.TARGET
+                assert(_selected_minion.get_ref() in minion_row_player.minions)
+                _target_state_enable_targets(minion_row_enemy.minions)
 
 
 ################################################################################
@@ -53,12 +58,12 @@ func enter_target_phase(minions):
 ################################################################################
 
 
-func _on_main_state_minion_selected(minion):
+func _on_main_state_minion_selected(minion: Control, friendly: bool):
     var prev = _selected_minion.get_ref()
     _selected_minion = weakref(minion)
     if prev != null and prev != minion:
         prev.set_selected(false)
-    action_panel.show_minion_action_bar(minion.minion_data)
+    action_panel.show_minion_action_bar(minion.minion_data, friendly)
 
 
 func _on_main_state_minion_deselected(minion):
@@ -73,8 +78,20 @@ func _on_main_state_minion_deselected(minion):
 ################################################################################
 
 
+func _target_state_enable_targets(minions):
+    _selection_targets = []
+    minion_row_enemy.disable_minion_selection()
+    minion_row_player.disable_minion_selection()
+    for minion in minions:
+        minion.set_selected(false)
+        minion.set_retain_selection(false)
+        minion.set_selectable(true)
+        minion.set_highlighted(true)
+        _selection_targets.append(minion)
+
+
 func _on_target_state_minion_selected(minion):
-    pass
+    print("Selected %s as a target" % minion.name)
 
 
 ################################################################################
@@ -84,6 +101,20 @@ func _on_target_state_minion_selected(minion):
 
 func _ready():
     enter_main_phase()
+    for _i in 3:
+        minion_row_enemy.append_minion({
+            "name": "Minion",
+            "type": Global.CardType.MINION,
+            "faction": "Enemies",
+            "tribe": "Enemy",
+            "species": 0,
+            "power": 2,
+            "health": 10,
+            "cost": 2,
+            "resource": Global.ResourceType.RESOURCES,
+            "effect": 0,
+            "effect_text": "A target dummy that does nothing.",
+        })
 
 
 func _on_ActionPanel_use_support(_index):
@@ -128,27 +159,37 @@ func _on_deploy_minion(minion_data: Dictionary, right_side: bool):
 func _on_deselect_minions():
     match state:
         State.MAIN:
-            minion_row_player.enable_minion_selection(true)
+            minion_row_enemy.reset_minion_selection()
+            minion_row_player.reset_minion_selection()
 
 
 func _on_select_targets(mode: int):
-    match mode:
-        Global.TargetMode.ATTACK_TARGET:
-            if minion_row_enemy.get_minion_count() == 0:
-                print("There are no targets to attack.")
-            else:
-                enter_target_phase(minion_row_enemy.minions)
+    enter_target_phase(mode)
 
 
 func _on_player_minion_selected(minion):
     match state:
         State.MAIN:
-            _on_main_state_minion_selected(minion)
+            _on_main_state_minion_selected(minion, true)
         State.TARGET:
             _on_target_state_minion_selected(minion)
 
 
 func _on_player_minion_deselected(minion):
+    match state:
+        State.MAIN:
+            _on_main_state_minion_deselected(minion)
+
+
+func _on_enemy_minion_selected(minion):
+    match state:
+        State.MAIN:
+            _on_main_state_minion_selected(minion, false)
+        State.TARGET:
+            _on_target_state_minion_selected(minion)
+
+
+func _on_enemy_minion_deselected(minion):
     match state:
         State.MAIN:
             _on_main_state_minion_deselected(minion)
