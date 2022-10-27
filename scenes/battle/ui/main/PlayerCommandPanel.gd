@@ -6,6 +6,7 @@ extends PanelContainer
 
 signal show_card_info(data)
 signal hide_card_info()
+signal deselect_minions()
 signal deploy_minion(minion_data, right_side)
 
 ################################################################################
@@ -87,6 +88,7 @@ func _on_check_support():
 func _on_cancel_action():
     show_main_command_card()
     emit_signal("hide_card_info")
+    emit_signal("deselect_minions")
 
 
 func _on_display_info(data: Dictionary):
@@ -99,3 +101,7 @@ func _on_hide_info():
 
 func _on_deploy_minion(minion_data: Dictionary):
     emit_signal("deploy_minion", minion_data, _deploy_right_side)
+
+
+func _on_attack_target():
+    pass # Replace with function body.

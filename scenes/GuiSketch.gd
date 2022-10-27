@@ -78,6 +78,11 @@ func _on_deploy_minion(minion_data: Dictionary, right_side: bool):
         print("The minion board is full.")
 
 
+func _on_deselect_minions():
+    # main phase
+    minion_row_player.enable_minion_selection(true)
+
+
 func _on_player_minion_selected(minion):
     # main phase
     var prev = _selected_minion.get_ref()

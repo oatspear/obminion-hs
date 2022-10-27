@@ -71,3 +71,5 @@ margin_bottom = 158.0
 [connection signal="cancel_action" from="SupportActionBar" to="." method="_on_cancel_action"]
 [connection signal="display_info" from="SupportActionBar" to="." method="_on_display_info"]
 [connection signal="hide_info" from="SupportActionBar" to="." method="_on_hide_info"]
+[connection signal="attack_target" from="MinionActionBar" to="." method="_on_attack_target"]
+[connection signal="cancel_action" from="MinionActionBar" to="." method="_on_cancel_action"]

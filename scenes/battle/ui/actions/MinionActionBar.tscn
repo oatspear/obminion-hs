@@ -32,10 +32,13 @@ rect_min_size = Vector2( 96, 0 )
 custom_fonts/font = ExtResource( 2 )
 text = "Cancel"
 
-[node name="Deploy" type="Button" parent="Actions"]
+[node name="Attack" type="Button" parent="Actions"]
 margin_left = 188.0
 margin_right = 284.0
 margin_bottom = 25.0
 rect_min_size = Vector2( 96, 0 )
 custom_fonts/font = ExtResource( 2 )
-text = "Deploy"
+text = "Attack"
+
+[connection signal="pressed" from="Actions/Cancel" to="." method="_on_cancel_pressed"]
+[connection signal="pressed" from="Actions/Attack" to="." method="_on_attack_pressed"]
