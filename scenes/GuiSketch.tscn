@@ -98,6 +98,7 @@ margin_top = 257.0
 margin_right = 340.0
 margin_bottom = 383.0
 
+[connection signal="selected_commander" from="BattleField/EnemyCommandPanel" to="." method="_on_enemy_commander_selected"]
 [connection signal="minion_deselected" from="BattleField/Center/MinionField/Top" to="." method="_on_enemy_minion_deselected"]
 [connection signal="minion_selected" from="BattleField/Center/MinionField/Top" to="." method="_on_enemy_minion_selected"]
 [connection signal="minion_deselected" from="BattleField/Center/MinionField/Bottom" to="." method="_on_player_minion_deselected"]

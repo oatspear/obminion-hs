@@ -102,6 +102,13 @@ func _on_target_state_minion_selected(minion):
     enter_main_phase()
 
 
+func _on_target_state_enemy_commander_selected():
+    for target in _selection_targets:
+        target.set_highlighted(false)
+    print("Selected enemy commander as a target")
+    enter_main_phase()
+
+
 ################################################################################
 # Event Handlers
 ################################################################################
@@ -201,3 +208,14 @@ func _on_enemy_minion_deselected(minion):
     match state:
         State.MAIN:
             _on_main_state_minion_deselected(minion)
+
+
+################################################################################
+# Event Handlers - Enemy Side
+################################################################################
+
+
+func _on_enemy_commander_selected():
+    match state:
+        State.TARGET:
+            _on_target_state_enemy_commander_selected()
