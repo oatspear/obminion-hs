@@ -1,7 +1,6 @@
 extends Reference
 
 const BPlayer = preload("res://scripts/BattlePlayer.gd")
-const BUnit = preload("res://scripts/BattleUnit.gd")
 
 ###############################################################################
 # Internal State
