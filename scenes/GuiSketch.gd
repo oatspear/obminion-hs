@@ -20,6 +20,7 @@ enum State { MAIN, TARGET }
 
 var state: int = State.MAIN
 
+onready var enemy_panel = $BattleField/EnemyCommandPanel
 onready var action_panel = $BattleField/PlayerCommandPanel
 onready var minion_row_enemy = $BattleField/Center/MinionField/Top
 onready var minion_row_player = $BattleField/Center/MinionField/Bottom
@@ -37,9 +38,13 @@ var _selection_targets: Array = []
 func enter_main_phase():
     state = State.MAIN
     minion_row_enemy.reset_minion_selection()
+    minion_row_enemy.reset_minion_highlights()
     minion_row_enemy.enable_minion_selection(true)
     minion_row_player.reset_minion_selection()
+    minion_row_player.reset_minion_highlights()
     minion_row_player.enable_minion_selection(true)
+    action_panel.commander.set_highlighted(false)
+    enemy_panel.commander.set_highlighted(false)
     # this may not be the best place for the lines below
     _selection_targets = []
     _selected_minion = weakref(null)
@@ -54,7 +59,9 @@ func enter_target_phase(mode: int):
             else:
                 state = State.TARGET
                 assert(_selected_minion.get_ref() in minion_row_player.minions)
-                _target_state_enable_targets(minion_row_enemy.minions)
+                _selection_targets = minion_row_enemy.minions.duplicate()
+                _selection_targets.append(enemy_panel.commander)
+                _target_state_enable_targets()
 
 
 ################################################################################
@@ -82,16 +89,17 @@ func _on_main_state_minion_deselected(minion):
 ################################################################################
 
 
-func _target_state_enable_targets(minions):
-    _selection_targets = []
+func _target_state_enable_targets():
+    # assume `_selection_targets` is already set
+    # reset all selections
     minion_row_enemy.disable_minion_selection()
     minion_row_player.disable_minion_selection()
-    for minion in minions:
-        minion.set_selected(false)
-        minion.set_retain_selection(false)
-        minion.set_selectable(true)
-        minion.set_highlighted(true)
-        _selection_targets.append(minion)
+    # highlight possible targets
+    for target in _selection_targets:
+        target.set_selected(false)
+        target.set_retain_selection(false)
+        target.set_selectable(true)
+        target.set_highlighted(true)
 
 
 func _on_target_state_minion_selected(minion):
@@ -176,6 +184,8 @@ func _on_deselect_minions():
         State.MAIN:
             minion_row_enemy.reset_minion_selection()
             minion_row_player.reset_minion_selection()
+        State.TARGET:
+            enter_main_phase()
 
 
 func _on_select_targets(mode: int):

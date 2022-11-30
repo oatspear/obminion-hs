@@ -14,6 +14,7 @@ signal select_targets(mode)
 # Variables
 ################################################################################
 
+onready var commander = $MainCommandCard/Middle/Commander
 onready var main_panel = $MainCommandCard
 onready var army_action_bar = $ArmyActionBar
 onready var support_action_bar = $SupportActionBar

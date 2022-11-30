@@ -87,6 +87,11 @@ func disable_minion_selection():
         minion.set_selectable(false)
 
 
+func reset_minion_highlights():
+    for minion in minions:
+        minion.set_highlighted(false)
+
+
 ################################################################################
 # Event Handlers
 ################################################################################

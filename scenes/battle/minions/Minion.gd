@@ -4,7 +4,7 @@ extends "res://scenes/ui/SelectablePanel.gd"
 # Variables
 ################################################################################
 
-export (bool) var highlighted: bool = false setget set_highlighted
+# export (bool) var highlighted: bool = false setget set_highlighted
 
 var minion_data: Dictionary = {} setget set_minion_data
 
@@ -43,15 +43,15 @@ func set_health(value: int):
     label_stats.stat2 = value
 
 
-func set_highlighted(highlight: bool):
-    highlighted = highlight
-    render()
-    if animation:
-        if highlight:
-            animation.play("pulse")
-        else:
-            animation.seek(0, true)
-            animation.stop(true)
+#func set_highlighted(highlight: bool):
+#    highlighted = highlight
+#    render()
+#    if animation:
+#        if highlight:
+#            animation.play("pulse")
+#        else:
+#            animation.seek(0, true)
+#            animation.stop(true)
 
 
 ################################################################################
@@ -59,30 +59,30 @@ func set_highlighted(highlight: bool):
 ################################################################################
 
 
-func _set_style_normal():
-    ._set_style_normal()
-    if animation and highlighted:
-        animation.play("pulse")
+#func _set_style_normal():
+#    ._set_style_normal()
+#    if animation and highlighted:
+#        animation.play("pulse")
 
 
-func _set_style_selected():
-    ._set_style_selected()
-    if animation and animation.is_playing():
-        # animation.current_animation == "pulse"
-        animation.seek(0, true)
-        animation.stop(true)
+#func _set_style_selected():
+#    ._set_style_selected()
+#    if animation and animation.is_playing():
+#        # animation.current_animation == "pulse"
+#        animation.seek(0, true)
+#        animation.stop(true)
 
 
-func _set_style_disabled():
-    #._set_style_disabled()
-    if selected:
-        ._set_style_selected()
-    else:
-        ._set_style_normal()
-    if animation and animation.is_playing():
-        # animation.current_animation == "pulse"
-        animation.seek(0, true)
-        animation.stop(true)
+#func _set_style_disabled():
+#    #._set_style_disabled()
+#    if selected:
+#        ._set_style_selected()
+#    else:
+#        ._set_style_normal()
+#    if animation and animation.is_playing():
+#        # animation.current_animation == "pulse"
+#        animation.seek(0, true)
+#        animation.stop(true)
 
 
 func _ready():

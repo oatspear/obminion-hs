@@ -8,6 +8,7 @@ extends PanelContainer
 const STYLE_NORMAL = preload("res://data/ui/styles/style_normal.tres")
 const STYLE_SELECTED = preload("res://data/ui/styles/style_selected.tres")
 const STYLE_DISABLED = preload("res://data/ui/styles/style_disabled.tres")
+const STYLE_HIGHLIGHTED = preload("res://data/ui/styles/style_highlighted.tres")
 
 ################################################################################
 # Signals
@@ -23,6 +24,7 @@ signal deselected()
 export (bool) var selectable: bool = true setget set_selectable
 export (bool) var selected: bool = false setget set_selected
 export (bool) var retain_selection: bool = true setget set_retain_selection
+export (bool) var highlighted: bool = false setget set_highlighted
 
 ################################################################################
 # Interface
@@ -51,7 +53,22 @@ func set_retain_selection(retain: bool):
     render()
 
 
+func set_highlighted(highlight: bool):
+    highlighted = highlight
+    render()
+
+
 func render():
+    if selected:
+        _set_style_selected()
+    else:
+        if not selectable:
+            _set_style_disabled()
+        else:
+            _set_style_normal()
+
+
+func render2():
     if not selectable:
         _set_style_disabled()
     else:
@@ -67,7 +84,10 @@ func render():
 
 
 func _set_style_normal():
-    set("custom_styles/panel", STYLE_NORMAL)
+    if highlighted:
+        set("custom_styles/panel", STYLE_HIGHLIGHTED)
+    else:
+        set("custom_styles/panel", STYLE_NORMAL)
 
 
 func _set_style_selected():
