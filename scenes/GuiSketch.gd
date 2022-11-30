@@ -40,6 +40,10 @@ func enter_main_phase():
     minion_row_enemy.enable_minion_selection(true)
     minion_row_player.reset_minion_selection()
     minion_row_player.enable_minion_selection(true)
+    # this may not be the best place for the lines below
+    _selection_targets = []
+    _selected_minion = weakref(null)
+    action_panel.show_main_command_card()
 
 
 func enter_target_phase(mode: int):
@@ -91,7 +95,11 @@ func _target_state_enable_targets(minions):
 
 
 func _on_target_state_minion_selected(minion):
+    assert(minion in _selection_targets)
+    for target in _selection_targets:
+        target.set_highlighted(false)
     print("Selected %s as a target" % minion.name)
+    enter_main_phase()
 
 
 ################################################################################
