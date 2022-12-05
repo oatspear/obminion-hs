@@ -1,6 +1,13 @@
 extends Node
 
 ################################################################################
+# Constants
+################################################################################
+
+const PLAYER_INDEX: int = 0
+const ENEMY_INDEX: int = 1
+
+################################################################################
 # Variables
 ################################################################################
 
@@ -30,3 +37,9 @@ func _default_battle_setup():
 
 func _ready():
     _default_battle_setup()
+    var p = server.players[PLAYER_INDEX]
+    gui.player_nameplate.set_player_name(p.name)
+    gui.player_nameplate.set_resources(p.resources, p.max_resources)
+    p = server.players[ENEMY_INDEX]
+    gui.enemy_nameplate.set_player_name(p.name)
+    gui.enemy_nameplate.set_resources(p.resources, p.max_resources)
