@@ -1,12 +1,14 @@
-[gd_scene load_steps=3 format=2]
+[gd_scene load_steps=4 format=2]
 
 [ext_resource path="res://assets/fonts/roboto_bold_16.tres" type="DynamicFont" id=1]
 [ext_resource path="res://scenes/ui/labels/icon_value/Label.tscn" type="PackedScene" id=2]
+[ext_resource path="res://scenes/ui/panels/CommanderNameplate.gd" type="Script" id=3]
 
 [node name="Nameplate" type="HBoxContainer"]
 anchor_right = 1.0
 margin_bottom = 24.0
 custom_constants/separation = 8
+script = ExtResource( 3 )
 __meta__ = {
 "_edit_use_anchors_": false
 }
