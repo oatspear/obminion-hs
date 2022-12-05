@@ -26,7 +26,6 @@ onready var minion_row_enemy = $BattleField/Center/MinionField/Top
 onready var minion_row_player = $BattleField/Center/MinionField/Bottom
 onready var dialog_confirm: ConfirmationDialog = $Popups/Confirm
 onready var popup_card_info = $Popups/InfoCardPopup
-onready var battle = $BattleMechanics
 
 var _selected_minion: WeakRef = weakref(null)
 var _selection_targets: Array = []
