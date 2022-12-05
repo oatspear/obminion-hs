@@ -30,6 +30,15 @@ func _default_battle_setup():
     server.players.append(p)
 
 
+func _render_initial_data():
+    var p = server.players[PLAYER_INDEX]
+    gui.player_nameplate.set_player_name(p.name)
+    gui.player_nameplate.set_resources(p.resources, p.max_resources)
+    p = server.players[ENEMY_INDEX]
+    gui.enemy_nameplate.set_player_name(p.name)
+    gui.enemy_nameplate.set_resources(p.resources, p.max_resources)
+
+
 ################################################################################
 # Event Handlers
 ################################################################################
@@ -37,9 +46,4 @@ func _default_battle_setup():
 
 func _ready():
     _default_battle_setup()
-    var p = server.players[PLAYER_INDEX]
-    gui.player_nameplate.set_player_name(p.name)
-    gui.player_nameplate.set_resources(p.resources, p.max_resources)
-    p = server.players[ENEMY_INDEX]
-    gui.enemy_nameplate.set_player_name(p.name)
-    gui.enemy_nameplate.set_resources(p.resources, p.max_resources)
+    _render_initial_data()
