@@ -1,0 +1,15 @@
+[gd_resource type="Resource" load_steps=2 format=2]
+
+[ext_resource path="res://scripts/MinionData.gd" type="Script" id=1]
+
+[resource]
+script = ExtResource( 1 )
+name = "Target Dummy"
+faction = "Enemies"
+tribe = "Dummies"
+species = 0
+power = 2
+health = 10
+supply = 2
+ability = 0
+ability_text = "A target dummy that does nothing."
