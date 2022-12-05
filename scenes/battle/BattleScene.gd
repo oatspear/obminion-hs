@@ -7,6 +7,8 @@ extends Node
 const PLAYER_INDEX: int = 0
 const ENEMY_INDEX: int = 1
 
+const TARGET_DUMMY = preload("res://data/minions/TargetDummy.tres")
+
 ################################################################################
 # Variables
 ################################################################################
@@ -24,19 +26,31 @@ func _default_battle_setup():
     p.name = "Player 1"
     p.max_resources = 5
     server.players.append(p)
+
     p = BattlePlayer.new()
     p.name = "Player 2"
     p.max_resources = 5
+    # FIXME: needs a wrapper class around MinionData (effects, graveyard...)
+    p.minion_deck.append(TARGET_DUMMY)
+    p.minion_deck.append(TARGET_DUMMY)
+    p.minion_deck.append(TARGET_DUMMY)
+    p.minion_deck.append(TARGET_DUMMY)
+    p.minion_deck.append(TARGET_DUMMY)
+    p.minion_deck.append(TARGET_DUMMY)
+    # FIXME: needs a new BattleMinion class
+    p.active_minions.append(TARGET_DUMMY)
     server.players.append(p)
 
 
 func _render_initial_data():
     var p = server.players[PLAYER_INDEX]
-    gui.player_nameplate.set_player_name(p.name)
-    gui.player_nameplate.set_resources(p.resources, p.max_resources)
+    gui.nameplate_player.set_player_name(p.name)
+    gui.nameplate_player.set_resources(p.resources, p.max_resources)
     p = server.players[ENEMY_INDEX]
-    gui.enemy_nameplate.set_player_name(p.name)
-    gui.enemy_nameplate.set_resources(p.resources, p.max_resources)
+    gui.nameplate_enemy.set_player_name(p.name)
+    gui.nameplate_enemy.set_resources(p.resources, p.max_resources)
+    for minion in p.active_minions:
+        gui.spawn_enemy_minion(minion)
 
 
 ################################################################################
@@ -47,3 +61,4 @@ func _render_initial_data():
 func _ready():
     _default_battle_setup()
     _render_initial_data()
+    gui.enter_main_phase()
