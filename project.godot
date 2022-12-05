@@ -10,9 +10,24 @@ config_version=4
 
 _global_script_classes=[ {
 "base": "Reference",
+"class": "BattleCommander",
+"language": "GDScript",
+"path": "res://scripts/BattleCommander.gd"
+}, {
+"base": "Reference",
+"class": "BattleMechanics",
+"language": "GDScript",
+"path": "res://scripts/BattleMechanics.gd"
+}, {
+"base": "Reference",
 "class": "BattleMinion",
 "language": "GDScript",
 "path": "res://scripts/BattleMinion.gd"
+}, {
+"base": "Reference",
+"class": "BattlePlayer",
+"language": "GDScript",
+"path": "res://scripts/BattlePlayer.gd"
 }, {
 "base": "Resource",
 "class": "MinionData",
@@ -25,7 +40,10 @@ _global_script_classes=[ {
 "path": "res://scripts/SupportData.gd"
 } ]
 _global_script_class_icons={
+"BattleCommander": "",
+"BattleMechanics": "",
 "BattleMinion": "",
+"BattlePlayer": "",
 "MinionData": "",
 "SupportData": ""
 }
@@ -33,7 +51,7 @@ _global_script_class_icons={
 [application]
 
 config/name="HS"
-run/main_scene="res://scenes/GuiSketch.tscn"
+run/main_scene="res://scenes/battle/BattleScene.tscn"
 config/icon="res://icon.png"
 
 [autoload]
