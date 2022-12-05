@@ -26,8 +26,8 @@ onready var minion_row_enemy = $BattleField/Center/MinionField/Top
 onready var minion_row_player = $BattleField/Center/MinionField/Bottom
 onready var dialog_confirm: ConfirmationDialog = $Popups/Confirm
 onready var popup_card_info = $Popups/InfoCardPopup
-onready var player_nameplate = $BattleField/PlayerNameplate/Nameplate
-onready var enemy_nameplate = $BattleField/EnemyNameplate/Nameplate
+onready var nameplate_player = $BattleField/PlayerNameplate/Nameplate
+onready var nameplate_enemy = $BattleField/EnemyNameplate/Nameplate
 
 var _selected_minion: WeakRef = weakref(null)
 var _selection_targets: Array = []
@@ -35,6 +35,14 @@ var _selection_targets: Array = []
 ################################################################################
 # Interface
 ################################################################################
+
+
+func spawn_player_minion(minion: MinionData):
+    minion_row_player.append_minion(minion.as_dict())
+
+
+func spawn_enemy_minion(minion: MinionData):
+    minion_row_enemy.append_minion(minion.as_dict())
 
 
 func enter_main_phase():
@@ -122,24 +130,6 @@ func _on_target_state_enemy_commander_selected():
 ################################################################################
 # Event Handlers
 ################################################################################
-
-
-func _ready():
-    enter_main_phase()
-    for _i in 3:
-        minion_row_enemy.append_minion({
-            "name": "Minion",
-            "type": Global.CardType.MINION,
-            "faction": "Enemies",
-            "tribe": "Enemy",
-            "species": 0,
-            "power": 2,
-            "health": 10,
-            "cost": 2,
-            "resource": Global.ResourceType.RESOURCES,
-            "effect": 0,
-            "effect_text": "A target dummy that does nothing.",
-        })
 
 
 func _on_ActionPanel_use_support(_index):
