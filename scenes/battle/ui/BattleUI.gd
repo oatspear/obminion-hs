@@ -37,6 +37,25 @@ var _selection_targets: Array = []
 ################################################################################
 
 
+func reset_data():
+    action_panel.reset_data()
+
+
+func set_player_army(minions: Array):
+    var data = null if len(minions) < 1 else minions[0].base_data
+    action_panel.army_action_bar.token1.minion_data = data
+    data = null if len(minions) < 2 else minions[1].base_data
+    action_panel.army_action_bar.token2.minion_data = data
+    data = null if len(minions) < 3 else minions[2].base_data
+    action_panel.army_action_bar.token3.minion_data = data
+    data = null if len(minions) < 4 else minions[3].base_data
+    action_panel.army_action_bar.token4.minion_data = data
+    data = null if len(minions) < 5 else minions[4].base_data
+    action_panel.army_action_bar.token5.minion_data = data
+    data = null if len(minions) < 6 else minions[5].base_data
+    action_panel.army_action_bar.token6.minion_data = data
+
+
 func spawn_player_minion(minion: BattleMinion):
     minion_row_player.append_minion(minion.as_dict())
 
