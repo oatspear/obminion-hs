@@ -1,6 +1,12 @@
 extends MarginContainer
 
 ################################################################################
+# Signals
+################################################################################
+
+signal action_attack_target(minion_index, target_index)
+
+################################################################################
 # Constants
 ################################################################################
 
@@ -64,6 +70,11 @@ func spawn_enemy_minion(minion: BattleMinion):
     minion_row_enemy.append_minion(minion.as_dict())
 
 
+func set_active_minion(player_index: int, minion_index: int, data: BattleMinion):
+    var minion = _get_active_minion(player_index, minion_index)
+    minion.set_minion_data(data.as_dict())
+
+
 func enter_main_phase():
     state = State.MAIN
     minion_row_enemy.reset_minion_selection()
@@ -91,6 +102,39 @@ func enter_target_phase(mode: int):
                 _selection_targets = minion_row_enemy.minions.duplicate()
                 _selection_targets.append(enemy_panel.commander)
                 _target_state_enable_targets()
+
+
+################################################################################
+# Rendering Interface
+################################################################################
+
+
+func animate_attack(
+    player_index: int,
+    minion_index: int,
+    enemy_index: int,
+    target_index: int
+):
+    var source = _get_active_minion(player_index, minion_index)
+    var target = _get_active_minion(enemy_index, target_index)
+    print("%s attacks %s" % [source.name, target.name])
+
+
+func animate_damage(player_index: int, minion_index: int, damage: int):
+    var minion = _get_active_minion(player_index, minion_index)
+    print("%s took %d damage" % [minion.name, damage])
+
+
+################################################################################
+# Helper Functions
+################################################################################
+
+
+func _get_active_minion(player_index: int, minion_index: int) -> Control:
+    if player_index == 0:
+        return minion_row_player.minions[minion_index]
+    else:
+        return minion_row_enemy.minions[minion_index]
 
 
 ################################################################################
@@ -136,7 +180,10 @@ func _on_target_state_minion_selected(minion):
     for target in _selection_targets:
         target.set_highlighted(false)
     print("Selected %s as a target" % minion.name)
+    var attacker = _selected_minion.get_ref()
+    assert(attacker != null)
     enter_main_phase()
+    emit_signal("action_attack_target", attacker.index, minion.index)
 
 
 func _on_target_state_enemy_commander_selected():

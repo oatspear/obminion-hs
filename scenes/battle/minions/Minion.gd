@@ -5,6 +5,7 @@ extends "res://scenes/ui/SelectablePanel.gd"
 ################################################################################
 
 # export (bool) var highlighted: bool = false setget set_highlighted
+export (int) var index: int = 0
 
 var minion_data: Dictionary = {} setget set_minion_data
 

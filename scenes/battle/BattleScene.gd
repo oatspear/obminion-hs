@@ -76,3 +76,16 @@ func _ready():
     _default_battle_setup()
     _render_initial_data()
     gui.enter_main_phase()
+
+
+func _on_ui_action_attack_target(minion_index: int, target_index: int):
+    server.action_attack_target(PLAYER_INDEX, minion_index, ENEMY_INDEX, target_index)
+    gui.animate_attack(PLAYER_INDEX, minion_index, ENEMY_INDEX, target_index)
+    gui.animate_damage(ENEMY_INDEX, target_index, 0)
+    gui.animate_damage(PLAYER_INDEX, minion_index, 0)
+    var p = server.players[PLAYER_INDEX]
+    var m = p.active_minions[minion_index]
+    gui.set_active_minion(PLAYER_INDEX, minion_index, m)
+    p = server.players[ENEMY_INDEX]
+    m = p.active_minions[target_index]
+    gui.set_active_minion(ENEMY_INDEX, target_index, m)
