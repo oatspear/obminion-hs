@@ -10,6 +10,11 @@ config_version=4
 
 _global_script_classes=[ {
 "base": "Reference",
+"class": "ArmyMinion",
+"language": "GDScript",
+"path": "res://scripts/ArmyMinion.gd"
+}, {
+"base": "Reference",
 "class": "BattleCommander",
 "language": "GDScript",
 "path": "res://scripts/BattleCommander.gd"
@@ -40,6 +45,7 @@ _global_script_classes=[ {
 "path": "res://scripts/SupportData.gd"
 } ]
 _global_script_class_icons={
+"ArmyMinion": "",
 "BattleCommander": "",
 "BattleMechanics": "",
 "BattleMinion": "",
