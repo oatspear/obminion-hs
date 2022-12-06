@@ -37,11 +37,11 @@ var _selection_targets: Array = []
 ################################################################################
 
 
-func spawn_player_minion(minion: MinionData):
+func spawn_player_minion(minion: BattleMinion):
     minion_row_player.append_minion(minion.as_dict())
 
 
-func spawn_enemy_minion(minion: MinionData):
+func spawn_enemy_minion(minion: BattleMinion):
     minion_row_enemy.append_minion(minion.as_dict())
 
 
