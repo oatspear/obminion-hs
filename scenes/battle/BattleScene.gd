@@ -30,15 +30,13 @@ func _default_battle_setup():
     p = BattlePlayer.new()
     p.name = "Player 2"
     p.max_resources = 5
-    # FIXME: needs a wrapper class around MinionData (effects, graveyard...)
     p.add_army_minion(TARGET_DUMMY)
     p.add_army_minion(TARGET_DUMMY)
     p.add_army_minion(TARGET_DUMMY)
     p.add_army_minion(TARGET_DUMMY)
     p.add_army_minion(TARGET_DUMMY)
     p.add_army_minion(TARGET_DUMMY)
-    # FIXME: needs a new BattleMinion class
-    p.active_minions.append(TARGET_DUMMY)
+    p.add_active_minion(TARGET_DUMMY)
     server.players.append(p)
 
 
