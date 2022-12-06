@@ -24,3 +24,9 @@ var commander: BattleCommander
 
 func replenish_resources():
     resources = max_resources
+
+
+func add_army_minion(base_data: MinionData):
+    var minion = ArmyMinion.new()
+    minion.base_data = base_data
+    minion_deck.append(minion)
