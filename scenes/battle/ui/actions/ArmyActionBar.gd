@@ -36,6 +36,15 @@ onready var button_deploy = $Actions/Deploy
 ################################################################################
 
 
+func reset_data():
+    token1.minion_data = null
+    token2.minion_data = null
+    token3.minion_data = null
+    token4.minion_data = null
+    token5.minion_data = null
+    token6.minion_data = null
+
+
 func reset_ui():
     button_deploy.disabled = true
     if _selected_minion != null:
