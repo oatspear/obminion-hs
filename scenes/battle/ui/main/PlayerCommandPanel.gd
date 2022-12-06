@@ -27,6 +27,11 @@ var _deploy_right_side: bool = true
 ################################################################################
 
 
+func reset_data():
+    army_action_bar.reset_data()
+    support_action_bar.reset_data()
+
+
 func show_main_command_card():
     for action_bar in get_children():
         action_bar.hide()
