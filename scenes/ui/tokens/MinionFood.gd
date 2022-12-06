@@ -17,7 +17,11 @@ onready var label_supply = $Elements/Cost
 
 func set_minion_data(data: MinionData):
     minion_data = data
-    render()
+    if data == null:
+        hide()
+    else:
+        show()
+        render()
 
 
 func render():
