@@ -36,6 +36,15 @@ onready var button_use = $Actions/Use
 ################################################################################
 
 
+func reset_data():
+    token1.support_data = null
+    token2.support_data = null
+    token3.support_data = null
+    token4.support_data = null
+    token5.support_data = null
+    token6.support_data = null
+
+
 func reset_ui():
     button_use.disabled = true
     if _selected_support != null:
