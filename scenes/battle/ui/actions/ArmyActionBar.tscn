@@ -47,6 +47,7 @@ visible = true
 margin_left = 78.0
 margin_right = 126.0
 margin_bottom = 67.0
+index = 1
 minion_data = ExtResource( 2 )
 
 [node name="Minion3" parent="Minions" instance=ExtResource( 1 )]
@@ -54,6 +55,7 @@ visible = true
 margin_left = 130.0
 margin_right = 178.0
 margin_bottom = 67.0
+index = 2
 minion_data = ExtResource( 4 )
 
 [node name="Minion4" parent="Minions" instance=ExtResource( 1 )]
@@ -61,6 +63,7 @@ visible = true
 margin_left = 182.0
 margin_right = 230.0
 margin_bottom = 67.0
+index = 3
 minion_data = ExtResource( 5 )
 
 [node name="Minion5" parent="Minions" instance=ExtResource( 1 )]
@@ -68,6 +71,7 @@ visible = true
 margin_left = 234.0
 margin_right = 282.0
 margin_bottom = 67.0
+index = 4
 minion_data = ExtResource( 6 )
 
 [node name="Minion6" parent="Minions" instance=ExtResource( 1 )]
@@ -75,6 +79,7 @@ visible = true
 margin_left = 286.0
 margin_right = 334.0
 margin_bottom = 67.0
+index = 5
 minion_data = ExtResource( 7 )
 
 [node name="Actions" type="HBoxContainer" parent="."]

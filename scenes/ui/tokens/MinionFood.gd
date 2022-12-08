@@ -5,6 +5,7 @@ extends "res://scenes/ui/SelectablePanel.gd"
 # Variables
 ################################################################################
 
+export (int) var index: int = 0
 export (Resource) var minion_data setget set_minion_data
 
 onready var portrait: TextureRect = $Elements/Portrait

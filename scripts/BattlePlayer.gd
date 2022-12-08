@@ -36,3 +36,9 @@ func add_active_minion(base_data: MinionData):
     var minion = BattleMinion.new()
     minion.base_data = base_data
     active_minions.append(minion)
+
+
+func insert_active_minion(index: int, base_data: MinionData):
+    var minion = BattleMinion.new()
+    minion.base_data = base_data
+    active_minions.insert(index, minion)

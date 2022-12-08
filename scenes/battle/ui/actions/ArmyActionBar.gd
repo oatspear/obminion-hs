@@ -12,7 +12,7 @@ const NO_DATA: Dictionary = {}
 
 signal display_info(data)
 signal hide_info()
-signal deploy_minion(minion_data)
+signal deploy_minion(army_index)
 signal cancel_action()
 
 ################################################################################
@@ -30,6 +30,15 @@ onready var token5 = $Minions/Minion5
 onready var token6 = $Minions/Minion6
 onready var button_cancel = $Actions/Cancel
 onready var button_deploy = $Actions/Deploy
+
+onready var tokens: Array = [
+    token1,
+    token2,
+    token3,
+    token4,
+    token5,
+    token6,
+]
 
 ################################################################################
 # Interface
@@ -52,6 +61,13 @@ func reset_ui():
     _selected_minion = null
     button_info.pressed = false
     emit_signal("hide_info")
+
+
+func remove_data_at(index: int):
+    tokens[index].minion_data = null
+    for i in range(index + 1, len(tokens)):
+        tokens[i-1].minion_data = tokens[i].minion_data
+        tokens[i].minion_data = null
 
 
 ################################################################################
@@ -90,7 +106,7 @@ func _ready():
 
 func _on_deploy_button_pressed():
     if _selected_minion:
-        emit_signal("deploy_minion", _selected_minion.minion_data.as_dict())
+        emit_signal("deploy_minion", _selected_minion.index)
 
 
 func _on_cancel_button_pressed():

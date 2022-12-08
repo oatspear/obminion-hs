@@ -4,6 +4,8 @@ extends MarginContainer
 # Signals
 ################################################################################
 
+signal action_deploy_left(army_index)
+signal action_deploy_right(army_index)
 signal action_attack_target(minion_index, target_index)
 
 ################################################################################
@@ -60,6 +62,10 @@ func set_player_army(minions: Array):
     action_panel.army_action_bar.token5.minion_data = data
     data = null if len(minions) < 6 else minions[5].base_data
     action_panel.army_action_bar.token6.minion_data = data
+
+
+func remove_from_player_army(index: int):
+    action_panel.army_action_bar.remove_data_at(index)
 
 
 func spawn_player_minion(minion: BattleMinion):
@@ -225,16 +231,15 @@ func _on_hide_card_info():
         popup_card_info.hide()
 
 
-func _on_deploy_minion(minion_data: Dictionary, right_side: bool):
+func _on_deploy_minion(army_index: int, right_side: bool):
     _on_hide_card_info()
     action_panel.show_main_command_card()
-    var ok = true
     if right_side:
-        ok = minion_row_player.append_minion(minion_data)
+        emit_signal("action_deploy_right", army_index)
     else:
-        ok = minion_row_player.preprend_minion(minion_data)
-    if not ok:
-        print("The minion board is full.")
+        #ok = minion_row_player.append_minion(minion_data)
+        #ok = minion_row_player.preprend_minion(minion_data)
+        emit_signal("action_deploy_left", army_index)
 
 
 func _on_deselect_minions():

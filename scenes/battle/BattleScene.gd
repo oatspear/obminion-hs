@@ -27,6 +27,11 @@ onready var gui = $BattleUI
 ################################################################################
 
 
+func _connect_to_mechanics_events():
+    server.connect("action_error", self, "_on_server_action_error")
+    server.connect("deployed_minion", self, "_on_server_deployed_minion")
+
+
 func _default_battle_setup():
     gui.reset_data()
 
@@ -68,14 +73,33 @@ func _render_initial_data():
 
 
 ################################################################################
-# Event Handlers
+# Event Handlers - Internal
 ################################################################################
 
 
 func _ready():
+    _connect_to_mechanics_events()
     _default_battle_setup()
     _render_initial_data()
     gui.enter_main_phase()
+
+
+func _on_server_action_error(msg: String):
+    print("Error: ", msg)
+
+
+func _on_server_deployed_minion(event: BattleEventDeploy):
+    if event.player_index == PLAYER_INDEX:
+        gui.remove_from_player_army(event.army_index)
+        # FIXME field index not taken into account
+        gui.spawn_player_minion(event.minion)
+    else:
+        gui.spawn_enemy_minion(event.minion)
+
+
+################################################################################
+# Event Handlers - GUI
+################################################################################
 
 
 func _on_ui_action_attack_target(minion_index: int, target_index: int):
@@ -89,3 +113,11 @@ func _on_ui_action_attack_target(minion_index: int, target_index: int):
     p = server.players[ENEMY_INDEX]
     m = p.active_minions[target_index]
     gui.set_active_minion(ENEMY_INDEX, target_index, m)
+
+
+func _on_ui_action_deploy_left(army_index: int):
+    server.action_deploy_left(PLAYER_INDEX, army_index)
+
+
+func _on_ui_action_deploy_right(army_index: int):
+    server.action_deploy_right(PLAYER_INDEX, army_index)

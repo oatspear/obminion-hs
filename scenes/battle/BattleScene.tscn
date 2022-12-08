@@ -9,3 +9,5 @@ script = ExtResource( 2 )
 [node name="BattleUI" parent="." instance=ExtResource( 1 )]
 
 [connection signal="action_attack_target" from="BattleUI" to="." method="_on_ui_action_attack_target"]
+[connection signal="action_deploy_left" from="BattleUI" to="." method="_on_ui_action_deploy_left"]
+[connection signal="action_deploy_right" from="BattleUI" to="." method="_on_ui_action_deploy_right"]

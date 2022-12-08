@@ -1,5 +1,4 @@
-extends Reference
-class_name BattleMechanics
+extends Node
 
 ###############################################################################
 # Signals
@@ -86,3 +85,4 @@ func action_attack_target(
 
 func _action_error(msg: String):
     emit_signal("computed_action", false, msg)
+
