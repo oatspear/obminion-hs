@@ -50,15 +50,7 @@ func get_minion_count() -> int:
 
 
 func preprend_minion(minion_data: Dictionary) -> bool:
-    if get_minion_count() >= MAX_MINIONS:
-        return false
-    for i in range(_minion_count, 0, -1):
-        var prev = minions[i-1].minion_data
-        minions[i].set_minion_data(prev)
-    minions[0].set_minion_data(minion_data)
-    minions[_minion_count].show()
-    _minion_count += 1
-    return true
+    return insert_minion(0, minion_data)
 
 
 func append_minion(minion_data: Dictionary) -> bool:
@@ -67,6 +59,18 @@ func append_minion(minion_data: Dictionary) -> bool:
     var minion = minions[_minion_count]
     minion.set_minion_data(minion_data)
     minion.show()
+    _minion_count += 1
+    return true
+
+
+func insert_minion(index: int, minion_data: Dictionary) -> bool:
+    if get_minion_count() >= MAX_MINIONS:
+        return false
+    for i in range(_minion_count, index, -1):
+        var prev = minions[i-1].minion_data
+        minions[i].set_minion_data(prev)
+    minions[index].set_minion_data(minion_data)
+    minions[_minion_count].show()
     _minion_count += 1
     return true
 

@@ -68,12 +68,18 @@ func remove_from_player_army(index: int):
     action_panel.army_action_bar.remove_data_at(index)
 
 
-func spawn_player_minion(minion: BattleMinion):
-    minion_row_player.append_minion(minion.as_dict())
+func spawn_player_minion(minion: BattleMinion, index: int = -1):
+    if index < 0:
+        minion_row_player.append_minion(minion.as_dict())
+    else:
+        minion_row_player.insert_minion(index, minion.as_dict())
 
 
-func spawn_enemy_minion(minion: BattleMinion):
-    minion_row_enemy.append_minion(minion.as_dict())
+func spawn_enemy_minion(minion: BattleMinion, index: int = -1):
+    if index < 0:
+        minion_row_enemy.append_minion(minion.as_dict())
+    else:
+        minion_row_enemy.insert_minion(index, minion.as_dict())
 
 
 func set_active_minion(player_index: int, minion_index: int, data: BattleMinion):

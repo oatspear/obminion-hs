@@ -91,10 +91,9 @@ func _on_server_action_error(msg: String):
 func _on_server_deployed_minion(event: BattleEventDeploy):
     if event.player_index == PLAYER_INDEX:
         gui.remove_from_player_army(event.army_index)
-        # FIXME field index not taken into account
-        gui.spawn_player_minion(event.minion)
+        gui.spawn_player_minion(event.minion, event.field_index)
     else:
-        gui.spawn_enemy_minion(event.minion)
+        gui.spawn_enemy_minion(event.minion, event.field_index)
 
 
 ################################################################################

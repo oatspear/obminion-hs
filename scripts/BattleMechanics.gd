@@ -56,12 +56,12 @@ func action_deploy_right(player_index: int, army_index: int):
     p.resources -= minion.base_data.supply
     # emit signal
     p.minion_deck.remove(army_index)
-    p.add_active_minion(minion.base_data)
+    var n = p.add_active_minion(minion.base_data)
     var event = BattleEventDeploy.new()
     event.player_index = player_index
     event.army_index = army_index
-    event.field_index = 0
-    event.minion = p.active_minions[0]
+    event.field_index = n - 1
+    event.minion = p.active_minions[n-1]
     emit_signal("deployed_minion", event)
 
 
