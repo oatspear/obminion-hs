@@ -36,12 +36,28 @@ func set_power(value: int):
     label_stats.stat1 = value
 
 
+func inc_power(amount: int):
+    label_stats.stat1 += amount
+
+
+func dec_power(amount: int):
+    label_stats.stat1 -= amount
+
+
 func get_health() -> int:
     return label_stats.stat2
 
 
 func set_health(value: int):
     label_stats.stat2 = value
+
+
+func inc_health(amount: int):
+    label_stats.stat2 += amount
+
+
+func dec_health(amount: int):
+    label_stats.stat2 -= amount
 
 
 #func set_highlighted(highlight: bool):

@@ -20,6 +20,16 @@ _global_script_classes=[ {
 "path": "res://scripts/BattleCommander.gd"
 }, {
 "base": "Reference",
+"class": "BattleEventAttack",
+"language": "GDScript",
+"path": "res://scripts/events/AttackEvent.gd"
+}, {
+"base": "Reference",
+"class": "BattleEventDamage",
+"language": "GDScript",
+"path": "res://scripts/events/DamageEvent.gd"
+}, {
+"base": "Reference",
 "class": "BattleEventDeploy",
 "language": "GDScript",
 "path": "res://scripts/events/DeployEvent.gd"
@@ -52,6 +62,8 @@ _global_script_classes=[ {
 _global_script_class_icons={
 "ArmyMinion": "",
 "BattleCommander": "",
+"BattleEventAttack": "",
+"BattleEventDamage": "",
 "BattleEventDeploy": "",
 "BattleMechanics": "",
 "BattleMinion": "",

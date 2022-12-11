@@ -135,6 +135,7 @@ func animate_attack(
 func animate_damage(player_index: int, minion_index: int, damage: int):
     var minion = _get_active_minion(player_index, minion_index)
     print("%s took %d damage" % [minion.name, damage])
+    minion.dec_health(damage)
 
 
 ################################################################################

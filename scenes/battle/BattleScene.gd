@@ -28,10 +28,14 @@ onready var gui = $BattleUI
 
 
 func _connect_to_mechanics_events():
-    var ok = server.connect("action_error", self, "_on_server_action_error")
-    assert(ok)
-    ok = server.connect("deployed_minion", self, "_on_server_deployed_minion")
-    assert(ok)
+    var error = server.connect("action_error", self, "_on_server_action_error")
+    assert(not error)
+    error = server.connect("minion_deployed", self, "_on_server_minion_deployed")
+    assert(not error)
+    error = server.connect("minion_attacked", self, "_on_server_minion_attacked")
+    assert(not error)
+    error = server.connect("damage_dealt", self, "_on_server_damage_dealt")
+    assert(not error)
 
 
 func _default_battle_setup():
@@ -90,12 +94,25 @@ func _on_server_action_error(msg: String):
     print("Error: ", msg)
 
 
-func _on_server_deployed_minion(event: BattleEventDeploy):
+func _on_server_minion_deployed(event: BattleEventDeploy):
     if event.player_index == PLAYER_INDEX:
         gui.remove_from_player_army(event.army_index)
         gui.spawn_player_minion(event.minion, event.field_index)
     else:
         gui.spawn_enemy_minion(event.minion, event.field_index)
+
+
+func _on_server_minion_attacked(event: BattleEventAttack):
+    gui.animate_attack(
+        event.player_index,
+        event.field_index,
+        event.enemy_index,
+        event.target_index
+    )
+
+
+func _on_server_damage_dealt(event: BattleEventDamage):
+    gui.animate_damage(event.player_index, event.field_index, event.damage)
 
 
 ################################################################################
@@ -105,15 +122,15 @@ func _on_server_deployed_minion(event: BattleEventDeploy):
 
 func _on_ui_action_attack_target(minion_index: int, target_index: int):
     server.action_attack_target(PLAYER_INDEX, minion_index, ENEMY_INDEX, target_index)
-    gui.animate_attack(PLAYER_INDEX, minion_index, ENEMY_INDEX, target_index)
-    gui.animate_damage(ENEMY_INDEX, target_index, 0)
-    gui.animate_damage(PLAYER_INDEX, minion_index, 0)
-    var p = server.players[PLAYER_INDEX]
-    var m = p.active_minions[minion_index]
-    gui.set_active_minion(PLAYER_INDEX, minion_index, m)
-    p = server.players[ENEMY_INDEX]
-    m = p.active_minions[target_index]
-    gui.set_active_minion(ENEMY_INDEX, target_index, m)
+    #gui.animate_attack(PLAYER_INDEX, minion_index, ENEMY_INDEX, target_index)
+    #gui.animate_damage(ENEMY_INDEX, target_index, 0)
+    #gui.animate_damage(PLAYER_INDEX, minion_index, 0)
+    #var p = server.players[PLAYER_INDEX]
+    #var m = p.active_minions[minion_index]
+    #gui.set_active_minion(PLAYER_INDEX, minion_index, m)
+    #p = server.players[ENEMY_INDEX]
+    #m = p.active_minions[target_index]
+    #gui.set_active_minion(ENEMY_INDEX, target_index, m)
 
 
 func _on_ui_action_deploy_left(army_index: int):

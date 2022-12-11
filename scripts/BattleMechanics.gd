@@ -6,7 +6,9 @@ class_name BattleMechanics
 ###############################################################################
 
 signal action_error(msg)
-signal deployed_minion(event)
+signal minion_deployed(event)
+signal minion_attacked(event)
+signal damage_dealt(event)
 
 ###############################################################################
 # Constants
@@ -44,7 +46,7 @@ func action_deploy_left(player_index: int, army_index: int):
     event.army_index = army_index
     event.field_index = 0
     event.minion = p.active_minions[0]
-    emit_signal("deployed_minion", event)
+    emit_signal("minion_deployed", event)
 
 
 func action_deploy_right(player_index: int, army_index: int):
@@ -62,21 +64,32 @@ func action_deploy_right(player_index: int, army_index: int):
     event.army_index = army_index
     event.field_index = n - 1
     event.minion = p.active_minions[n-1]
-    emit_signal("deployed_minion", event)
+    emit_signal("minion_deployed", event)
 
 
 func action_attack_target(
     player_index: int,
-    minion_index: int,
+    field_index: int,
     enemy_index: int,
     target_index: int
 ):
     var p1 = players[player_index]
     var p2 = players[enemy_index]
-    var source = p1.active_minions[minion_index]
+    var source = p1.active_minions[field_index]
     var target = p2.active_minions[target_index]
+    # TODO attack declaration event
+    # emit post attack event
+    var event = BattleEventAttack.new()
+    event.player_index = player_index
+    event.field_index = field_index
+    event.enemy_index = enemy_index
+    event.target_index = target_index
+    emit_signal("minion_attacked", event)
+    # deal damage
     target.health -= source.power
     source.health -= target.power
+    _damage_dealt(enemy_index, target_index, source.power)
+    _damage_dealt(player_index, field_index, target.power)
 
 
 ###############################################################################
@@ -86,3 +99,11 @@ func action_attack_target(
 
 func _action_error(msg: String):
     emit_signal("computed_action", false, msg)
+
+
+func _damage_dealt(player_index: int, field_index: int, damage: int):
+    var event = BattleEventDamage.new()
+    event.player_index = player_index
+    event.field_index = field_index
+    event.damage = damage
+    emit_signal("damage_dealt", event)
