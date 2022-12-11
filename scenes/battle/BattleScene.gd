@@ -28,8 +28,10 @@ onready var gui = $BattleUI
 
 
 func _connect_to_mechanics_events():
-    server.connect("action_error", self, "_on_server_action_error")
-    server.connect("deployed_minion", self, "_on_server_deployed_minion")
+    var ok = server.connect("action_error", self, "_on_server_action_error")
+    assert(ok)
+    ok = server.connect("deployed_minion", self, "_on_server_deployed_minion")
+    assert(ok)
 
 
 func _default_battle_setup():
