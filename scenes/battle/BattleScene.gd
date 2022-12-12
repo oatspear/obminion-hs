@@ -30,6 +30,8 @@ onready var gui = $BattleUI
 func _connect_to_mechanics_events():
     var error = server.connect("action_error", self, "_on_server_action_error")
     assert(not error)
+    error = server.connect("resources_changed", self, "_on_server_resources_changed")
+    assert(not error)
     error = server.connect("minion_deployed", self, "_on_server_minion_deployed")
     assert(not error)
     error = server.connect("minion_attacked", self, "_on_server_minion_attacked")
@@ -43,6 +45,7 @@ func _default_battle_setup():
 
     var p = BattlePlayer.new()
     p.name = "Player 1"
+    p.resources = 5
     p.max_resources = 5
     p.add_army_minion(MINION1)
     p.add_army_minion(MINION2)
@@ -54,6 +57,7 @@ func _default_battle_setup():
 
     p = BattlePlayer.new()
     p.name = "Player 2"
+    p.resources = 5
     p.max_resources = 5
     p.add_army_minion(TARGET_DUMMY)
     p.add_army_minion(TARGET_DUMMY)
@@ -92,6 +96,13 @@ func _ready():
 
 func _on_server_action_error(msg: String):
     print("Error: ", msg)
+
+
+func _on_server_resources_changed(player_index: int, current: int, maximum: int):
+    if player_index == PLAYER_INDEX:
+        gui.set_player_resources(current, maximum)
+    else:
+        gui.set_enemy_resources(current, maximum)
 
 
 func _on_server_minion_deployed(event: BattleEventDeploy):

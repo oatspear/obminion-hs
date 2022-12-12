@@ -87,6 +87,14 @@ func set_active_minion(player_index: int, minion_index: int, data: BattleMinion)
     minion.set_minion_data(data.as_dict())
 
 
+func set_player_resources(current: int, maximum: int):
+    nameplate_player.set_resources(current, maximum)
+
+
+func set_enemy_resources(current: int, maximum: int):
+    nameplate_enemy.set_resources(current, maximum)
+
+
 func enter_main_phase():
     state = State.MAIN
     minion_row_enemy.reset_minion_selection()

@@ -6,6 +6,7 @@ class_name BattleMechanics
 ###############################################################################
 
 signal action_error(msg)
+signal resources_changed(player_index, current, maximum)
 signal minion_deployed(event)
 signal minion_attacked(event)
 signal damage_dealt(event)
@@ -38,7 +39,7 @@ func action_deploy_left(player_index: int, army_index: int):
     if len(p.active_minions) >= MAX_ACTIVE_MINIONS:
         return emit_signal("action_error", MSG_BOARD_FULL)
     p.resources -= minion.base_data.supply
-    # emit signal
+    emit_signal("resources_changed", player_index, p.resources, p.max_resources)
     p.minion_deck.remove(army_index)
     p.insert_active_minion(0, minion.base_data)
     var event = BattleEventDeploy.new()
@@ -56,7 +57,7 @@ func action_deploy_right(player_index: int, army_index: int):
     if len(p.active_minions) >= MAX_ACTIVE_MINIONS:
         return emit_signal("action_error", MSG_BOARD_FULL)
     p.resources -= minion.base_data.supply
-    # emit signal
+    emit_signal("resources_changed", player_index, p.resources, p.max_resources)
     p.minion_deck.remove(army_index)
     var n = p.add_active_minion(minion.base_data)
     var event = BattleEventDeploy.new()
