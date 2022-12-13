@@ -17,6 +17,7 @@ signal damage_dealt(event)
 
 const MAX_ACTIVE_MINIONS: int = 6
 
+const NO_RESOURCES = "Not enough resources."
 const MSG_BOARD_FULL = "The minion board is full."
 
 ###############################################################################
@@ -35,7 +36,8 @@ var current_turn: int = 0
 func action_deploy_left(player_index: int, army_index: int):
     var p = players[player_index]
     var minion = p.minion_deck[army_index]
-    # FIXME check resources, etc.
+    if p.resources < minion.base_data.supply:
+        return emit_signal("action_error", NO_RESOURCES)
     if len(p.active_minions) >= MAX_ACTIVE_MINIONS:
         return emit_signal("action_error", MSG_BOARD_FULL)
     p.resources -= minion.base_data.supply
@@ -53,7 +55,8 @@ func action_deploy_left(player_index: int, army_index: int):
 func action_deploy_right(player_index: int, army_index: int):
     var p = players[player_index]
     var minion = p.minion_deck[army_index]
-    # FIXME check resources, etc.
+    if p.resources < minion.base_data.supply:
+        return emit_signal("action_error", NO_RESOURCES)
     if len(p.active_minions) >= MAX_ACTIVE_MINIONS:
         return emit_signal("action_error", MSG_BOARD_FULL)
     p.resources -= minion.base_data.supply

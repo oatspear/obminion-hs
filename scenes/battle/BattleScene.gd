@@ -96,6 +96,7 @@ func _ready():
 
 func _on_server_action_error(msg: String):
     print("Error: ", msg)
+    gui.show_error(msg)
 
 
 func _on_server_resources_changed(player_index: int, current: int, maximum: int):

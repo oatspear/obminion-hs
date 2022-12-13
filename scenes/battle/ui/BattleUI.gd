@@ -12,12 +12,16 @@ signal action_attack_target(minion_index, target_index)
 # Constants
 ################################################################################
 
+const SIZE_POPUP_NOTICE = Vector2(192, 32)
+
 const STR_POPUP_TITLE_END_TURN = "End Turn"
 const STR_POPUP_TEXT_END_TURN = "End your turn?"
 
 const STR_POPUP_TITLE_FORFEIT = "Forfeit"
 const STR_POPUP_TEXT_FORFEIT = "Forfeit the game?"
 
+const STR_POPUP_TITLE_ERROR = "Error"
+const STR_POPUP_TITLE_NOTICE = "Notice"
 
 enum State { MAIN, TARGET }
 
@@ -33,6 +37,7 @@ onready var action_panel = $BattleField/PlayerCommandPanel
 onready var minion_row_enemy = $BattleField/Center/MinionField/Top
 onready var minion_row_player = $BattleField/Center/MinionField/Bottom
 onready var dialog_confirm: ConfirmationDialog = $Popups/Confirm
+onready var dialog_notice: AcceptDialog = $Popups/Notice
 onready var popup_card_info = $Popups/InfoCardPopup
 onready var nameplate_player = $BattleField/PlayerNameplate/Nameplate
 onready var nameplate_enemy = $BattleField/EnemyNameplate/Nameplate
@@ -127,6 +132,12 @@ func enter_target_phase(mode: int):
 ################################################################################
 # Rendering Interface
 ################################################################################
+
+
+func show_error(msg: String):
+    dialog_notice.window_title = STR_POPUP_TITLE_ERROR
+    dialog_notice.dialog_text = msg
+    dialog_notice.popup_centered_minsize(SIZE_POPUP_NOTICE)
 
 
 func animate_attack(
