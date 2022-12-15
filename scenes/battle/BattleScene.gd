@@ -51,6 +51,7 @@ func _default_battle_setup():
     p.name = "Player 1"
     p.resources = 5
     p.max_resources = 5
+    p.graveyard_size = 1
     p.add_army_minion(MINION1)
     p.add_army_minion(MINION2)
     p.add_army_minion(MINION3)
@@ -63,6 +64,7 @@ func _default_battle_setup():
     p.name = "Player 2"
     p.resources = 5
     p.max_resources = 5
+    p.graveyard_size = 2
     p.add_army_minion(TARGET_DUMMY)
     p.add_army_minion(TARGET_DUMMY)
     p.add_army_minion(TARGET_DUMMY)

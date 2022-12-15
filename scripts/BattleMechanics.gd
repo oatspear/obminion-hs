@@ -100,10 +100,20 @@ func action_attack_target(
         emit_signal("minion_died", enemy_index, target_index)
         p2.active_minions.remove(target_index)
         emit_signal("minion_destroyed", enemy_index, target_index)
+        if p2.add_to_graveyard(target.base_data):
+            print("Enemy graveyard", p2.graveyard)
+        else:
+            print("Enemy graveyard is full")  # FIXME
+        # TODO emit signal
     if source.health <= 0:
         emit_signal("minion_died", player_index, field_index)
         p1.active_minions.remove(field_index)
         emit_signal("minion_destroyed", player_index, field_index)
+        if p1.add_to_graveyard(source.base_data):
+            print("Player graveyard", p1.graveyard)
+        else:
+            print("Player graveyard is full")  # FIXME
+        # TODO emit signal
 
 
 ###############################################################################

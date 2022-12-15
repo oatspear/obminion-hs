@@ -15,6 +15,9 @@ var support_deck: Array = []
 
 var active_minions: Array = []
 
+var graveyard: Array = []
+var graveyard_size: int = 0
+
 var commander: BattleCommander
 
 ################################################################################
@@ -45,3 +48,10 @@ func insert_active_minion(index: int, base_data: MinionData) -> int:
     minion.base_data = base_data
     active_minions.insert(index, minion)
     return len(active_minions)
+
+
+func add_to_graveyard(base_data: MinionData) -> bool:
+    if len(graveyard) >= graveyard_size:
+        return false
+    graveyard.append(base_data)
+    return true
