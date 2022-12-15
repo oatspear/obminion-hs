@@ -28,6 +28,10 @@ func set_minion_data(data: Dictionary):
     set_health(minion_data.get("health", 0))
 
 
+func reset_minion_data():
+    return set_minion_data({})
+
+
 func get_power() -> int:
     return label_stats.stat1
 

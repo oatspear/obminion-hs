@@ -38,6 +38,10 @@ func _connect_to_mechanics_events():
     assert(not error)
     error = server.connect("damage_dealt", self, "_on_server_damage_dealt")
     assert(not error)
+    error = server.connect("minion_died", self, "_on_server_minion_died")
+    assert(not error)
+    error = server.connect("minion_destroyed", self, "_on_server_minion_destroyed")
+    assert(not error)
 
 
 func _default_battle_setup():
@@ -125,6 +129,17 @@ func _on_server_minion_attacked(event: BattleEventAttack):
 
 func _on_server_damage_dealt(event: BattleEventDamage):
     gui.animate_damage(event.player_index, event.field_index, event.damage)
+
+
+func _on_server_minion_died(player_index: int, field_index: int):
+    gui.animate_minion_death(player_index, field_index)
+
+
+func _on_server_minion_destroyed(player_index: int, field_index: int):
+    if player_index == PLAYER_INDEX:
+        gui.remove_from_player_field(field_index)
+    else:
+        gui.remove_from_enemy_field(field_index)
 
 
 ################################################################################

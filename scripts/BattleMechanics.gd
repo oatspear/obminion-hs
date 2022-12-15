@@ -9,6 +9,8 @@ signal action_error(msg)
 signal resources_changed(player_index, current, maximum)
 signal minion_deployed(event)
 signal minion_attacked(event)
+signal minion_died(player_index, field_index)
+signal minion_destroyed(player_index, field_index)
 signal damage_dealt(event)
 
 ###############################################################################
@@ -94,6 +96,14 @@ func action_attack_target(
     source.health -= target.power
     _damage_dealt(enemy_index, target_index, source.power)
     _damage_dealt(player_index, field_index, target.power)
+    if target.health <= 0:
+        emit_signal("minion_died", enemy_index, target_index)
+        p2.active_minions.remove(target_index)
+        emit_signal("minion_destroyed", enemy_index, target_index)
+    if source.health <= 0:
+        emit_signal("minion_died", player_index, field_index)
+        p1.active_minions.remove(field_index)
+        emit_signal("minion_destroyed", player_index, field_index)
 
 
 ###############################################################################

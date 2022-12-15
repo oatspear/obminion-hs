@@ -87,6 +87,14 @@ func spawn_enemy_minion(minion: BattleMinion, index: int = -1):
         minion_row_enemy.insert_minion(index, minion.as_dict())
 
 
+func remove_from_player_field(index: int):
+    minion_row_player.remove_minion(index)
+
+
+func remove_from_enemy_field(index: int):
+    minion_row_enemy.remove_minion(index)
+
+
 func set_active_minion(player_index: int, minion_index: int, data: BattleMinion):
     var minion = _get_active_minion(player_index, minion_index)
     minion.set_minion_data(data.as_dict())
@@ -155,6 +163,11 @@ func animate_damage(player_index: int, minion_index: int, damage: int):
     var minion = _get_active_minion(player_index, minion_index)
     print("%s took %d damage" % [minion.name, damage])
     minion.dec_health(damage)
+
+
+func animate_minion_death(player_index: int, field_index: int):
+    var minion = _get_active_minion(player_index, field_index)
+    print("%s died" % minion.name)
 
 
 ################################################################################

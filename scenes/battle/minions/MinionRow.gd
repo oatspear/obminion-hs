@@ -75,6 +75,17 @@ func insert_minion(index: int, minion_data: Dictionary) -> bool:
     return true
 
 
+func remove_minion(index: int) -> bool:
+    var n = get_minion_count()
+    if n > index:
+        for i in range(index, n - 1):
+            var other = minions[i+1].minion_data
+            minions[i].set_minion_data(other)
+        minions[n-1].reset_minion_data()
+        minions[n-1].hide()
+    return true
+
+
 func reset_minion_selection():
     for minion in minions:
         minion.set_selected(false)
@@ -103,7 +114,7 @@ func reset_minion_highlights():
 
 func _ready():
     for minion in minions:
-        minion.set_minion_data({})
+        minion.reset_minion_data()
         minion.hide()
 
 
