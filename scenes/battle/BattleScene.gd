@@ -42,6 +42,8 @@ func _connect_to_mechanics_events():
     assert(not error)
     error = server.connect("minion_destroyed", self, "_on_server_minion_destroyed")
     assert(not error)
+    error = server.connect("minion_recruited", self, "_on_server_minion_recruited")
+    assert(not error)
 
 
 func _default_battle_setup():
@@ -49,7 +51,7 @@ func _default_battle_setup():
 
     var p = BattlePlayer.new()
     p.name = "Player 1"
-    p.resources = 5
+    p.resources = 10
     p.max_resources = 5
     p.graveyard_size = 1
     p.add_army_minion(MINION1)
@@ -142,6 +144,13 @@ func _on_server_minion_destroyed(player_index: int, field_index: int):
         gui.remove_from_player_field(field_index)
     else:
         gui.remove_from_enemy_field(field_index)
+
+
+func _on_server_minion_recruited(player_index: int, minion: MinionData):
+    if player_index == PLAYER_INDEX:
+        gui.add_to_player_army(minion)
+    else:
+        gui.add_to_enemy_army(minion)
 
 
 ################################################################################

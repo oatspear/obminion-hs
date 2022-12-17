@@ -69,8 +69,16 @@ func set_player_army(minions: Array):
     action_panel.army_action_bar.token6.minion_data = data
 
 
+func add_to_player_army(minion: MinionData):
+    action_panel.army_action_bar.add_data(minion)
+
+
 func remove_from_player_army(index: int):
     action_panel.army_action_bar.remove_data_at(index)
+
+
+func add_to_enemy_army(minion: MinionData):
+    pass
 
 
 func spawn_player_minion(minion: BattleMinion, index: int = -1):

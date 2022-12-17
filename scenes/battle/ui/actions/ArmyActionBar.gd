@@ -63,6 +63,14 @@ func reset_ui():
     emit_signal("hide_info")
 
 
+func add_data(minion_data: MinionData) -> bool:
+    for token in tokens:
+        if token.minion_data == null:
+            token.set_minion_data(minion_data)
+            return true
+    return false
+
+
 func remove_data_at(index: int):
     tokens[index].minion_data = null
     for i in range(index + 1, len(tokens)):

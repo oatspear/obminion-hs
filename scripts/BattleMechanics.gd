@@ -7,6 +7,7 @@ class_name BattleMechanics
 
 signal action_error(msg)
 signal resources_changed(player_index, current, maximum)
+signal minion_recruited(player_index, minion_data)
 signal minion_deployed(event)
 signal minion_attacked(event)
 signal minion_died(player_index, field_index)
@@ -100,19 +101,23 @@ func action_attack_target(
         emit_signal("minion_died", enemy_index, target_index)
         p2.active_minions.remove(target_index)
         emit_signal("minion_destroyed", enemy_index, target_index)
-        if p2.add_to_graveyard(target.base_data):
-            print("Enemy graveyard", p2.graveyard)
-        else:
-            print("Enemy graveyard is full")  # FIXME
+        while not p2.add_to_graveyard(target.base_data):
+            print("Enemy graveyard is full")
+            var minion = p2.rotate_graveyard_to_army()
+            assert(minion != null)
+            emit_signal("minion_recruited", enemy_index, minion)
+        print("Enemy graveyard", p2.graveyard)
         # TODO emit signal
     if source.health <= 0:
         emit_signal("minion_died", player_index, field_index)
         p1.active_minions.remove(field_index)
         emit_signal("minion_destroyed", player_index, field_index)
-        if p1.add_to_graveyard(source.base_data):
-            print("Player graveyard", p1.graveyard)
-        else:
-            print("Player graveyard is full")  # FIXME
+        while not p1.add_to_graveyard(source.base_data):
+            print("Player graveyard is full")
+            var minion = p1.rotate_graveyard_to_army()
+            assert(minion != null)
+            emit_signal("minion_recruited", player_index, minion)
+        print("Player graveyard", p1.graveyard)
         # TODO emit signal
 
 
