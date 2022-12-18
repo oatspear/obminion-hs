@@ -61,7 +61,7 @@ func _default_battle_setup():
     p.add_army_minion(MINION4)
     p.add_army_minion(MINION5)
     p.add_army_minion(MINION6)
-    server.players.append(p)
+    server.data.players.append(p)
 
     p = BattlePlayer.new()
     p.name = "Player 2"
@@ -75,16 +75,16 @@ func _default_battle_setup():
     p.add_army_minion(TARGET_DUMMY)
     p.add_army_minion(TARGET_DUMMY)
     p.add_active_minion(TARGET_DUMMY)
-    server.players.append(p)
+    server.data.players.append(p)
 
 
 func _render_initial_data():
-    var p = server.players[PLAYER_INDEX]
+    var p = server.data.players[PLAYER_INDEX]
     gui.nameplate_player.set_player_name(p.name)
     gui.nameplate_player.set_resources(p.resources, p.max_resources)
     gui.set_player_army(p.minion_deck)
 
-    p = server.players[ENEMY_INDEX]
+    p = server.data.players[ENEMY_INDEX]
     gui.nameplate_enemy.set_player_name(p.name)
     gui.nameplate_enemy.set_resources(p.resources, p.max_resources)
     for minion in p.active_minions:
@@ -164,10 +164,10 @@ func _on_ui_action_attack_target(minion_index: int, target_index: int):
     #gui.animate_attack(PLAYER_INDEX, minion_index, ENEMY_INDEX, target_index)
     #gui.animate_damage(ENEMY_INDEX, target_index, 0)
     #gui.animate_damage(PLAYER_INDEX, minion_index, 0)
-    #var p = server.players[PLAYER_INDEX]
+    #var p = server.data.players[PLAYER_INDEX]
     #var m = p.active_minions[minion_index]
     #gui.set_active_minion(PLAYER_INDEX, minion_index, m)
-    #p = server.players[ENEMY_INDEX]
+    #p = server.data.players[ENEMY_INDEX]
     #m = p.active_minions[target_index]
     #gui.set_active_minion(ENEMY_INDEX, target_index, m)
 

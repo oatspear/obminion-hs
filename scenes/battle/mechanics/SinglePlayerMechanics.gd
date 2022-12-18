@@ -28,8 +28,7 @@ const MSG_BOARD_FULL = "The minion board is full."
 # Internal State
 ###############################################################################
 
-var players: Array = []
-var current_turn: int = 0
+var data: BattleData = BattleData.new()
 
 
 ###############################################################################
@@ -38,7 +37,7 @@ var current_turn: int = 0
 
 
 func action_deploy_left(player_index: int, army_index: int):
-    var p = players[player_index]
+    var p = data.players[player_index]
     var minion = p.minion_deck[army_index]
     if p.resources < minion.base_data.supply:
         return emit_signal("action_error", NO_RESOURCES)
@@ -57,7 +56,7 @@ func action_deploy_left(player_index: int, army_index: int):
 
 
 func action_deploy_right(player_index: int, army_index: int):
-    var p = players[player_index]
+    var p = data.players[player_index]
     var minion = p.minion_deck[army_index]
     if p.resources < minion.base_data.supply:
         return emit_signal("action_error", NO_RESOURCES)
@@ -81,8 +80,8 @@ func action_attack_target(
     enemy_index: int,
     target_index: int
 ):
-    var p1 = players[player_index]
-    var p2 = players[enemy_index]
+    var p1 = data.players[player_index]
+    var p2 = data.players[enemy_index]
     var source = p1.active_minions[field_index]
     var target = p2.active_minions[target_index]
     # TODO attack declaration event
@@ -125,10 +124,6 @@ func action_attack_target(
 ###############################################################################
 # Helper Functions
 ###############################################################################
-
-
-func _action_error(msg: String):
-    emit_signal("computed_action", false, msg)
 
 
 func _damage_dealt(player_index: int, field_index: int, damage: int):
