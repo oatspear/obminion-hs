@@ -60,6 +60,11 @@ _global_script_classes=[ {
 "path": "res://scripts/MinionData.gd"
 }, {
 "base": "Resource",
+"class": "PlayerData",
+"language": "GDScript",
+"path": "res://scripts/PlayerData.gd"
+}, {
+"base": "Resource",
 "class": "SupportData",
 "language": "GDScript",
 "path": "res://scripts/SupportData.gd"
@@ -75,6 +80,7 @@ _global_script_class_icons={
 "BattleMinion": "",
 "BattlePlayer": "",
 "MinionData": "",
+"PlayerData": "",
 "SupportData": ""
 }
 

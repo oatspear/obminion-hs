@@ -38,14 +38,14 @@ var data: BattleData = BattleData.new()
 
 func action_deploy_left(player_index: int, army_index: int):
     var p = data.players[player_index]
-    var minion = p.minion_deck[army_index]
+    var minion = p.player_data.minions[army_index]
     if p.resources < minion.base_data.supply:
         return emit_signal("action_error", NO_RESOURCES)
     if len(p.active_minions) >= MAX_ACTIVE_MINIONS:
         return emit_signal("action_error", MSG_BOARD_FULL)
     p.resources -= minion.base_data.supply
     emit_signal("resources_changed", player_index, p.resources, p.max_resources)
-    p.minion_deck.remove(army_index)
+    p.player_data.minions.remove(army_index)
     p.insert_active_minion(0, minion.base_data)
     var event = BattleEventDeploy.new()
     event.player_index = player_index
@@ -57,14 +57,14 @@ func action_deploy_left(player_index: int, army_index: int):
 
 func action_deploy_right(player_index: int, army_index: int):
     var p = data.players[player_index]
-    var minion = p.minion_deck[army_index]
+    var minion = p.player_data.minions[army_index]
     if p.resources < minion.base_data.supply:
         return emit_signal("action_error", NO_RESOURCES)
     if len(p.active_minions) >= MAX_ACTIVE_MINIONS:
         return emit_signal("action_error", MSG_BOARD_FULL)
     p.resources -= minion.base_data.supply
     emit_signal("resources_changed", player_index, p.resources, p.max_resources)
-    p.minion_deck.remove(army_index)
+    p.player_data.minions.remove(army_index)
     var n = p.add_active_minion(minion.base_data)
     var event = BattleEventDeploy.new()
     event.player_index = player_index

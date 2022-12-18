@@ -5,16 +5,16 @@ class_name BattlePlayer
 # Variables
 ################################################################################
 
+var index: int = 0
 var name: String = "Player"
 
 var resources: int = Global.DEFAULT_STARTING_RESOURCES
 var max_resources: int = Global.DEFAULT_MAX_RESOURCES
 
-var minion_deck: Array = []
-var support_deck: Array = []
+var player_data: PlayerData
 
 var active_minions: Array = []
-
+var army: Array = []
 var graveyard: Array = []
 var graveyard_size: int = 0
 
@@ -25,6 +25,13 @@ var commander: BattleCommander
 ################################################################################
 
 
+func reset():
+    name = player_data.name
+    resources = player_data.resources
+    max_resources = player_data.max_resources
+    graveyard_size = player_data.graveyard_size
+
+
 func replenish_resources():
     resources = max_resources
 
@@ -32,8 +39,8 @@ func replenish_resources():
 func add_army_minion(base_data: MinionData) -> int:
     var minion = ArmyMinion.new()
     minion.base_data = base_data
-    minion_deck.append(minion)
-    return len(minion_deck)
+    player_data.minions.append(minion)
+    return len(player_data.minions)
 
 
 func add_active_minion(base_data: MinionData) -> int:

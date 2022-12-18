@@ -50,11 +50,14 @@ onready var gui = $BattleUI
 func _default_battle_setup():
     gui.reset_data()
 
+    var data = PlayerData.new()
+    data.name = "Player 1"
+    data.resources = 10
+    data.max_resources = 5
+    data.graveyard_size = 1
     var p = server.data.players[PLAYER_INDEX]
-    p.name = "Player 1"
-    p.resources = 10
-    p.max_resources = 5
-    p.graveyard_size = 1
+    p.player_data = data
+    p.reset()
     p.add_army_minion(MINION1)
     p.add_army_minion(MINION2)
     p.add_army_minion(MINION3)
@@ -62,11 +65,14 @@ func _default_battle_setup():
     p.add_army_minion(MINION5)
     p.add_army_minion(MINION6)
 
+    data = PlayerData.new()
+    data.name = "Player 2"
+    data.resources = 5
+    data.max_resources = 5
+    data.graveyard_size = 2
     p = server.data.players[ENEMY_INDEX]
-    p.name = "Player 2"
-    p.resources = 5
-    p.max_resources = 5
-    p.graveyard_size = 2
+    p.player_data = data
+    p.reset()
     p.add_army_minion(TARGET_DUMMY)
     p.add_army_minion(TARGET_DUMMY)
     p.add_army_minion(TARGET_DUMMY)
@@ -80,7 +86,7 @@ func _render_initial_data():
     var p = server.data.players[PLAYER_INDEX]
     gui.nameplate_player.set_player_name(p.name)
     gui.nameplate_player.set_resources(p.resources, p.max_resources)
-    gui.set_player_army(p.minion_deck)
+    gui.set_player_army(p.player_data.minions)
 
     p = server.data.players[ENEMY_INDEX]
     gui.nameplate_enemy.set_player_name(p.name)
