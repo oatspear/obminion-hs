@@ -50,7 +50,7 @@ onready var gui = $BattleUI
 func _default_battle_setup():
     gui.reset_data()
 
-    var p = BattlePlayer.new()
+    var p = server.data.players[PLAYER_INDEX]
     p.name = "Player 1"
     p.resources = 10
     p.max_resources = 5
@@ -61,9 +61,8 @@ func _default_battle_setup():
     p.add_army_minion(MINION4)
     p.add_army_minion(MINION5)
     p.add_army_minion(MINION6)
-    server.data.players.append(p)
 
-    p = BattlePlayer.new()
+    p = server.data.players[ENEMY_INDEX]
     p.name = "Player 2"
     p.resources = 5
     p.max_resources = 5
@@ -75,7 +74,6 @@ func _default_battle_setup():
     p.add_army_minion(TARGET_DUMMY)
     p.add_army_minion(TARGET_DUMMY)
     p.add_active_minion(TARGET_DUMMY)
-    server.data.players.append(p)
 
 
 func _render_initial_data():

@@ -11,7 +11,11 @@ class_name BattleData
 # Internal State
 ###############################################################################
 
-var players: Array = []
+var players: Array = [
+    BattlePlayer.new(),
+    BattlePlayer.new(),
+]
+
 var current_turn: int = 0
 
 ###############################################################################

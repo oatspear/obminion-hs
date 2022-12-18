@@ -7,8 +7,8 @@ class_name BattlePlayer
 
 var name: String = "Player"
 
-var resources: int = 0
-var max_resources: int = 1
+var resources: int = Global.DEFAULT_STARTING_RESOURCES
+var max_resources: int = Global.DEFAULT_MAX_RESOURCES
 
 var minion_deck: Array = []
 var support_deck: Array = []
