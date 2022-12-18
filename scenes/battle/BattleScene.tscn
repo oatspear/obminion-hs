@@ -1,13 +1,24 @@
-[gd_scene load_steps=3 format=2]
+[gd_scene load_steps=4 format=2]
 
 [ext_resource path="res://scenes/battle/ui/BattleUI.tscn" type="PackedScene" id=1]
 [ext_resource path="res://scenes/battle/BattleScene.gd" type="Script" id=2]
+[ext_resource path="res://scenes/battle/mechanics/SinglePlayerMechanics.tscn" type="PackedScene" id=3]
 
 [node name="BattleScene" type="Node"]
 script = ExtResource( 2 )
 
+[node name="Server" parent="." instance=ExtResource( 3 )]
+
 [node name="BattleUI" parent="." instance=ExtResource( 1 )]
 
+[connection signal="action_error" from="Server" to="." method="_on_server_action_error"]
+[connection signal="damage_dealt" from="Server" to="." method="_on_server_damage_dealt"]
+[connection signal="minion_attacked" from="Server" to="." method="_on_server_minion_attacked"]
+[connection signal="minion_deployed" from="Server" to="." method="_on_server_minion_deployed"]
+[connection signal="minion_destroyed" from="Server" to="." method="_on_server_minion_destroyed"]
+[connection signal="minion_died" from="Server" to="." method="_on_server_minion_died"]
+[connection signal="minion_recruited" from="Server" to="." method="_on_server_minion_recruited"]
+[connection signal="resources_changed" from="Server" to="." method="_on_server_resources_changed"]
 [connection signal="action_attack_target" from="BattleUI" to="." method="_on_ui_action_attack_target"]
 [connection signal="action_deploy_left" from="BattleUI" to="." method="_on_ui_action_deploy_left"]
 [connection signal="action_deploy_right" from="BattleUI" to="." method="_on_ui_action_deploy_right"]
