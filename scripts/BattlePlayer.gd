@@ -11,7 +11,7 @@ var name: String = "Player"
 var resources: int = Global.DEFAULT_STARTING_RESOURCES
 var max_resources: int = Global.DEFAULT_MAX_RESOURCES
 
-var player_data: PlayerData
+var player_data: PlayerData setget set_player_data
 
 var active_minions: Array = []
 var army: Array = []
@@ -23,6 +23,15 @@ var commander: BattleCommander
 ################################################################################
 # Interface
 ################################################################################
+
+
+func set_player_data(data: PlayerData):
+    player_data = data
+    reset()
+    for base_data in data.minions:
+        var minion = ArmyMinion.new()
+        minion.base_data = base_data
+        army.append(minion)
 
 
 func reset():
@@ -42,7 +51,8 @@ func replenish_resources():
 func add_army_minion(base_data: MinionData) -> int:
     var minion = ArmyMinion.new()
     minion.base_data = base_data
-    player_data.minions.append(minion)
+    player_data.minions.append(base_data)
+    army.append(minion)
     return len(player_data.minions)
 
 

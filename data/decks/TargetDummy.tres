@@ -1,0 +1,15 @@
+[gd_resource type="Resource" load_steps=3 format=2]
+
+[ext_resource path="res://scripts/PlayerData.gd" type="Script" id=1]
+[ext_resource path="res://data/minions/TargetDummy.tres" type="Resource" id=2]
+
+[resource]
+resource_local_to_scene = true
+script = ExtResource( 1 )
+name = "Dummy Enemy"
+faction = "Dummies"
+resources = 5
+max_resources = 5
+graveyard_size = 2
+minions = [ ExtResource( 2 ), ExtResource( 2 ), ExtResource( 2 ), ExtResource( 2 ), ExtResource( 2 ), ExtResource( 2 ) ]
+support = [  ]

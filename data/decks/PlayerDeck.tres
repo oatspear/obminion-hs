@@ -1,0 +1,20 @@
+[gd_resource type="Resource" load_steps=8 format=2]
+
+[ext_resource path="res://scripts/PlayerData.gd" type="Script" id=1]
+[ext_resource path="res://data/minions/Minion3.tres" type="Resource" id=2]
+[ext_resource path="res://data/minions/Minion2.tres" type="Resource" id=3]
+[ext_resource path="res://data/minions/Minion6.tres" type="Resource" id=4]
+[ext_resource path="res://data/minions/Minion4.tres" type="Resource" id=5]
+[ext_resource path="res://data/minions/Minion5.tres" type="Resource" id=6]
+[ext_resource path="res://data/minions/Minion1.tres" type="Resource" id=7]
+
+[resource]
+resource_local_to_scene = true
+script = ExtResource( 1 )
+name = "The Player"
+faction = "Player Faction"
+resources = 10
+max_resources = 5
+graveyard_size = 1
+minions = [ ExtResource( 7 ), ExtResource( 3 ), ExtResource( 2 ), ExtResource( 5 ), ExtResource( 6 ), ExtResource( 4 ) ]
+support = [  ]

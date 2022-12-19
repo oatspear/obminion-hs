@@ -15,6 +15,9 @@ const MINION5 = preload("res://data/minions/Minion5.tres")
 const MINION6 = preload("res://data/minions/Minion6.tres")
 const TARGET_DUMMY = preload("res://data/minions/TargetDummy.tres")
 
+const PLAYER_DECK = preload("res://data/decks/PlayerDeck.tres")
+const ENEMY_DECK = preload("res://data/decks/TargetDummy.tres")
+
 ################################################################################
 # Variables
 ################################################################################
@@ -50,38 +53,32 @@ onready var gui = $BattleUI
 func _default_battle_setup():
     gui.reset_data()
 
-    var data = PlayerData.new()
-    data.reset()  # this reset is needed so the resource does not share references
-    data.name = "Player 1"
-    data.resources = 10
-    data.max_resources = 5
-    data.graveyard_size = 1
+    var data = PLAYER_DECK
+    # data.reset()  # this reset is needed so the resource does not share references
     var p = server.data.players[PLAYER_INDEX]
-    p.player_data = data
-    p.reset()
-    p.add_army_minion(MINION1)
-    p.add_army_minion(MINION2)
-    p.add_army_minion(MINION3)
-    p.add_army_minion(MINION4)
-    p.add_army_minion(MINION5)
-    p.add_army_minion(MINION6)
+    p.set_player_data(data)
+    #p.player_data = data
+    #p.reset()
+    #p.add_army_minion(MINION1)
+    #p.add_army_minion(MINION2)
+    #p.add_army_minion(MINION3)
+    #p.add_army_minion(MINION4)
+    #p.add_army_minion(MINION5)
+    #p.add_army_minion(MINION6)
     assert(len(data.minions) == 6)
 
-    data = PlayerData.new()
-    data.reset()  # this reset is needed so the resource does not share references
-    data.name = "Player 2"
-    data.resources = 5
-    data.max_resources = 5
-    data.graveyard_size = 2
+    data = ENEMY_DECK
+    # data.reset()  # this reset is needed so the resource does not share references
     p = server.data.players[ENEMY_INDEX]
-    p.player_data = data
-    p.reset()
-    p.add_army_minion(TARGET_DUMMY)
-    p.add_army_minion(TARGET_DUMMY)
-    p.add_army_minion(TARGET_DUMMY)
-    p.add_army_minion(TARGET_DUMMY)
-    p.add_army_minion(TARGET_DUMMY)
-    p.add_army_minion(TARGET_DUMMY)
+    p.set_player_data(data)
+    #p.player_data = data
+    #p.reset()
+    #p.add_army_minion(TARGET_DUMMY)
+    #p.add_army_minion(TARGET_DUMMY)
+    #p.add_army_minion(TARGET_DUMMY)
+    #p.add_army_minion(TARGET_DUMMY)
+    #p.add_army_minion(TARGET_DUMMY)
+    #p.add_army_minion(TARGET_DUMMY)
     p.add_active_minion(TARGET_DUMMY)
     assert(server.data.players[PLAYER_INDEX] != server.data.players[ENEMY_INDEX])
     assert(len(data.minions) == 6)
