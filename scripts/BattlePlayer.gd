@@ -30,6 +30,9 @@ func reset():
     resources = player_data.resources
     max_resources = player_data.max_resources
     graveyard_size = player_data.graveyard_size
+    active_minions = []
+    army = []
+    graveyard = []
 
 
 func replenish_resources():
@@ -65,7 +68,7 @@ func add_to_graveyard(base_data: MinionData) -> bool:
 
 
 func rotate_graveyard_to_army():
-    print("Rotate %s from graveyard" % (graveyard[0] if graveyard else "nothing"))
+    print("Rotate %s from graveyard" % (graveyard[0].name if graveyard else "nothing"))
     var minion = graveyard.pop_front()
     if minion != null:
         add_army_minion(minion)

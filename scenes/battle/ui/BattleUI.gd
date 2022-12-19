@@ -82,6 +82,7 @@ func add_to_enemy_army(minion: MinionData):
 
 
 func spawn_player_minion(minion: BattleMinion, index: int = -1):
+    print("GUI: spawn player minion: %s" % minion.base_data.name)
     if index < 0:
         minion_row_player.append_minion(minion.as_dict())
     else:

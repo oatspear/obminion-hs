@@ -19,3 +19,14 @@ export (Array, Resource) var support: Array = []
 ################################################################################
 # Interface
 ################################################################################
+
+
+func reset():
+    # useful to ensure that exported arrays are not shared between instances
+    name = "Player"
+    faction = "Faction"
+    resources = Global.DEFAULT_STARTING_RESOURCES
+    max_resources = Global.DEFAULT_MAX_RESOURCES
+    graveyard_size = Global.DEFAULT_GRAVEYARD_SIZE
+    minions = []
+    support = []

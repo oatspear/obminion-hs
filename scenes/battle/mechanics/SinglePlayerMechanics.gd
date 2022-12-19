@@ -58,6 +58,7 @@ func action_deploy_left(player_index: int, army_index: int):
 func action_deploy_right(player_index: int, army_index: int):
     var p = data.players[player_index]
     var minion = p.player_data.minions[army_index]
+    print("Deploying %s from %s" % [minion.base_data.name, p.name])
     if p.resources < minion.base_data.supply:
         return emit_signal("action_error", NO_RESOURCES)
     if len(p.active_minions) >= MAX_ACTIVE_MINIONS:
@@ -112,6 +113,7 @@ func action_attack_target(
         emit_signal("minion_died", player_index, field_index)
         p1.active_minions.remove(field_index)
         emit_signal("minion_destroyed", player_index, field_index)
+        print("%s died" % source.base_data.name)
         while not p1.add_to_graveyard(source.base_data):
             print("Player graveyard is full")
             var minion = p1.rotate_graveyard_to_army()
