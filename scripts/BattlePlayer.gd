@@ -39,9 +39,7 @@ func reset():
     graveyard = []
     army = []
     for base_data in player_data.minions:
-        var minion = BattleMinion.new()
-        minion.base_data = base_data
-        army.append(minion)
+        add_army_minion(base_data)
 
 
 func replenish_resources():
@@ -49,23 +47,23 @@ func replenish_resources():
 
 
 func add_army_minion(data: MinionData) -> int:
-    var minion = BattleMinion.new()
+    var minion = _new_minion(data, len(army))
     minion.set_base_data(data)
     army.append(minion)
     return len(army)
 
 
 func add_active_minion(data: MinionData) -> int:
-    var minion = BattleMinion.new()
+    var minion = _new_minion(data, len(active_minions))
     minion.set_base_data(data)
     active_minions.append(minion)
     return len(active_minions)
 
 
-func insert_active_minion(index: int, data: MinionData) -> int:
-    var minion = BattleMinion.new()
+func insert_active_minion(field_index: int, data: MinionData) -> int:
+    var minion = _new_minion(data, field_index)
     minion.set_base_data(data)
-    active_minions.insert(index, minion)
+    active_minions.insert(field_index, minion)
     return len(active_minions)
 
 
@@ -81,4 +79,17 @@ func rotate_graveyard_to_army():
     var minion = graveyard.pop_front()
     if minion != null:
         add_army_minion(minion)
+    return minion
+
+
+################################################################################
+# Helper Functions
+################################################################################
+
+
+func _new_minion(data: MinionData, i: int) -> BattleMinion:
+    var minion = BattleMinion.new()
+    minion.set_base_data(data)
+    minion.index = i
+    minion.player = index
     return minion
