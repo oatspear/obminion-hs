@@ -28,10 +28,6 @@ var commander: BattleCommander
 func set_player_data(data: PlayerData):
     player_data = data
     reset()
-    for base_data in data.minions:
-        var minion = ArmyMinion.new()
-        minion.base_data = base_data
-        army.append(minion)
 
 
 func reset():
@@ -40,40 +36,43 @@ func reset():
     max_resources = player_data.max_resources
     graveyard_size = player_data.graveyard_size
     active_minions = []
-    army = []
     graveyard = []
+    army = []
+    for base_data in player_data.minions:
+        var minion = BattleMinion.new()
+        minion.base_data = base_data
+        army.append(minion)
 
 
 func replenish_resources():
     resources = max_resources
 
 
-func add_army_minion(base_data: MinionData) -> int:
-    var minion = ArmyMinion.new()
-    minion.base_data = base_data
-    player_data.minions.append(base_data)
-    army.append(minion)
-    return len(player_data.minions)
-
-
-func add_active_minion(base_data: MinionData) -> int:
+func add_army_minion(data: MinionData) -> int:
     var minion = BattleMinion.new()
-    minion.base_data = base_data
+    minion.set_base_data(data)
+    army.append(minion)
+    return len(army)
+
+
+func add_active_minion(data: MinionData) -> int:
+    var minion = BattleMinion.new()
+    minion.set_base_data(data)
     active_minions.append(minion)
     return len(active_minions)
 
 
-func insert_active_minion(index: int, base_data: MinionData) -> int:
+func insert_active_minion(index: int, data: MinionData) -> int:
     var minion = BattleMinion.new()
-    minion.base_data = base_data
+    minion.set_base_data(data)
     active_minions.insert(index, minion)
     return len(active_minions)
 
 
-func add_to_graveyard(base_data: MinionData) -> bool:
+func add_to_graveyard(data: MinionData) -> bool:
     if len(graveyard) >= graveyard_size:
         return false
-    graveyard.append(base_data)
+    graveyard.append(data)
     return true
 
 
