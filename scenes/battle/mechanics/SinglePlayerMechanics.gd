@@ -37,41 +37,11 @@ var data: BattleData = BattleData.new()
 
 
 func action_deploy_left(player_index: int, army_index: int):
-    var p: BattlePlayer = data.players[player_index]
-    var minion: BattleMinion = p.army[army_index]
-    if p.resources < minion.supply:
-        return emit_signal("action_error", NO_RESOURCES)
-    if len(p.active_minions) >= MAX_ACTIVE_MINIONS:
-        return emit_signal("action_error", MSG_BOARD_FULL)
-    p.resources -= minion.supply
-    emit_signal("resources_changed", player_index, p.resources, p.max_resources)
-    p.army.remove(army_index)
-    p.insert_active_minion(0, minion.base_data)
-    var event = BattleEventDeploy.new()
-    event.player_index = player_index
-    event.army_index = army_index
-    event.field_index = 0
-    event.minion = p.active_minions[0]
-    emit_signal("minion_deployed", event)
+    return _deploy(player_index, army_index, 0)
 
 
 func action_deploy_right(player_index: int, army_index: int):
-    var p: BattlePlayer = data.players[player_index]
-    var minion: BattleMinion = p.army[army_index]
-    if p.resources < minion.supply:
-        return emit_signal("action_error", NO_RESOURCES)
-    if len(p.active_minions) >= MAX_ACTIVE_MINIONS:
-        return emit_signal("action_error", MSG_BOARD_FULL)
-    p.resources -= minion.supply
-    emit_signal("resources_changed", player_index, p.resources, p.max_resources)
-    p.army.remove(army_index)
-    var n = p.add_active_minion(minion.base_data)
-    var event = BattleEventDeploy.new()
-    event.player_index = player_index
-    event.army_index = army_index
-    event.field_index = n - 1
-    event.minion = p.active_minions[n-1]
-    emit_signal("minion_deployed", event)
+    return _deploy(player_index, army_index, -1)
 
 
 func action_attack_target(
@@ -125,6 +95,27 @@ func action_attack_target(
 ###############################################################################
 # Helper Functions
 ###############################################################################
+
+
+func _deploy(player_index: int, army_index: int, field_index: int):
+    var p: BattlePlayer = data.players[player_index]
+    var minion: BattleMinion = p.army[army_index]
+    if p.resources < minion.supply:
+        return emit_signal("action_error", NO_RESOURCES)
+    if len(p.active_minions) >= MAX_ACTIVE_MINIONS:
+        return emit_signal("action_error", MSG_BOARD_FULL)
+    p.resources -= minion.supply
+    emit_signal("resources_changed", player_index, p.resources, p.max_resources)
+    p.army.remove(army_index)
+    if field_index < 0 or field_index > p.active_minions.size():
+        field_index = p.active_minions.size()
+    p.insert_active_minion(field_index, minion.base_data)
+    var event = BattleEventDeploy.new()
+    event.player_index = player_index
+    event.army_index = army_index
+    event.field_index = field_index
+    event.minion = p.active_minions[field_index]
+    emit_signal("minion_deployed", event)
 
 
 func _damage_dealt(player_index: int, field_index: int, damage: int):
