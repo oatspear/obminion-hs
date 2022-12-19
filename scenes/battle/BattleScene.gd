@@ -54,34 +54,13 @@ func _default_battle_setup():
     gui.reset_data()
 
     var data = PLAYER_DECK
-    # data.reset()  # this reset is needed so the resource does not share references
     var p = server.data.players[PLAYER_INDEX]
     p.set_player_data(data)
-    #p.player_data = data
-    #p.reset()
-    #p.add_army_minion(MINION1)
-    #p.add_army_minion(MINION2)
-    #p.add_army_minion(MINION3)
-    #p.add_army_minion(MINION4)
-    #p.add_army_minion(MINION5)
-    #p.add_army_minion(MINION6)
-    assert(len(data.minions) == 6)
 
     data = ENEMY_DECK
-    # data.reset()  # this reset is needed so the resource does not share references
     p = server.data.players[ENEMY_INDEX]
     p.set_player_data(data)
-    #p.player_data = data
-    #p.reset()
-    #p.add_army_minion(TARGET_DUMMY)
-    #p.add_army_minion(TARGET_DUMMY)
-    #p.add_army_minion(TARGET_DUMMY)
-    #p.add_army_minion(TARGET_DUMMY)
-    #p.add_army_minion(TARGET_DUMMY)
-    #p.add_army_minion(TARGET_DUMMY)
     p.add_active_minion(TARGET_DUMMY)
-    assert(server.data.players[PLAYER_INDEX] != server.data.players[ENEMY_INDEX])
-    assert(len(data.minions) == 6)
 
 
 func _render_initial_data():
