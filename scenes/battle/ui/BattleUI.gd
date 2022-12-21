@@ -77,7 +77,7 @@ func remove_from_player_army(i: int):
     action_panel.army_action_bar.remove_data_at(i)
 
 
-func add_to_enemy_army(minion: MinionData):
+func add_to_enemy_army(_minion: MinionData):
     pass
 
 

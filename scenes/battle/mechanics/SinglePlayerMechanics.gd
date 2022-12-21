@@ -109,7 +109,7 @@ func _deploy(player_index: int, army_index: int, field_index: int):
     p.army.remove(army_index)
     if field_index < 0 or field_index > p.active_minions.size():
         field_index = p.active_minions.size()
-    p.insert_active_minion(field_index, minion.base_data)
+    var _r = p.insert_active_minion(field_index, minion.base_data)
     minion = p.active_minions[field_index]
     minion.can_act = true
     var event = BattleEventDeploy.new()
