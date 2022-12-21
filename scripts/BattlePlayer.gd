@@ -91,5 +91,5 @@ func _new_minion(data: MinionData, i: int) -> BattleMinion:
     var minion = BattleMinion.new()
     minion.set_base_data(data)
     minion.index = i
-    minion.player = index
+    minion.player_index = index
     return minion
