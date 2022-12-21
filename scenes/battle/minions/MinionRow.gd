@@ -69,7 +69,9 @@ func insert_minion(index: int, minion_data: Dictionary) -> bool:
     for i in range(_minion_count, index, -1):
         var prev = minions[i-1].minion_data
         minions[i].set_minion_data(prev)
+        minions[i].can_act = minions[i-1].can_act
     minions[index].set_minion_data(minion_data)
+    minions[index].can_act = false
     minions[_minion_count].show()
     _minion_count += 1
     return true

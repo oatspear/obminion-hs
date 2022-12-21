@@ -38,47 +38,55 @@ func reset():
     active_minions = []
     graveyard = []
     army = []
-    for base_data in player_data.minions:
-        var _r = add_army_minion(base_data)
+    for i in range(player_data.minions.size()):
+        var _r = add_minion_from_deck(i)
 
 
 func replenish_resources():
     resources = max_resources
 
 
-func add_army_minion(data: MinionData) -> int:
-    var minion = _new_minion(data, len(army))
-    minion.set_base_data(data)
+func add_minion_from_deck(deck_index: int) -> MinionInstance:
+    var base_data: MinionData = player_data.minions[deck_index]
+    var minion = MinionInstance.new()
+    minion.set_base_data(base_data)
+    minion.deck_index = deck_index
+    # minion.index and minion.player_index are handled below
+    add_to_army(minion)
+    return minion
+
+
+func add_to_army(minion: MinionInstance) -> void:
+    # ensure that indices are consistent
+    minion.index = len(army)
+    minion.player_index = index
     army.append(minion)
-    return len(army)
 
 
-func add_active_minion(data: MinionData) -> int:
-    var minion = _new_minion(data, len(active_minions))
-    minion.set_base_data(data)
+func add_active_minion(minion: BattleMinion) -> void:
+    # ensure that indices are consistent
     active_minions.append(minion)
-    return len(active_minions)
+    _fix_battle_indices()
 
 
-func insert_active_minion(field_index: int, data: MinionData) -> int:
-    var minion = _new_minion(data, field_index)
-    minion.set_base_data(data)
+func insert_active_minion(field_index: int, minion: BattleMinion) -> void:
+    # ensure that indices are consistent
     active_minions.insert(field_index, minion)
-    return len(active_minions)
+    _fix_battle_indices()
 
 
-func add_to_graveyard(data: MinionData) -> bool:
+func add_to_graveyard(minion: MinionInstance) -> bool:
     if len(graveyard) >= graveyard_size:
         return false
-    graveyard.append(data)
+    graveyard.append(minion)
     return true
 
 
 func rotate_graveyard_to_army():
-    print("Rotate %s from graveyard" % (graveyard[0].name if graveyard else "nothing"))
-    var minion = graveyard.pop_front()
+    print("Rotate %s from graveyard" % (graveyard[0].base_data.name if graveyard else "nothing"))
+    var minion: MinionInstance = graveyard.pop_front()
     if minion != null:
-        var _r = add_army_minion(minion)
+        add_to_army(minion)
     return minion
 
 
@@ -87,9 +95,14 @@ func rotate_graveyard_to_army():
 ################################################################################
 
 
-func _new_minion(data: MinionData, i: int) -> BattleMinion:
-    var minion = BattleMinion.new()
+func _instance_from_data(data: MinionData) -> MinionInstance:
+    var minion = MinionInstance.new()
     minion.set_base_data(data)
-    minion.index = i
-    minion.player_index = index
     return minion
+
+
+func _fix_battle_indices():
+    for i in range(active_minions.size()):
+        var minion: BattleMinion = active_minions[i]
+        minion.index = i
+        minion.player_index = index
