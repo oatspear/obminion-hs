@@ -110,11 +110,13 @@ func _deploy(player_index: int, army_index: int, field_index: int):
     if field_index < 0 or field_index > p.active_minions.size():
         field_index = p.active_minions.size()
     p.insert_active_minion(field_index, minion.base_data)
+    minion = p.active_minions[field_index]
+    minion.can_act = true
     var event = BattleEventDeploy.new()
     event.player_index = player_index
     event.army_index = army_index
     event.field_index = field_index
-    event.minion = p.active_minions[field_index]
+    event.minion = minion
     emit_signal("minion_deployed", event)
 
 

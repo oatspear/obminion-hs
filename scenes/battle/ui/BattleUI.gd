@@ -73,35 +73,38 @@ func add_to_player_army(minion: MinionData):
     action_panel.army_action_bar.add_data(minion)
 
 
-func remove_from_player_army(index: int):
-    action_panel.army_action_bar.remove_data_at(index)
+func remove_from_player_army(i: int):
+    action_panel.army_action_bar.remove_data_at(i)
 
 
 func add_to_enemy_army(minion: MinionData):
     pass
 
 
-func spawn_player_minion(minion: BattleMinion, index: int = -1):
-    print("GUI: spawn player minion: %s" % minion.base_data.name)
-    if index < 0:
+func spawn_player_minion(minion: BattleMinion, i: int = -1):
+    if i < 0:
+        i = minion_row_player.get_minion_count()
         minion_row_player.append_minion(minion.as_dict())
     else:
-        minion_row_player.insert_minion(index, minion.as_dict())
+        minion_row_player.insert_minion(i, minion.as_dict())
+    minion_row_player.minions[i].can_act = minion.can_act
 
 
-func spawn_enemy_minion(minion: BattleMinion, index: int = -1):
-    if index < 0:
+func spawn_enemy_minion(minion: BattleMinion, i: int = -1):
+    if i < 0:
+        i = minion_row_enemy.get_minion_count()
         minion_row_enemy.append_minion(minion.as_dict())
     else:
-        minion_row_enemy.insert_minion(index, minion.as_dict())
+        minion_row_enemy.insert_minion(i, minion.as_dict())
+    minion_row_enemy.minions[i].can_act = minion.can_act
 
 
-func remove_from_player_field(index: int):
-    minion_row_player.remove_minion(index)
+func remove_from_player_field(i: int):
+    minion_row_player.remove_minion(i)
 
 
-func remove_from_enemy_field(index: int):
-    minion_row_enemy.remove_minion(index)
+func remove_from_enemy_field(i: int):
+    minion_row_enemy.remove_minion(i)
 
 
 func set_active_minion(player_index: int, minion_index: int, data: BattleMinion):
@@ -201,7 +204,8 @@ func _on_main_state_minion_selected(minion: Control, friendly: bool):
     _selected_minion = weakref(minion)
     if prev != null and prev != minion:
         prev.set_selected(false)
-    action_panel.show_minion_action_bar(minion.minion_data, friendly)
+    var can_act = friendly and minion.can_act
+    action_panel.show_minion_action_bar(minion.minion_data, can_act)
 
 
 func _on_main_state_minion_deselected(minion):

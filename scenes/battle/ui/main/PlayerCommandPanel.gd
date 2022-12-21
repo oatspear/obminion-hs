@@ -52,12 +52,12 @@ func show_support_action_bar():
     support_action_bar.show()
 
 
-func show_minion_action_bar(minion_data: Dictionary, friendly: bool):
+func show_minion_action_bar(minion_data: Dictionary, can_act: bool):
     for action_bar in get_children():
         action_bar.hide()
     # minion_action_bar.reset_ui()
     minion_action_bar.set_minion_data(minion_data)
-    if friendly:
+    if can_act:
         minion_action_bar.set_attack_enabled(true)
     else:
         minion_action_bar.set_attack_enabled(false)

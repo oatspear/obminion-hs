@@ -8,6 +8,7 @@ extends "res://scenes/ui/SelectablePanel.gd"
 export (int) var index: int = 0
 
 var minion_data: Dictionary = {} setget set_minion_data
+var can_act: bool = false
 
 onready var portrait: TextureRect = $Elements/Portrait
 onready var label_stats = $Elements/Stats

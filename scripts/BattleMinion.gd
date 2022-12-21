@@ -8,9 +8,10 @@ class_name BattleMinion
 
 var base_data: MinionData setget set_base_data
 
-var index: int = 0
+var index: int = -1
 var player: int = -1
 var active: bool = false
+var can_act: bool = false
 
 var tribe: String = "Tribe"
 
