@@ -55,18 +55,7 @@ func reset_data():
 
 
 func set_player_army(minions: Array):
-    var data = null if len(minions) < 1 else minions[0]
-    action_panel.army_action_bar.token1.minion_data = data
-    data = null if len(minions) < 2 else minions[1]
-    action_panel.army_action_bar.token2.minion_data = data
-    data = null if len(minions) < 3 else minions[2]
-    action_panel.army_action_bar.token3.minion_data = data
-    data = null if len(minions) < 4 else minions[3]
-    action_panel.army_action_bar.token4.minion_data = data
-    data = null if len(minions) < 5 else minions[4]
-    action_panel.army_action_bar.token5.minion_data = data
-    data = null if len(minions) < 6 else minions[5]
-    action_panel.army_action_bar.token6.minion_data = data
+    action_panel.army_action_bar.set_minions(minions)
 
 
 func add_to_player_army(minion: MinionData):

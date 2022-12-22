@@ -47,7 +47,7 @@ func _render_initial_data():
     var p = server.data.players[PLAYER_INDEX]
     gui.nameplate_player.set_player_name(p.name)
     gui.nameplate_player.set_resources(p.resources, p.max_resources)
-    gui.set_player_army(p.player_data.minions)
+    gui.set_player_army(p.army)
 
     p = server.data.players[ENEMY_INDEX]
     gui.nameplate_enemy.set_player_name(p.name)
