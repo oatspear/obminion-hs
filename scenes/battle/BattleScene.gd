@@ -7,12 +7,6 @@ extends Node
 const PLAYER_INDEX: int = 0
 const ENEMY_INDEX: int = 1
 
-const MINION1 = preload("res://data/minions/Minion1.tres")
-const MINION2 = preload("res://data/minions/Minion2.tres")
-const MINION3 = preload("res://data/minions/Minion3.tres")
-const MINION4 = preload("res://data/minions/Minion4.tres")
-const MINION5 = preload("res://data/minions/Minion5.tres")
-const MINION6 = preload("res://data/minions/Minion6.tres")
 const TARGET_DUMMY = preload("res://data/minions/TargetDummy.tres")
 
 const PLAYER_DECK = preload("res://data/decks/PlayerDeck.tres")
@@ -22,32 +16,12 @@ const ENEMY_DECK = preload("res://data/decks/TargetDummy.tres")
 # Variables
 ################################################################################
 
-# onready var server: BattleMechanics = BattleMechanics.new()
 onready var server = $Server
 onready var gui = $BattleUI
 
 ################################################################################
 # Helper Functions
 ################################################################################
-
-
-#func _connect_to_mechanics_events():
-#    var error = server.connect("action_error", self, "_on_server_action_error")
-#    assert(not error)
-#    error = server.connect("resources_changed", self, "_on_server_resources_changed")
-#    assert(not error)
-#    error = server.connect("minion_deployed", self, "_on_server_minion_deployed")
-#    assert(not error)
-#    error = server.connect("minion_attacked", self, "_on_server_minion_attacked")
-#    assert(not error)
-#    error = server.connect("damage_dealt", self, "_on_server_damage_dealt")
-#    assert(not error)
-#    error = server.connect("minion_died", self, "_on_server_minion_died")
-#    assert(not error)
-#    error = server.connect("minion_destroyed", self, "_on_server_minion_destroyed")
-#    assert(not error)
-#    error = server.connect("minion_recruited", self, "_on_server_minion_recruited")
-#    assert(not error)
 
 
 func _default_battle_setup():
@@ -88,7 +62,6 @@ func _render_initial_data():
 
 
 func _ready():
-    #_connect_to_mechanics_events()
     _default_battle_setup()
     _render_initial_data()
     gui.enter_main_phase()
