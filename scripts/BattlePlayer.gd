@@ -58,9 +58,8 @@ func add_minion_from_deck(deck_index: int) -> MinionInstance:
 
 func add_to_army(minion: MinionInstance) -> void:
     # ensure that indices are consistent
-    minion.index = len(army)
-    minion.player_index = index
     army.append(minion)
+    _fix_army_indices()
 
 
 func add_active_minion(minion: BattleMinion) -> void:
@@ -95,10 +94,11 @@ func rotate_graveyard_to_army():
 ################################################################################
 
 
-func _instance_from_data(data: MinionData) -> MinionInstance:
-    var minion = MinionInstance.new()
-    minion.set_base_data(data)
-    return minion
+func _fix_army_indices():
+    for i in range(army.size()):
+        var minion: MinionInstance = army[i]
+        minion.index = i
+        minion.player_index = index
 
 
 func _fix_battle_indices():
