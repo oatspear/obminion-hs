@@ -3,7 +3,7 @@
 [ext_resource path="res://scenes/ui/labels/icon_value/Label.tscn" type="PackedScene" id=1]
 [ext_resource path="res://assets/icons/user.png" type="Texture" id=2]
 [ext_resource path="res://scenes/ui/SelectablePanel.tscn" type="PackedScene" id=3]
-[ext_resource path="res://scenes/ui/tokens/MinionFood.gd" type="Script" id=4]
+[ext_resource path="res://scenes/ui/tokens/MinionInstanceToken.gd" type="Script" id=4]
 
 [node name="Minion" instance=ExtResource( 3 )]
 visible = false

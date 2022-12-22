@@ -1,6 +1,6 @@
 [gd_scene load_steps=11 format=2]
 
-[ext_resource path="res://scenes/ui/tokens/MinionFood.tscn" type="PackedScene" id=1]
+[ext_resource path="res://scenes/ui/tokens/MinionInstanceToken.tscn" type="PackedScene" id=1]
 [ext_resource path="res://data/minions/Minion2.tres" type="Resource" id=2]
 [ext_resource path="res://data/minions/Minion1.tres" type="Resource" id=3]
 [ext_resource path="res://data/minions/Minion3.tres" type="Resource" id=4]
