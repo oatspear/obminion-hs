@@ -13,7 +13,7 @@ var max_resources: int = Global.DEFAULT_MAX_RESOURCES
 
 var player_data: PlayerData setget set_player_data
 
-var active_minions: Array = []
+var battlefield: Array = []
 var army: Array = []
 var graveyard: Array = []
 var graveyard_size: int = 0
@@ -35,7 +35,7 @@ func reset():
     resources = player_data.resources
     max_resources = player_data.max_resources
     graveyard_size = player_data.graveyard_size
-    active_minions = []
+    battlefield = []
     graveyard = []
     army = []
     for i in range(player_data.minions.size()):
@@ -65,13 +65,13 @@ func add_to_army(minion: MinionInstance) -> void:
 
 func add_active_minion(minion: BattleMinion) -> void:
     # ensure that indices are consistent
-    active_minions.append(minion)
+    battlefield.append(minion)
     _fix_battle_indices()
 
 
 func insert_active_minion(field_index: int, minion: BattleMinion) -> void:
     # ensure that indices are consistent
-    active_minions.insert(field_index, minion)
+    battlefield.insert(field_index, minion)
     _fix_battle_indices()
 
 
@@ -102,7 +102,7 @@ func _instance_from_data(data: MinionData) -> MinionInstance:
 
 
 func _fix_battle_indices():
-    for i in range(active_minions.size()):
-        var minion: BattleMinion = active_minions[i]
+    for i in range(battlefield.size()):
+        var minion: BattleMinion = battlefield[i]
         minion.index = i
         minion.player_index = index

@@ -52,8 +52,8 @@ func action_attack_target(
 ):
     var p1 = data.players[player_index]
     var p2 = data.players[enemy_index]
-    var source: BattleMinion = p1.active_minions[field_index]
-    var target: BattleMinion = p2.active_minions[target_index]
+    var source: BattleMinion = p1.battlefield[field_index]
+    var target: BattleMinion = p2.battlefield[target_index]
     # TODO attack declaration event
     # emit post attack event
     var event = BattleEventAttack.new()
@@ -69,7 +69,7 @@ func action_attack_target(
     _damage_dealt(player_index, field_index, target.power)
     if target.health <= 0:
         emit_signal("minion_died", enemy_index, target_index)
-        p2.active_minions.remove(target_index)
+        p2.battlefield.remove(target_index)
         emit_signal("minion_destroyed", enemy_index, target_index)
         while not p2.add_to_graveyard(target.instance):
             print("Enemy graveyard is full")
@@ -80,7 +80,7 @@ func action_attack_target(
         # TODO emit signal
     if source.health <= 0:
         emit_signal("minion_died", player_index, field_index)
-        p1.active_minions.remove(field_index)
+        p1.battlefield.remove(field_index)
         emit_signal("minion_destroyed", player_index, field_index)
         print("%s died" % source.base_data.name)
         while not p1.add_to_graveyard(source.instance):
@@ -102,13 +102,13 @@ func _deploy(player_index: int, army_index: int, field_index: int):
     var instance: MinionInstance = p.army[army_index]
     if p.resources < instance.supply:
         return emit_signal("action_error", NO_RESOURCES)
-    if len(p.active_minions) >= MAX_ACTIVE_MINIONS:
+    if len(p.battlefield) >= MAX_ACTIVE_MINIONS:
         return emit_signal("action_error", MSG_BOARD_FULL)
     p.resources -= instance.supply
     emit_signal("resources_changed", player_index, p.resources, p.max_resources)
     p.army.remove(army_index)
-    if field_index < 0 or field_index > p.active_minions.size():
-        field_index = p.active_minions.size()
+    if field_index < 0 or field_index > p.battlefield.size():
+        field_index = p.battlefield.size()
     var minion = BattleMinion.new()
     minion.set_minion_instance(instance)
     minion.can_act = true

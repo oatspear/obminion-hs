@@ -78,7 +78,7 @@ func _render_initial_data():
     p = server.data.players[ENEMY_INDEX]
     gui.nameplate_enemy.set_player_name(p.name)
     gui.nameplate_enemy.set_resources(p.resources, p.max_resources)
-    for minion in p.active_minions:
+    for minion in p.battlefield:
         gui.spawn_enemy_minion(minion)
 
 
@@ -156,10 +156,10 @@ func _on_ui_action_attack_target(minion_index: int, target_index: int):
     #gui.animate_damage(ENEMY_INDEX, target_index, 0)
     #gui.animate_damage(PLAYER_INDEX, minion_index, 0)
     #var p = server.data.players[PLAYER_INDEX]
-    #var m = p.active_minions[minion_index]
+    #var m = p.battlefield[minion_index]
     #gui.set_active_minion(PLAYER_INDEX, minion_index, m)
     #p = server.data.players[ENEMY_INDEX]
-    #m = p.active_minions[target_index]
+    #m = p.battlefield[target_index]
     #gui.set_active_minion(ENEMY_INDEX, target_index, m)
 
 
