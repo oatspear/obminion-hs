@@ -63,6 +63,15 @@ func reset_ui():
     emit_signal("hide_info")
 
 
+func set_minions(minions: Array):
+    var n: int = min(tokens.size(), minions.size())
+    for i in range(n):
+        var minion: MinionInstance = minions[i]
+        tokens[i].set_minion_data(minion.as_minion_data())
+    for i in range(n, tokens.size()):
+        tokens[i].set_minion_data(null)
+
+
 func add_data(minion_data: MinionData) -> bool:
     for token in tokens:
         if token.minion_data == null:
