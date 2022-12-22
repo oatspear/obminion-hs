@@ -102,22 +102,16 @@ func _deploy(player_index: int, army_index: int, field_index: int):
     var instance: MinionInstance = p.army[army_index]
     if p.resources < instance.supply:
         return emit_signal("action_error", NO_RESOURCES)
-    if len(p.battlefield) >= MAX_ACTIVE_MINIONS:
+    if p.battlefield.size() >= MAX_ACTIVE_MINIONS:
         return emit_signal("action_error", MSG_BOARD_FULL)
     p.resources -= instance.supply
     emit_signal("resources_changed", player_index, p.resources, p.max_resources)
-    p.army.remove(army_index)
-    if field_index < 0 or field_index > p.battlefield.size():
-        field_index = p.battlefield.size()
-    var minion = BattleMinion.new()
-    minion.set_minion_instance(instance)
-    minion.can_act = true
-    p.insert_active_minion(field_index, minion)
+    p.deploy(army_index, field_index)
     var event = BattleEventDeploy.new()
     event.player_index = player_index
     event.army_index = army_index
     event.field_index = field_index
-    event.minion = minion
+    event.minion = p.battlefield[field_index]
     emit_signal("minion_deployed", event)
 
 
