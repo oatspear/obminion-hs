@@ -48,6 +48,20 @@ func is_minion_token() -> bool:
     return not is_deck_minion()
 
 
+func as_minion_data() -> MinionData:
+    var data = MinionData.new()
+    data.name = name
+    data.faction = base_data.faction
+    data.tribe = tribe
+    data.species = base_data.species
+    data.power = power
+    data.health = health
+    data.supply = supply
+    data.ability = ability
+    data.ability_text = base_data.ability_text  # FIXME
+    return data
+
+
 func as_dict() -> Dictionary:
     return {
         "name": name,
