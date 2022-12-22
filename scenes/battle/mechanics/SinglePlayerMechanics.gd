@@ -127,3 +127,22 @@ func _damage_dealt(player_index: int, field_index: int, damage: int):
     event.field_index = field_index
     event.damage = damage
     emit_signal("damage_dealt", event)
+
+
+#func _connect_to_mechanics_events():
+#    var error = server.connect("action_error", self, "_on_server_action_error")
+#    assert(not error)
+#    error = server.connect("resources_changed", self, "_on_server_resources_changed")
+#    assert(not error)
+#    error = server.connect("minion_deployed", self, "_on_server_minion_deployed")
+#    assert(not error)
+#    error = server.connect("minion_attacked", self, "_on_server_minion_attacked")
+#    assert(not error)
+#    error = server.connect("damage_dealt", self, "_on_server_damage_dealt")
+#    assert(not error)
+#    error = server.connect("minion_died", self, "_on_server_minion_died")
+#    assert(not error)
+#    error = server.connect("minion_destroyed", self, "_on_server_minion_destroyed")
+#    assert(not error)
+#    error = server.connect("minion_recruited", self, "_on_server_minion_recruited")
+#    assert(not error)
