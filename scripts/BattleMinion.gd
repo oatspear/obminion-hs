@@ -58,7 +58,7 @@ func is_minion_token() -> bool:
 
 func as_dict() -> Dictionary:
     return {
-        "name": base_data.name,
+        "name": name,
         "type": Global.CardType.MINION,
         "faction": base_data.faction,
         "tribe": tribe,
