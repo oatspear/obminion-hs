@@ -1,4 +1,5 @@
 extends Reference
+
 class_name BattleMechanics
 
 ###############################################################################
@@ -27,8 +28,7 @@ const MSG_BOARD_FULL = "The minion board is full."
 # Internal State
 ###############################################################################
 
-var players: Array = []
-var current_turn: int = 0
+var data: BattleData = BattleData.new()
 
 
 ###############################################################################
@@ -37,41 +37,11 @@ var current_turn: int = 0
 
 
 func action_deploy_left(player_index: int, army_index: int):
-    var p = players[player_index]
-    var minion = p.minion_deck[army_index]
-    if p.resources < minion.base_data.supply:
-        return emit_signal("action_error", NO_RESOURCES)
-    if len(p.active_minions) >= MAX_ACTIVE_MINIONS:
-        return emit_signal("action_error", MSG_BOARD_FULL)
-    p.resources -= minion.base_data.supply
-    emit_signal("resources_changed", player_index, p.resources, p.max_resources)
-    p.minion_deck.remove(army_index)
-    p.insert_active_minion(0, minion.base_data)
-    var event = BattleEventDeploy.new()
-    event.player_index = player_index
-    event.army_index = army_index
-    event.field_index = 0
-    event.minion = p.active_minions[0]
-    emit_signal("minion_deployed", event)
+    return _deploy(player_index, army_index, 0)
 
 
 func action_deploy_right(player_index: int, army_index: int):
-    var p = players[player_index]
-    var minion = p.minion_deck[army_index]
-    if p.resources < minion.base_data.supply:
-        return emit_signal("action_error", NO_RESOURCES)
-    if len(p.active_minions) >= MAX_ACTIVE_MINIONS:
-        return emit_signal("action_error", MSG_BOARD_FULL)
-    p.resources -= minion.base_data.supply
-    emit_signal("resources_changed", player_index, p.resources, p.max_resources)
-    p.minion_deck.remove(army_index)
-    var n = p.add_active_minion(minion.base_data)
-    var event = BattleEventDeploy.new()
-    event.player_index = player_index
-    event.army_index = army_index
-    event.field_index = n - 1
-    event.minion = p.active_minions[n-1]
-    emit_signal("minion_deployed", event)
+    return _deploy(player_index, army_index, -1)
 
 
 func action_attack_target(
@@ -80,10 +50,10 @@ func action_attack_target(
     enemy_index: int,
     target_index: int
 ):
-    var p1 = players[player_index]
-    var p2 = players[enemy_index]
-    var source = p1.active_minions[field_index]
-    var target = p2.active_minions[target_index]
+    var p1 = data.players[player_index]
+    var p2 = data.players[enemy_index]
+    var source: BattleMinion = p1.battlefield[field_index]
+    var target: BattleMinion = p2.battlefield[target_index]
     # TODO attack declaration event
     # emit post attack event
     var event = BattleEventAttack.new()
@@ -99,9 +69,9 @@ func action_attack_target(
     _damage_dealt(player_index, field_index, target.power)
     if target.health <= 0:
         emit_signal("minion_died", enemy_index, target_index)
-        p2.active_minions.remove(target_index)
+        p2.battlefield.remove(target_index)
         emit_signal("minion_destroyed", enemy_index, target_index)
-        while not p2.add_to_graveyard(target.base_data):
+        while not p2.add_to_graveyard(target.instance):
             print("Enemy graveyard is full")
             var minion = p2.rotate_graveyard_to_army()
             assert(minion != null)
@@ -110,13 +80,14 @@ func action_attack_target(
         # TODO emit signal
     if source.health <= 0:
         emit_signal("minion_died", player_index, field_index)
-        p1.active_minions.remove(field_index)
+        p1.battlefield.remove(field_index)
         emit_signal("minion_destroyed", player_index, field_index)
-        while not p1.add_to_graveyard(source.base_data):
+        print("%s died" % source.base_data.name)
+        while not p1.add_to_graveyard(source.instance):
             print("Player graveyard is full")
             var minion = p1.rotate_graveyard_to_army()
             assert(minion != null)
-            emit_signal("minion_recruited", player_index, minion)
+            emit_signal("minion_recruited", player_index, minion.base_data)
         print("Player graveyard", p1.graveyard)
         # TODO emit signal
 
@@ -126,8 +97,28 @@ func action_attack_target(
 ###############################################################################
 
 
-func _action_error(msg: String):
-    emit_signal("computed_action", false, msg)
+func _deploy(player_index: int, army_index: int, field_index: int):
+    var p: BattlePlayer = data.players[player_index]
+    var instance: MinionInstance = p.army[army_index]
+    if p.resources < instance.supply:
+        return emit_signal("action_error", NO_RESOURCES)
+    if len(p.battlefield) >= MAX_ACTIVE_MINIONS:
+        return emit_signal("action_error", MSG_BOARD_FULL)
+    p.resources -= instance.supply
+    emit_signal("resources_changed", player_index, p.resources, p.max_resources)
+    p.army.remove(army_index)
+    if field_index < 0 or field_index > p.battlefield.size():
+        field_index = p.battlefield.size()
+    var minion = BattleMinion.new()
+    minion.set_minion_instance(instance)
+    minion.can_act = true
+    p.insert_active_minion(field_index, minion)
+    var event = BattleEventDeploy.new()
+    event.player_index = player_index
+    event.army_index = army_index
+    event.field_index = field_index
+    event.minion = minion
+    emit_signal("minion_deployed", event)
 
 
 func _damage_dealt(player_index: int, field_index: int, damage: int):
