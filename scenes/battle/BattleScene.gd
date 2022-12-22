@@ -152,15 +152,6 @@ func _on_server_minion_recruited(player_index: int, minion: MinionData):
 
 func _on_ui_action_attack_target(minion_index: int, target_index: int):
     server.action_attack_target(PLAYER_INDEX, minion_index, ENEMY_INDEX, target_index)
-    #gui.animate_attack(PLAYER_INDEX, minion_index, ENEMY_INDEX, target_index)
-    #gui.animate_damage(ENEMY_INDEX, target_index, 0)
-    #gui.animate_damage(PLAYER_INDEX, minion_index, 0)
-    #var p = server.data.players[PLAYER_INDEX]
-    #var m = p.battlefield[minion_index]
-    #gui.set_active_minion(PLAYER_INDEX, minion_index, m)
-    #p = server.data.players[ENEMY_INDEX]
-    #m = p.battlefield[target_index]
-    #gui.set_active_minion(ENEMY_INDEX, target_index, m)
 
 
 func _on_ui_action_deploy_left(army_index: int):
