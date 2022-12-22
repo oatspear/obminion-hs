@@ -1,7 +1,7 @@
 [gd_scene load_steps=11 format=2]
 
 [ext_resource path="res://assets/fonts/roboto_bold_12.tres" type="DynamicFont" id=1]
-[ext_resource path="res://scenes/ui/tokens/SupportGold.tscn" type="PackedScene" id=2]
+[ext_resource path="res://scenes/ui/tokens/SupportInstanceToken.tscn" type="PackedScene" id=2]
 [ext_resource path="res://assets/fonts/roboto_bold_16.tres" type="DynamicFont" id=3]
 [ext_resource path="res://scenes/battle/ui/actions/SupportActionBar.gd" type="Script" id=4]
 [ext_resource path="res://data/supports/Support1.tres" type="Resource" id=5]
