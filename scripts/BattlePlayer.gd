@@ -74,6 +74,16 @@ func insert_active_minion(field_index: int, minion: BattleMinion) -> void:
     _fix_battle_indices()
 
 
+func deploy(army_index: int, field_index: int):
+    var instance: MinionInstance = army[army_index]
+    army.remove(army_index)
+    if field_index < 0 or field_index > battlefield.size():
+        field_index = battlefield.size()
+    var minion = BattleMinion.new()
+    minion.set_minion_instance(instance)
+    insert_active_minion(field_index, minion)
+
+
 func add_to_graveyard(minion: MinionInstance) -> bool:
     if len(graveyard) >= graveyard_size:
         return false
