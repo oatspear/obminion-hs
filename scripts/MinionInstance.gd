@@ -16,6 +16,7 @@ var deck_index: int = -1
 var deployed: bool = false
 
 # current/modified stats
+var name: String = "Minion"
 var tribe: String = "Tribe"
 var power: int = 0
 var health: int = 0
@@ -31,6 +32,7 @@ var effects: Array = []
 
 func set_base_data(data: MinionData):
     base_data = data
+    name = data.name
     tribe = data.tribe
     power = data.power
     health = data.health

@@ -17,6 +17,7 @@ var active: bool = false
 var can_act: bool = false
 
 # current/modified stats
+var name: String = "Minion"
 var tribe: String = "Tribe"
 var power: int = 0
 var health: int = 0
@@ -38,6 +39,7 @@ func set_minion_instance(minion_instance: MinionInstance):
 
 func set_base_data(data: MinionData):
     base_data = data
+    name = data.name
     tribe = data.tribe
     power = data.power
     max_health = data.health

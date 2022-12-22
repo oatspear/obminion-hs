@@ -83,7 +83,7 @@ func add_to_graveyard(minion: MinionInstance) -> bool:
 
 
 func rotate_graveyard_to_army():
-    print("Rotate %s from graveyard" % (graveyard[0].base_data.name if graveyard else "nothing"))
+    print("Rotate %s from graveyard" % (graveyard[0].name if graveyard else "nothing"))
     var minion: MinionInstance = graveyard.pop_front()
     if minion != null:
         add_to_army(minion)
