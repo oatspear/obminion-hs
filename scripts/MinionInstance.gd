@@ -46,3 +46,19 @@ func is_deck_minion() -> bool:
 
 func is_minion_token() -> bool:
     return not is_deck_minion()
+
+
+func as_dict() -> Dictionary:
+    return {
+        "name": name,
+        "type": Global.CardType.MINION,
+        "faction": base_data.faction,
+        "tribe": tribe,
+        "species": base_data.species,
+        "power": power,
+        "health": health,
+        "cost": supply,
+        "resource": Global.ResourceType.RESOURCES,
+        "effect": ability,
+        "effect_text": base_data.ability_text,
+    }
