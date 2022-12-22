@@ -107,6 +107,7 @@ func _deploy(player_index: int, army_index: int, field_index: int):
     p.resources -= instance.supply
     emit_signal("resources_changed", player_index, p.resources, p.max_resources)
     p.deploy(army_index, field_index)
+    p.battlefield[field_index].can_act = true
     var event = BattleEventDeploy.new()
     event.player_index = player_index
     event.army_index = army_index
