@@ -237,9 +237,10 @@ func _on_target_state_minion_selected(minion):
         target.set_highlighted(false)
     print("Selected %s as a target" % minion.name)
     var attacker = _active_minion.get_ref()
-    assert(attacker != null)
-    enter_main_phase()
-    emit_signal("action_attack_target", attacker.index, minion.index)
+    if attacker == null:
+        emit_signal("target_selected", minion.index)
+    else:
+        emit_signal("action_attack_target", attacker.index, minion.index)
 
 
 func _on_target_state_enemy_commander_selected():

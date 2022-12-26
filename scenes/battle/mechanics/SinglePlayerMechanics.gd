@@ -138,7 +138,9 @@ func _deploy(player_index: int, army_index: int, field_index: int):
     event.minion = minion
     emit_signal("minion_deployed", event)
     if p.battlefield.size() > 2:
-        emit_signal("request_select_target", player_index, Global.TargetMode.FRIENDLY_MINION)
+        _ongoing_player_input = player_index
+        _ongoing_target_mode = Global.TargetMode.FRIENDLY_MINION
+        emit_signal("request_select_target", player_index, _ongoing_target_mode)
 
 
 func _damage_dealt(player_index: int, field_index: int, damage: int):
