@@ -64,6 +64,7 @@ func reset_ui():
 
 
 func set_minions(minions: Array):
+# warning-ignore:narrowing_conversion
     var n: int = min(tokens.size(), minions.size())
     for i in range(n):
         var minion: MinionInstance = minions[i]
