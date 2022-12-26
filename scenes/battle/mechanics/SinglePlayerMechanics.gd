@@ -69,7 +69,7 @@ func action_attack_target(
     source.damage += target.get_power()
     _damage_dealt(enemy_index, target_index, source.get_power())
     _damage_dealt(player_index, field_index, target.get_power())
-    if target.get_current_health() <= 0 or source.has_poison():
+    if target.get_current_health() <= 0 or source.has_ability(Global.Abilities.POISON):
         emit_signal("minion_died", enemy_index, target_index)
         p2.battlefield.remove(target_index)
         emit_signal("minion_destroyed", enemy_index, target_index)
@@ -80,7 +80,7 @@ func action_attack_target(
             emit_signal("minion_recruited", enemy_index, minion)
         print("Enemy graveyard", p2.graveyard)
         # TODO emit signal
-    if source.get_current_health() <= 0 or target.has_poison():
+    if source.get_current_health() <= 0 or target.has_ability(Global.Abilities.POISON):
         emit_signal("minion_died", player_index, field_index)
         p1.battlefield.remove(field_index)
         emit_signal("minion_destroyed", player_index, field_index)
@@ -110,7 +110,7 @@ func _deploy(player_index: int, army_index: int, field_index: int):
     emit_signal("resources_changed", player_index, p.resources, p.max_resources)
     p.deploy(army_index, field_index)
     var minion: BattleMinion = p.battlefield[field_index]
-    # minion.action_timer = 0 if minion.has_haste() else DEFAULT_ACTION_TIMER
+    # minion.action_timer = 0 if minion.has_ability(Global.Abilities.HASTE) else DEFAULT_ACTION_TIMER
     var event = BattleEventDeploy.new()
     event.player_index = player_index
     event.army_index = army_index
