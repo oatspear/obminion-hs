@@ -15,7 +15,7 @@ export (int) var power: int = 0
 export (int) var health: int = 0
 export (int) var supply: int = 0
 
-export (int) var ability: int = 0
+export (Global.Abilities) var ability: int = Global.Abilities.NONE
 export (String) var ability_text: String = ""
 
 ################################################################################

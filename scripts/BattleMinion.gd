@@ -62,6 +62,10 @@ func is_minion_token() -> bool:
     return instance.is_minion_token()
 
 
+func has_poison() -> bool:
+    return bool(instance.ability & Global.Abilities.POISON)
+
+
 ################################################################################
 # Data Transformation Interface
 ################################################################################

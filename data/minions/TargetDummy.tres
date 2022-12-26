@@ -11,5 +11,5 @@ species = 0
 power = 2
 health = 10
 supply = 2
-ability = 0
+ability = 2
 ability_text = "A target dummy that does nothing."
