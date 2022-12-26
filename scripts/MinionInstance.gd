@@ -13,13 +13,19 @@ var base_data: MinionData setget set_base_data
 var index: int = -1
 var player_index: int = -1
 var deck_index: int = -1
-var deployed: bool = false
 
 # current/modified stats
 var name: String = "Minion"
 var tribe: String = "Tribe"
-var power: int = 0
+
+var _base_power: int = 0
+var _bonus_power: int = 0
+var power: int = 0 setget set_power
+
+var _base_health: int = 0
+var _bonus_health: int = 0
 var health: int = 0
+
 var supply: int = 0
 var ability: int = 0
 
@@ -34,10 +40,24 @@ func set_base_data(data: MinionData):
     base_data = data
     name = data.name
     tribe = data.tribe
-    power = data.power
-    health = data.health
+    set_power(data.power)
+    set_health(data.health)
     supply = data.supply
     ability = data.ability
+
+
+func set_power(value: int) -> void:
+    # overrides species' base stat and current bonuses
+    _base_power = value
+    _bonus_power = 0
+    power = value
+
+
+func set_health(value: int) -> void:
+    # overrides species' base stat and current bonuses
+    _base_health = value
+    _bonus_health = 0
+    health = value
 
 
 func is_deck_minion() -> bool:
@@ -46,6 +66,31 @@ func is_deck_minion() -> bool:
 
 func is_minion_token() -> bool:
     return not is_deck_minion()
+
+
+func calculate_power() -> void:
+    var value = _base_power + _bonus_power
+    power = 0 if value < 0 else value
+
+
+func calculate_health() -> void:
+    var value = _base_health + _bonus_health
+    health = 0 if value < 0 else value
+
+
+func apply_power_modifier(amount: int) -> void:
+    _bonus_power += amount
+    calculate_power()
+
+
+func apply_health_modifier(amount: int) -> void:
+    _bonus_health += amount
+    calculate_health()
+
+
+################################################################################
+# Data Transformation Interface
+################################################################################
 
 
 func as_minion_data() -> MinionData:
