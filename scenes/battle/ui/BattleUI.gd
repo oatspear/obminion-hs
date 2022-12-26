@@ -7,6 +7,7 @@ extends MarginContainer
 signal action_deploy_left(army_index)
 signal action_deploy_right(army_index)
 signal action_attack_target(minion_index, target_index)
+signal target_selected(index)
 
 ################################################################################
 # Constants
@@ -42,7 +43,7 @@ onready var popup_card_info = $Popups/InfoCardPopup
 onready var nameplate_player = $BattleField/PlayerNameplate/Nameplate
 onready var nameplate_enemy = $BattleField/EnemyNameplate/Nameplate
 
-var _selected_minion: WeakRef = weakref(null)
+var _active_minion: WeakRef = weakref(null)
 var _selection_targets: Array = []
 
 ################################################################################
@@ -121,7 +122,7 @@ func enter_main_phase():
     enemy_panel.commander.set_highlighted(false)
     # this may not be the best place for the lines below
     _selection_targets = []
-    _selected_minion = weakref(null)
+    _active_minion = weakref(null)
     action_panel.show_main_command_card()
 
 
@@ -132,10 +133,18 @@ func enter_target_phase(mode: int):
                 print("There are no targets to attack.")
             else:
                 state = State.TARGET
-                assert(_selected_minion.get_ref() in minion_row_player.minions)
+                assert(_active_minion.get_ref() in minion_row_player.minions)
                 _selection_targets = minion_row_enemy.minions.duplicate()
                 _selection_targets.append(enemy_panel.commander)
                 _target_state_enable_targets()
+        Global.TargetMode.FRIENDLY_MINION:
+            assert(minion_row_player.get_minion_count() > 0)
+            state = State.TARGET
+            # assert(_active_minion.get_ref() in minion_row_player.minions)
+            _selection_targets = minion_row_player.minions.duplicate()
+            _target_state_enable_targets()
+        Global.TargetMode.HOSTILE_MINION:
+            assert(minion_row_enemy.get_minion_count() > 0)
 
 
 ################################################################################
@@ -189,8 +198,8 @@ func _get_active_minion(player_index: int, minion_index: int) -> Control:
 
 
 func _on_main_state_minion_selected(minion: Control, friendly: bool):
-    var prev = _selected_minion.get_ref()
-    _selected_minion = weakref(minion)
+    var prev = _active_minion.get_ref()
+    _active_minion = weakref(minion)
     if prev != null and prev != minion:
         prev.set_selected(false)
     var can_act = friendly and minion.can_act
@@ -198,9 +207,9 @@ func _on_main_state_minion_selected(minion: Control, friendly: bool):
 
 
 func _on_main_state_minion_deselected(minion):
-    var prev = _selected_minion.get_ref()
+    var prev = _active_minion.get_ref()
     if prev != null and prev == minion:
-        _selected_minion = weakref(null)
+        _active_minion = weakref(null)
         action_panel.show_main_command_card()
 
 
@@ -227,7 +236,7 @@ func _on_target_state_minion_selected(minion):
     for target in _selection_targets:
         target.set_highlighted(false)
     print("Selected %s as a target" % minion.name)
-    var attacker = _selected_minion.get_ref()
+    var attacker = _active_minion.get_ref()
     assert(attacker != null)
     enter_main_phase()
     emit_signal("action_attack_target", attacker.index, minion.index)

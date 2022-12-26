@@ -14,6 +14,7 @@ signal minion_attacked(event)
 signal minion_died(player_index, field_index)
 signal minion_destroyed(player_index, field_index)
 signal damage_dealt(event)
+signal request_select_target(player_index, target_mode)
 
 ###############################################################################
 # Constants
@@ -32,6 +33,8 @@ const DEFAULT_ACTION_TIMER: int = 1
 
 var data: BattleData = BattleData.new()
 
+var _ongoing_player_input: int = -1
+var _ongoing_target_mode: int = Global.TargetMode.NONE
 
 ###############################################################################
 # Interface
@@ -94,6 +97,23 @@ func action_attack_target(
         # TODO emit signal
 
 
+func set_requested_target(index: int):
+    assert(_ongoing_player_input >= 0)
+    assert(_ongoing_target_mode != Global.TargetMode.NONE)
+    match _ongoing_target_mode:
+        Global.TargetMode.FRIENDLY_MINION:
+            var p: BattlePlayer = data.players[_ongoing_player_input]
+            var minion: BattleMinion = p.battlefield[index]
+            print("set requested target: [P:%d, BM:%d]" % [_ongoing_player_input, index])
+        Global.TargetMode.HOSTILE_MINION:
+            var i: int = (_ongoing_player_input + 1) % data.players.size()
+            var p: BattlePlayer = data.players[i]
+            var minion: BattleMinion = p.battlefield[index]
+            print("set requested target: [P:%d, BM:%d]" % [_ongoing_player_input, index])
+    _ongoing_player_input = -1
+    _ongoing_target_mode = Global.TargetMode.NONE
+
+
 ###############################################################################
 # Helper Functions
 ###############################################################################
@@ -117,6 +137,8 @@ func _deploy(player_index: int, army_index: int, field_index: int):
     event.field_index = field_index
     event.minion = minion
     emit_signal("minion_deployed", event)
+    if p.battlefield.size() > 2:
+        emit_signal("request_select_target", player_index, Global.TargetMode.FRIENDLY_MINION)
 
 
 func _damage_dealt(player_index: int, field_index: int, damage: int):

@@ -118,6 +118,11 @@ func _on_server_minion_recruited(player_index: int, minion: MinionData):
         gui.add_to_enemy_army(minion)
 
 
+func _on_server_request_select_target(player_index: int, target_mode: int):
+    if player_index == PLAYER_INDEX:
+        gui.enter_target_phase(target_mode)
+
+
 ################################################################################
 # Event Handlers - GUI
 ################################################################################
@@ -133,3 +138,7 @@ func _on_ui_action_deploy_left(army_index: int):
 
 func _on_ui_action_deploy_right(army_index: int):
     server.action_deploy_right(PLAYER_INDEX, army_index)
+
+
+func _on_ui_target_selected(index: int):
+    server.set_requested_target(index)

@@ -16,6 +16,8 @@ var action_timer: int = 0
 
 # battle-specific variables
 var damage: int = 0  # taken
+var _aura_power: int = 0
+var _aura_health: int = 0
 
 ################################################################################
 # Interface
@@ -35,15 +37,17 @@ func get_supply() -> int:
 
 
 func get_power() -> int:
-    return instance.power
+    var value = instance.power + _aura_power
+    return 0 if value < 0 else value
 
 
 func get_health() -> int:
-    return instance.health
+    var value = instance.health + _aura_health
+    return 0 if value < 0 else value
 
 
 func get_current_health() -> int:
-    return instance.health - damage
+    return get_health() - damage
 
 
 func get_ability() -> int:

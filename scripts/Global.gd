@@ -43,7 +43,7 @@ const DEFAULT_GRAVEYARD_SIZE = 2
 
 
 enum Abilities {
-    NONE    = 0b_0000_0000_0000_0000,
-    HASTE   = 0b_0000_0000_0000_0001,
-    POISON  = 0b_0000_0000_0000_0010,
+    NONE                        = 0b_0000_0000_0000_0000,
+    HASTE                       = 0b_0000_0000_0000_0001,
+    POISON                      = 0b_0000_0000_0000_0010,
 }
