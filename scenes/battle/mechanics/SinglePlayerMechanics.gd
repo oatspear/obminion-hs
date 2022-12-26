@@ -63,11 +63,11 @@ func action_attack_target(
     event.target_index = target_index
     emit_signal("minion_attacked", event)
     # deal damage
-    target.health -= source.power
-    source.health -= target.power
-    _damage_dealt(enemy_index, target_index, source.power)
-    _damage_dealt(player_index, field_index, target.power)
-    if target.health <= 0:
+    target.damage += source.get_power()
+    source.damage += target.get_power()
+    _damage_dealt(enemy_index, target_index, source.get_power())
+    _damage_dealt(player_index, field_index, target.get_power())
+    if target.get_current_health() <= 0:
         emit_signal("minion_died", enemy_index, target_index)
         p2.battlefield.remove(target_index)
         emit_signal("minion_destroyed", enemy_index, target_index)
@@ -78,11 +78,11 @@ func action_attack_target(
             emit_signal("minion_recruited", enemy_index, minion)
         print("Enemy graveyard", p2.graveyard)
         # TODO emit signal
-    if source.health <= 0:
+    if source.get_current_health() <= 0:
         emit_signal("minion_died", player_index, field_index)
         p1.battlefield.remove(field_index)
         emit_signal("minion_destroyed", player_index, field_index)
-        print("%s died" % source.base_data.name)
+        print("%s died" % source.instance.name)
         while not p1.add_to_graveyard(source.instance):
             print("Player graveyard is full")
             var minion = p1.rotate_graveyard_to_army()
@@ -107,7 +107,7 @@ func _deploy(player_index: int, army_index: int, field_index: int):
     p.resources -= instance.supply
     emit_signal("resources_changed", player_index, p.resources, p.max_resources)
     p.deploy(army_index, field_index)
-    p.battlefield[field_index].can_act = true
+    p.battlefield[field_index].action_timer = 0
     var event = BattleEventDeploy.new()
     event.player_index = player_index
     event.army_index = army_index

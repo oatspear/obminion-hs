@@ -76,7 +76,7 @@ func spawn_player_minion(minion: BattleMinion, i: int = -1):
         minion_row_player.append_minion(minion.as_dict())
     else:
         minion_row_player.insert_minion(i, minion.as_dict())
-    minion_row_player.minions[i].can_act = minion.can_act
+    minion_row_player.minions[i].can_act = minion.action_timer <= 0
 
 
 func spawn_enemy_minion(minion: BattleMinion, i: int = -1):
@@ -85,7 +85,7 @@ func spawn_enemy_minion(minion: BattleMinion, i: int = -1):
         minion_row_enemy.append_minion(minion.as_dict())
     else:
         minion_row_enemy.insert_minion(i, minion.as_dict())
-    minion_row_enemy.minions[i].can_act = minion.can_act
+    minion_row_enemy.minions[i].can_act = minion.action_timer <= 0
 
 
 func remove_from_player_field(i: int):

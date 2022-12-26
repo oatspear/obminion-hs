@@ -73,7 +73,7 @@ func as_dict() -> Dictionary:
         "type": Global.CardType.MINION,
         "faction": instance.base_data.faction,
         "tribe": get_tribe(),
-        "species": instance.species,
+        "species": instance.base_data.species,
         "power": get_power(),
         "health": get_health(),
         "cost": get_supply(),
