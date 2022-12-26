@@ -24,6 +24,8 @@ const MAX_ACTIVE_MINIONS: int = 6
 const NO_RESOURCES = "Not enough resources."
 const MSG_BOARD_FULL = "The minion board is full."
 
+const DEFAULT_ACTION_TIMER: int = 1
+
 ###############################################################################
 # Internal State
 ###############################################################################
@@ -107,12 +109,13 @@ func _deploy(player_index: int, army_index: int, field_index: int):
     p.resources -= instance.supply
     emit_signal("resources_changed", player_index, p.resources, p.max_resources)
     p.deploy(army_index, field_index)
-    p.battlefield[field_index].action_timer = 0
+    var minion: BattleMinion = p.battlefield[field_index]
+    # minion.action_timer = 0 if minion.has_haste() else DEFAULT_ACTION_TIMER
     var event = BattleEventDeploy.new()
     event.player_index = player_index
     event.army_index = army_index
     event.field_index = field_index
-    event.minion = p.battlefield[field_index]
+    event.minion = minion
     emit_signal("minion_deployed", event)
 
 

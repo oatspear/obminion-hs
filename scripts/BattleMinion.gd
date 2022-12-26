@@ -62,6 +62,10 @@ func is_minion_token() -> bool:
     return instance.is_minion_token()
 
 
+func has_haste() -> bool:
+    return bool(instance.ability & Global.Abilities.HASTE)
+
+
 func has_poison() -> bool:
     return bool(instance.ability & Global.Abilities.POISON)
 
