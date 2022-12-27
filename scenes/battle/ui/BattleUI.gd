@@ -24,14 +24,14 @@ const STR_POPUP_TEXT_FORFEIT = "Forfeit the game?"
 const STR_POPUP_TITLE_ERROR = "Error"
 const STR_POPUP_TITLE_NOTICE = "Notice"
 
-enum State { MAIN, TARGET }
+enum State { INITIAL, MAIN, TARGET }
 
 
 ################################################################################
 # Variables
 ################################################################################
 
-var state: int = State.MAIN
+var _state: int = State.INITIAL
 
 onready var enemy_panel = $BattleField/EnemyCommandPanel
 onready var action_panel = $BattleField/PlayerCommandPanel
@@ -111,7 +111,8 @@ func set_enemy_resources(current: int, maximum: int):
 
 
 func enter_main_phase():
-    state = State.MAIN
+    _state = State.MAIN
+    action_panel.enabled = true
     minion_row_enemy.reset_minion_selection()
     minion_row_enemy.reset_minion_highlights()
     minion_row_enemy.enable_minion_selection(true)
@@ -132,14 +133,14 @@ func enter_target_phase(mode: int):
             if minion_row_enemy.get_minion_count() == 0:
                 print("There are no targets to attack.")
             else:
-                state = State.TARGET
+                _state = State.TARGET
                 assert(_active_minion.get_ref() in minion_row_player.minions)
                 _selection_targets = minion_row_enemy.minions.duplicate()
                 _selection_targets.append(enemy_panel.commander)
                 _target_state_enable_targets()
         Global.TargetMode.FRIENDLY_MINION:
             assert(minion_row_player.get_minion_count() > 0)
-            state = State.TARGET
+            _state = State.TARGET
             # assert(_active_minion.get_ref() in minion_row_player.minions)
             _selection_targets = minion_row_player.minions.duplicate()
             _target_state_enable_targets()
@@ -255,6 +256,11 @@ func _on_target_state_enemy_commander_selected():
 ################################################################################
 
 
+func _ready():
+    _state = State.INITIAL
+    action_panel.enabled = false
+
+
 func _on_ActionPanel_use_support(_index):
     pass # Replace with function body.
 
@@ -294,7 +300,7 @@ func _on_deploy_minion(army_index: int, right_side: bool):
 
 
 func _on_deselect_minions():
-    match state:
+    match _state:
         State.MAIN:
             minion_row_enemy.reset_minion_selection()
             minion_row_player.reset_minion_selection()
@@ -307,7 +313,7 @@ func _on_select_targets(mode: int):
 
 
 func _on_player_minion_selected(minion):
-    match state:
+    match _state:
         State.MAIN:
             _on_main_state_minion_selected(minion, true)
         State.TARGET:
@@ -315,13 +321,13 @@ func _on_player_minion_selected(minion):
 
 
 func _on_player_minion_deselected(minion):
-    match state:
+    match _state:
         State.MAIN:
             _on_main_state_minion_deselected(minion)
 
 
 func _on_enemy_minion_selected(minion):
-    match state:
+    match _state:
         State.MAIN:
             _on_main_state_minion_selected(minion, false)
         State.TARGET:
@@ -329,7 +335,7 @@ func _on_enemy_minion_selected(minion):
 
 
 func _on_enemy_minion_deselected(minion):
-    match state:
+    match _state:
         State.MAIN:
             _on_main_state_minion_deselected(minion)
 
@@ -340,6 +346,6 @@ func _on_enemy_minion_deselected(minion):
 
 
 func _on_enemy_commander_selected():
-    match state:
+    match _state:
         State.TARGET:
             _on_target_state_enemy_commander_selected()

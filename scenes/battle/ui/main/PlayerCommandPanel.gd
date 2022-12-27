@@ -14,6 +14,8 @@ signal select_targets(mode)
 # Variables
 ################################################################################
 
+var enabled: bool = true
+
 onready var commander = $MainCommandCard/Middle/Commander
 onready var main_panel = $MainCommandCard
 onready var army_action_bar = $ArmyActionBar
@@ -70,25 +72,30 @@ func show_minion_action_bar(minion_data: Dictionary, can_act: bool):
 
 
 func _on_check_army_left():
-    _deploy_right_side = false
-    show_army_action_bar()
+    if enabled:
+        _deploy_right_side = false
+        show_army_action_bar()
 
 
 func _on_check_army_right():
-    _deploy_right_side = true
-    show_army_action_bar()
+    if enabled:
+        _deploy_right_side = true
+        show_army_action_bar()
 
 
 func _on_check_commander():
-    pass # Replace with function body.
+    if enabled:
+        pass # Replace with function body.
 
 
 func _on_check_graveyard():
-    pass # Replace with function body.
+    if enabled:
+        pass # Replace with function body.
 
 
 func _on_check_support():
-    show_support_action_bar()
+    if enabled:
+        show_support_action_bar()
 
 
 ################################################################################
