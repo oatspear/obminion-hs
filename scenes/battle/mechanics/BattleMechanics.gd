@@ -9,6 +9,8 @@ extends Node
 signal action_error(msg)
 
 signal battle_started(battle_data)
+signal turn_started(player_index)
+
 
 signal resources_changed(player_index, current, maximum)
 signal minion_recruited(player_index, minion_data)
@@ -47,7 +49,7 @@ enum State {
 
 var data: BattleData = BattleData.new()
 
-var _state: int = State.TURN_MAIN_PHASE
+var _state: int = State.INITIAL
 var _ongoing_player_input: int = -1
 var _ongoing_target_mode: int = Global.TargetMode.NONE
 
@@ -212,12 +214,55 @@ func _damage_dealt(player_index: int, field_index: int, damage: int):
 
 
 func _ready():
+    _state = State.INITIAL
     set_process(false)
 
 
 func _process(_delta: float):
+    # states listed in most likely order of relevance
     match _state:
+        State.TURN_MAIN_PHASE:
+            _turn_main_phase_state()
+        State.TURN_ATTACK_PHASE:
+            pass
+        State.TURN_RESOLVE_EFFECT:
+            pass
+        State.TURN_START:
+            _turn_start_state()
         State.BATTLE_SETUP:
+            _battle_setup_state()
+        State.BATTLE_END:
             pass
         _:
             pass
+
+
+################################################################################
+# Battle Setup State
+################################################################################
+
+
+func _battle_setup_state():
+    emit_signal("battle_started", data)
+    _state = State.TURN_START
+
+
+################################################################################
+# Turn Start State
+################################################################################
+
+
+func _turn_start_state():
+    emit_signal("turn_started", data.current_turn)
+    _state = State.TURN_MAIN_PHASE
+
+
+################################################################################
+# Turn Main Phase State
+################################################################################
+
+
+func _turn_main_phase_state():
+    # this could be used to run timers, or detect available actions, for example
+    # client actions trigger the main processing and state transitions
+    pass

@@ -63,13 +63,25 @@ func _render_initial_data():
 
 func _ready():
     _default_battle_setup()
-    _render_initial_data()
-    gui.enter_main_phase()
+    # `start_battle` triggers a state transition
+    # will be processed in the next frame
+    server.start_battle()
 
 
 func _on_server_action_error(msg: String):
     print("Error: ", msg)
     gui.show_error(msg)
+
+
+func _on_server_battle_started(data: BattleData):
+    print("[SERVER]: battle started")
+    _render_initial_data()
+
+
+func _on_server_turn_started(player_index: int):
+    print("[SERVER]: turn started: P%d" % player_index)
+    if player_index == PLAYER_INDEX:
+        gui.enter_main_phase()
 
 
 func _on_server_resources_changed(player_index: int, current: int, maximum: int):
