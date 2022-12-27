@@ -2,11 +2,14 @@ extends Node
 
 # class_name BattleMechanics
 
-###############################################################################
+################################################################################
 # Signals
-###############################################################################
+################################################################################
 
 signal action_error(msg)
+
+signal battle_started(battle_data)
+
 signal resources_changed(player_index, current, maximum)
 signal minion_recruited(player_index, minion_data)
 signal minion_deployed(event)
@@ -16,9 +19,9 @@ signal minion_destroyed(player_index, field_index)
 signal damage_dealt(event)
 signal request_select_target(player_index, target_mode)
 
-###############################################################################
+################################################################################
 # Constants
-###############################################################################
+################################################################################
 
 const MAX_ACTIVE_MINIONS: int = 6
 
@@ -27,26 +30,52 @@ const MSG_BOARD_FULL = "The minion board is full."
 
 const DEFAULT_ACTION_TIMER: int = 1
 
-###############################################################################
+enum State {
+    INITIAL,
+    BATTLE_SETUP,
+    TURN_START,
+    TURN_MAIN_PHASE,
+    TURN_ATTACK_PHASE,
+    TURN_RESOLVE_EFFECT,
+    BATTLE_END,
+    END,
+}
+
+################################################################################
 # Internal State
-###############################################################################
+################################################################################
 
 var data: BattleData = BattleData.new()
 
+var _state: int = State.TURN_MAIN_PHASE
 var _ongoing_player_input: int = -1
 var _ongoing_target_mode: int = Global.TargetMode.NONE
 
-###############################################################################
+################################################################################
 # Interface
-###############################################################################
+################################################################################
 
 
-func action_deploy_left(player_index: int, army_index: int):
-    return _deploy(player_index, army_index, 0)
+func start_battle() -> int:
+    if _state != State.INITIAL:
+        return Global.GameError.BATTLE_STARTED
+    _state = State.BATTLE_SETUP
+    set_process(true)
+    return Global.GameError.NONE
 
 
-func action_deploy_right(player_index: int, army_index: int):
-    return _deploy(player_index, army_index, -1)
+func action_deploy_left(player_index: int, army_index: int) -> int:
+    if not _player_can_act(player_index):
+        return Global.GameError.NOT_YOUR_TURN
+    _deploy(player_index, army_index, 0)
+    return Global.GameError.NONE
+
+
+func action_deploy_right(player_index: int, army_index: int) -> int:
+    if not _player_can_act(player_index):
+        return Global.GameError.NOT_YOUR_TURN
+    _deploy(player_index, army_index, -1)
+    return Global.GameError.NONE
 
 
 func action_attack_target(
@@ -54,7 +83,9 @@ func action_attack_target(
     field_index: int,
     enemy_index: int,
     target_index: int
-):
+) -> int:
+    if not _player_can_act(player_index):
+        return Global.GameError.NOT_YOUR_TURN
     var p1 = data.players[player_index]
     var p2 = data.players[enemy_index]
     var source: BattleMinion = p1.battlefield[field_index]
@@ -95,6 +126,7 @@ func action_attack_target(
             emit_signal("minion_recruited", player_index, minion.base_data)
         print("Player graveyard", p1.graveyard)
         # TODO emit signal
+    return Global.GameError.NONE
 
 
 func set_requested_target(index: int):
@@ -114,9 +146,13 @@ func set_requested_target(index: int):
     _ongoing_target_mode = Global.TargetMode.NONE
 
 
-###############################################################################
+################################################################################
 # Helper Functions
-###############################################################################
+################################################################################
+
+
+func _player_can_act(player_index: int) -> bool:
+    return _state == State.TURN_MAIN_PHASE and data.current_turn == player_index
 
 
 func _deploy(player_index: int, army_index: int, field_index: int):
@@ -168,3 +204,20 @@ func _damage_dealt(player_index: int, field_index: int, damage: int):
 #    assert(not error)
 #    error = server.connect("minion_recruited", self, "_on_server_minion_recruited")
 #    assert(not error)
+
+
+################################################################################
+# Main Loop
+################################################################################
+
+
+func _ready():
+    set_process(false)
+
+
+func _process(_delta: float):
+    match _state:
+        State.BATTLE_SETUP:
+            pass
+        _:
+            pass

@@ -5,12 +5,23 @@ extends Node
 # Constants
 ################################################################################
 
+
+enum GameError {
+    NONE = 0,
+    BATTLE_STARTED,
+    NOT_YOUR_TURN,
+    NO_RESOURCES,
+    BOARD_FULL,
+}
+
+
 enum ResourceType {
     NONE,
     RESOURCES,
     POWER,
     HEALTH,
 }
+
 
 const VALUE_ICONS = {
     ResourceType.RESOURCES: preload("res://assets/icons/crystal.png"),
