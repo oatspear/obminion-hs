@@ -91,6 +91,9 @@ func _on_server_turn_started(player_index: int):
     print("[SERVER]: turn started: P%d" % player_index)
     if player_index == PLAYER_INDEX:
         gui.enter_main_phase()
+    else:
+        # FIXME
+        server.action_end_turn(player_index)
 
 
 func _on_server_resources_changed(player_index: int, current: int, maximum: int):
