@@ -12,6 +12,13 @@ const TARGET_DUMMY = preload("res://data/minions/TargetDummy.tres")
 const PLAYER_DECK = preload("res://data/decks/PlayerDeck.tres")
 const ENEMY_DECK = preload("res://data/decks/TargetDummy.tres")
 
+const ERROR_MESSAGES = {
+    Global.GameError.BOARD_FULL: "The board is full.",
+    Global.GameError.BATTLE_STARTED: "The battle has already started.",
+    Global.GameError.NOT_YOUR_TURN: "It is not your turn.",
+    Global.GameError.NO_RESOURCES: "Not enough resources.",
+}
+
 ################################################################################
 # Variables
 ################################################################################
@@ -153,27 +160,40 @@ func _on_server_request_select_target(player_index: int, target_mode: int):
 
 
 func _on_ui_action_attack_target(minion_index: int, target_index: int):
-    server.action_attack_target(PLAYER_INDEX, minion_index, ENEMY_INDEX, target_index)
-    # <-- server response happens at this point
-    gui.enter_main_phase()
+    var error = server.action_attack_target(PLAYER_INDEX, minion_index, ENEMY_INDEX, target_index)
+    if error:
+        gui.show_error(ERROR_MESSAGES[error])
+    else:
+        gui.enter_main_phase()
 
 
 func _on_ui_action_deploy_left(army_index: int):
-    server.action_deploy_left(PLAYER_INDEX, army_index)
+    var error = server.action_deploy_left(PLAYER_INDEX, army_index)
+    if error:
+        gui.show_error(ERROR_MESSAGES[error])
 
 
 func _on_ui_action_deploy_right(army_index: int):
-    server.action_deploy_right(PLAYER_INDEX, army_index)
+    var error = server.action_deploy_right(PLAYER_INDEX, army_index)
+    if error:
+        gui.show_error(ERROR_MESSAGES[error])
 
 
 func _on_ui_target_selected(index: int):
-    server.set_requested_target(index)
-    gui.enter_main_phase()
+    var error = server.set_requested_target(index)
+    if error:
+        gui.show_error(ERROR_MESSAGES[error])
+    else:
+        gui.enter_main_phase()
 
 
 func _on_ui_action_end_turn():
-    server.action_end_turn(PLAYER_INDEX)
+    var error = server.action_end_turn(PLAYER_INDEX)
+    if error:
+        gui.show_error(ERROR_MESSAGES[error])
 
 
 func _on_ui_action_forfeit():
-    server.action_forfeit_game(PLAYER_INDEX)
+    var error = server.action_forfeit_game(PLAYER_INDEX)
+    if error:
+        gui.show_error(ERROR_MESSAGES[error])
