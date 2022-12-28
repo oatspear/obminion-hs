@@ -12,4 +12,6 @@ power = 2
 health = 10
 supply = 2
 ability = 2
+battlecry = 0
+deathrattle = 0
 ability_text = "A target dummy that does nothing."

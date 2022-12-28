@@ -12,4 +12,6 @@ power = 5
 health = 5
 supply = 3
 ability = 0
+battlecry = 0
+deathrattle = 0
 ability_text = "[b]Battlecry:[/b] do something [i]amazing[/i]!"

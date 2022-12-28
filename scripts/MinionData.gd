@@ -15,7 +15,9 @@ export (int) var power: int = 0
 export (int) var health: int = 0
 export (int) var supply: int = 0
 
-export (Global.Abilities) var ability: int = Global.Abilities.NONE
+export (int) var ability: int = 0
+export (int) var battlecry: int = 0
+export (int) var deathrattle: int = 0
 export (String) var ability_text: String = ""
 
 ################################################################################

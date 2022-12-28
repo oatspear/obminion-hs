@@ -20,6 +20,7 @@ script = ExtResource( 2 )
 [connection signal="minion_destroyed" from="Server" to="." method="_on_server_minion_destroyed"]
 [connection signal="minion_died" from="Server" to="." method="_on_server_minion_died"]
 [connection signal="minion_recruited" from="Server" to="." method="_on_server_minion_recruited"]
+[connection signal="minion_stats_changed" from="Server" to="." method="_on_server_minion_stats_changed"]
 [connection signal="request_select_target" from="Server" to="." method="_on_server_request_select_target"]
 [connection signal="resources_changed" from="Server" to="." method="_on_server_resources_changed"]
 [connection signal="turn_started" from="Server" to="." method="_on_server_turn_started"]

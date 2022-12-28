@@ -70,6 +70,14 @@ func has_ability(ability: int) -> bool:
     return bool(instance.ability & ability)
 
 
+func apply_power_modifier(amount: int) -> void:
+    instance.apply_power_modifier(amount)
+
+
+func apply_health_modifier(amount: int) -> void:
+    instance.apply_health_modifier(amount)
+
+
 ################################################################################
 # Data Transformation Interface
 ################################################################################

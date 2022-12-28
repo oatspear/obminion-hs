@@ -28,6 +28,8 @@ var health: int = 0
 
 var supply: int = 0
 var ability: int = 0
+var battlecry: int = 0
+var deathrattle: int = 0
 
 var effects: Array = []
 
@@ -36,14 +38,20 @@ var effects: Array = []
 ################################################################################
 
 
+func reset():
+    name = base_data.name
+    tribe = base_data.tribe
+    set_power(base_data.power)
+    set_health(base_data.health)
+    supply = base_data.supply
+    ability = base_data.ability
+    battlecry = base_data.battlecry
+    deathrattle = base_data.deathrattle
+
+
 func set_base_data(data: MinionData):
     base_data = data
-    name = data.name
-    tribe = data.tribe
-    set_power(data.power)
-    set_health(data.health)
-    supply = data.supply
-    ability = data.ability
+    reset()
 
 
 func set_power(value: int) -> void:

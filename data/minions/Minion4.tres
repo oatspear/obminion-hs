@@ -12,4 +12,6 @@ power = 4
 health = 4
 supply = 2
 ability = 0
+battlecry = 0
+deathrattle = 0
 ability_text = ""

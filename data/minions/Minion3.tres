@@ -12,4 +12,6 @@ power = 3
 health = 3
 supply = 2
 ability = 0
+battlecry = 0
+deathrattle = 0
 ability_text = "[b]Deathrattle:[/b] deal 1 damage."

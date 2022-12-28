@@ -20,6 +20,7 @@ signal minion_deployed(event)
 signal minion_attacked(event)
 signal minion_died(player_index, field_index)
 signal minion_destroyed(player_index, field_index)
+signal minion_stats_changed(minion)
 signal damage_dealt(event)
 signal request_select_target(player_index, target_mode)
 
@@ -127,6 +128,7 @@ func action_attack_target(
         emit_signal("minion_died", enemy_index, target_index)
         p2.battlefield.remove(target_index)
         emit_signal("minion_destroyed", enemy_index, target_index)
+        target.instance.reset()
         while not p2.add_to_graveyard(target.instance):
             print("Enemy graveyard is full")
             var minion = p2.rotate_graveyard_to_army()
@@ -138,7 +140,7 @@ func action_attack_target(
         emit_signal("minion_died", player_index, field_index)
         p1.battlefield.remove(field_index)
         emit_signal("minion_destroyed", player_index, field_index)
-        print("%s died" % source.instance.name)
+        source.instance.reset()
         while not p1.add_to_graveyard(source.instance):
             print("Player graveyard is full")
             var minion = p1.rotate_graveyard_to_army()
@@ -193,10 +195,11 @@ func _deploy(player_index: int, army_index: int, field_index: int):
     event.field_index = field_index
     event.minion = minion
     emit_signal("minion_deployed", event)
-    if p.battlefield.size() > 2:
-        _ongoing_player_input = player_index
-        _ongoing_target_mode = Global.TargetMode.FRIENDLY_MINION
-        emit_signal("request_select_target", player_index, _ongoing_target_mode)
+    #if p.battlefield.size() > 2:
+    #    _ongoing_player_input = player_index
+    #    _ongoing_target_mode = Global.TargetMode.FRIENDLY_MINION
+    #    emit_signal("request_select_target", player_index, _ongoing_target_mode)
+    _do_battlecry(minion)
 
 
 func _damage_dealt(player_index: int, field_index: int, damage: int):
@@ -207,23 +210,35 @@ func _damage_dealt(player_index: int, field_index: int, damage: int):
     emit_signal("damage_dealt", event)
 
 
-#func _connect_to_mechanics_events():
-#    var error = server.connect("action_error", self, "_on_server_action_error")
-#    assert(not error)
-#    error = server.connect("resources_changed", self, "_on_server_resources_changed")
-#    assert(not error)
-#    error = server.connect("minion_deployed", self, "_on_server_minion_deployed")
-#    assert(not error)
-#    error = server.connect("minion_attacked", self, "_on_server_minion_attacked")
-#    assert(not error)
-#    error = server.connect("damage_dealt", self, "_on_server_damage_dealt")
-#    assert(not error)
-#    error = server.connect("minion_died", self, "_on_server_minion_died")
-#    assert(not error)
-#    error = server.connect("minion_destroyed", self, "_on_server_minion_destroyed")
-#    assert(not error)
-#    error = server.connect("minion_recruited", self, "_on_server_minion_recruited")
-#    assert(not error)
+func _do_battlecry(minion: BattleMinion):
+    var battlecry = minion.instance.battlecry
+    if not battlecry:
+        return
+
+    var p: BattlePlayer = data.players[minion.player_index]
+    var e: BattlePlayer = data.players[(minion.player_index + 1) % 2]
+
+    if battlecry & Global.Abilities.BUFF_ADJACENT_ALLY_POWER:
+        var i = minion.index
+        if i > 0:
+            var other: BattleMinion = p.battlefield[i-1]
+            other.apply_power_modifier(+1)
+            emit_signal("minion_stats_changed", other)
+        if (i + 1) < p.battlefield.size():
+            var other: BattleMinion = p.battlefield[i+1]
+            other.apply_power_modifier(+1)
+            emit_signal("minion_stats_changed", other)
+
+    if battlecry & Global.Abilities.BUFF_ADJACENT_ALLY_HEALTH:
+        var i = minion.index
+        if i > 0:
+            var other: BattleMinion = p.battlefield[i-1]
+            other.apply_health_modifier(+1)
+            emit_signal("minion_stats_changed", other)
+        if (i + 1) < p.battlefield.size():
+            var other: BattleMinion = p.battlefield[i+1]
+            other.apply_health_modifier(+1)
+            emit_signal("minion_stats_changed", other)
 
 
 ################################################################################

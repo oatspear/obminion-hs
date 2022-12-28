@@ -57,4 +57,6 @@ enum Abilities {
     NONE                        = 0b_0000_0000_0000_0000,
     HASTE                       = 0b_0000_0000_0000_0001,
     POISON                      = 0b_0000_0000_0000_0010,
+    BUFF_ADJACENT_ALLY_POWER    = 0b_0000_0001_0000_0000,
+    BUFF_ADJACENT_ALLY_HEALTH   = 0b_0000_0010_0000_0000,
 }

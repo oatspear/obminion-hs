@@ -12,4 +12,6 @@ power = 1
 health = 1
 supply = 1
 ability = 0
+battlecry = 0
+deathrattle = 0
 ability_text = "Whenever this minion takes damage, gain [b]1 health[/b]."

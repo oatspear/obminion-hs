@@ -149,6 +149,10 @@ func _on_server_minion_recruited(player_index: int, minion: MinionData):
         gui.add_to_enemy_army(minion)
 
 
+func _on_server_minion_stats_changed(minion: BattleMinion):
+    gui.set_active_minion(minion.player_index, minion.index, minion)
+
+
 func _on_server_request_select_target(player_index: int, target_mode: int):
     if player_index == PLAYER_INDEX:
         gui.enter_target_phase(target_mode)
