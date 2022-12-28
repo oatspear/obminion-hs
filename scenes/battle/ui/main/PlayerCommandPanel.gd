@@ -9,6 +9,8 @@ signal hide_card_info()
 signal deselect_minions()
 signal deploy_minion(army_index, right_side)
 signal select_targets(mode)
+signal confirm_end_turn()
+signal confirm_forfeit()
 
 ################################################################################
 # Variables
@@ -21,6 +23,7 @@ onready var main_panel = $MainCommandCard
 onready var army_action_bar = $ArmyActionBar
 onready var support_action_bar = $SupportActionBar
 onready var minion_action_bar = $MinionActionBar
+onready var commander_action_bar = $CommanderActionBar
 
 var _deploy_right_side: bool = true
 
@@ -66,6 +69,17 @@ func show_minion_action_bar(minion_data: Dictionary, can_act: bool):
     minion_action_bar.show()
 
 
+func show_commander_action_bar(player_commander: bool):
+    for action_bar in get_children():
+        action_bar.hide()
+    # commander_action_bar.set_minion_data(minion_data)
+    #if player_commander:
+    #    commander_action_bar.set_attack_enabled(true)
+    #else:
+    #    commander_action_bar.set_attack_enabled(false)
+    commander_action_bar.show()
+
+
 ################################################################################
 # Event Handlers - Primary
 ################################################################################
@@ -85,7 +99,7 @@ func _on_check_army_right():
 
 func _on_check_commander():
     if enabled:
-        pass # Replace with function body.
+        show_commander_action_bar(true)
 
 
 func _on_check_graveyard():
@@ -123,3 +137,11 @@ func _on_deploy_minion(army_index: int):
 
 func _on_attack_target():
     emit_signal("select_targets", Global.TargetMode.ATTACK_TARGET)
+
+
+func _on_end_turn():
+    emit_signal("confirm_end_turn")
+
+
+func _on_forfeit():
+    emit_signal("confirm_forfeit")

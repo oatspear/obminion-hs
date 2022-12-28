@@ -78,6 +78,15 @@ func _on_server_battle_started(data: BattleData):
     _render_initial_data()
 
 
+func _on_server_battle_ended(victor_index: int):
+    if victor_index < 0:
+        print("[SERVER]: battle ended on a draw")
+        gui.show_notice("The battle ended on a draw.")
+    else:
+        print("[SERVER]: battle ended; P%d won" % victor_index)
+        gui.show_notice("%s won the battle!" % server.data.players[victor_index].name)
+
+
 func _on_server_turn_started(player_index: int):
     print("[SERVER]: turn started: P%d" % player_index)
     if player_index == PLAYER_INDEX:
@@ -157,3 +166,11 @@ func _on_ui_action_deploy_right(army_index: int):
 func _on_ui_target_selected(index: int):
     server.set_requested_target(index)
     gui.enter_main_phase()
+
+
+func _on_ui_action_end_turn():
+    server.action_end_turn(PLAYER_INDEX)
+
+
+func _on_ui_action_forfeit():
+    server.action_forfeit_game(PLAYER_INDEX)

@@ -12,6 +12,7 @@ script = ExtResource( 2 )
 [node name="BattleUI" parent="." instance=ExtResource( 1 )]
 
 [connection signal="action_error" from="Server" to="." method="_on_server_action_error"]
+[connection signal="battle_ended" from="Server" to="." method="_on_server_battle_ended"]
 [connection signal="battle_started" from="Server" to="." method="_on_server_battle_started"]
 [connection signal="damage_dealt" from="Server" to="." method="_on_server_damage_dealt"]
 [connection signal="minion_attacked" from="Server" to="." method="_on_server_minion_attacked"]
@@ -25,4 +26,6 @@ script = ExtResource( 2 )
 [connection signal="action_attack_target" from="BattleUI" to="." method="_on_ui_action_attack_target"]
 [connection signal="action_deploy_left" from="BattleUI" to="." method="_on_ui_action_deploy_left"]
 [connection signal="action_deploy_right" from="BattleUI" to="." method="_on_ui_action_deploy_right"]
+[connection signal="action_end_turn" from="BattleUI" to="." method="_on_ui_action_end_turn"]
+[connection signal="action_forfeit" from="BattleUI" to="." method="_on_ui_action_forfeit"]
 [connection signal="target_selected" from="BattleUI" to="." method="_on_ui_target_selected"]

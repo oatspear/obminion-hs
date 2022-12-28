@@ -7,6 +7,8 @@ extends MarginContainer
 signal action_deploy_left(army_index)
 signal action_deploy_right(army_index)
 signal action_attack_target(minion_index, target_index)
+signal action_end_turn()
+signal action_forfeit()
 signal target_selected(index)
 
 ################################################################################
@@ -25,6 +27,8 @@ const STR_POPUP_TITLE_ERROR = "Error"
 const STR_POPUP_TITLE_NOTICE = "Notice"
 
 enum State { INITIAL, MAIN, TARGET }
+
+enum PopupType { NONE, END_TURN, FORFEIT }
 
 
 ################################################################################
@@ -45,6 +49,7 @@ onready var nameplate_enemy = $BattleField/EnemyNameplate/Nameplate
 
 var _active_minion: WeakRef = weakref(null)
 var _selection_targets: Array = []
+var _popup_type: int = PopupType.NONE
 
 ################################################################################
 # Interface
@@ -159,6 +164,12 @@ func show_error(msg: String):
     dialog_notice.popup_centered_minsize(SIZE_POPUP_NOTICE)
 
 
+func show_notice(msg: String):
+    dialog_notice.window_title = STR_POPUP_TITLE_NOTICE
+    dialog_notice.dialog_text = msg
+    dialog_notice.popup_centered_minsize(SIZE_POPUP_NOTICE)
+
+
 func animate_attack(
     player_index: int,
     minion_index: int,
@@ -214,6 +225,10 @@ func _on_main_state_minion_deselected(minion):
         action_panel.show_main_command_card()
 
 
+func _on_main_state_enemy_commander_selected():
+    pass
+
+
 ################################################################################
 # State - Target
 ################################################################################
@@ -265,13 +280,15 @@ func _on_ActionPanel_use_support(_index):
     pass # Replace with function body.
 
 
-func _on_ActionPanel_end_turn():
+func _on_confirm_end_turn():
+    _popup_type = PopupType.END_TURN
     dialog_confirm.window_title = STR_POPUP_TITLE_END_TURN
     dialog_confirm.dialog_text = STR_POPUP_TEXT_END_TURN
     dialog_confirm.popup()
 
 
-func _on_ActionPanel_forfeit_game():
+func _on_confirm_forfeit_game():
+    _popup_type = PopupType.FORFEIT
     dialog_confirm.window_title = STR_POPUP_TITLE_FORFEIT
     dialog_confirm.dialog_text = STR_POPUP_TEXT_FORFEIT
     dialog_confirm.popup()
@@ -347,5 +364,23 @@ func _on_enemy_minion_deselected(minion):
 
 func _on_enemy_commander_selected():
     match _state:
+        State.MAIN:
+            _on_main_state_enemy_commander_selected()
         State.TARGET:
             _on_target_state_enemy_commander_selected()
+
+
+################################################################################
+# Event Handlers - Popups
+################################################################################
+
+
+func _on_popup_confirmed():
+    action_panel.show_main_command_card()
+    match _popup_type:
+        PopupType.END_TURN:
+            emit_signal("action_end_turn")
+        PopupType.FORFEIT:
+            emit_signal("action_forfeit")
+        _:
+            push_error("popup confirmed with unknown state: %d" % _popup_type)

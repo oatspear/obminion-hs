@@ -1,9 +1,10 @@
-[gd_scene load_steps=7 format=2]
+[gd_scene load_steps=8 format=2]
 
 [ext_resource path="res://scenes/battle/ui/actions/MainCommandCard.tscn" type="PackedScene" id=1]
 [ext_resource path="res://scenes/battle/ui/actions/ArmyActionBar.tscn" type="PackedScene" id=2]
 [ext_resource path="res://scenes/battle/ui/actions/SupportActionBar.tscn" type="PackedScene" id=3]
 [ext_resource path="res://scenes/battle/ui/actions/MinionActionBar.tscn" type="PackedScene" id=4]
+[ext_resource path="res://scenes/battle/ui/actions/CommanderActionBar.tscn" type="PackedScene" id=5]
 [ext_resource path="res://scenes/battle/ui/main/PlayerCommandPanel.gd" type="Script" id=8]
 
 [sub_resource type="StyleBoxFlat" id=1]
@@ -59,6 +60,14 @@ margin_top = 8.0
 margin_right = 352.0
 margin_bottom = 158.0
 
+[node name="CommanderActionBar" parent="." instance=ExtResource( 5 )]
+visible = false
+anchor_right = 0.0
+margin_left = 8.0
+margin_top = 8.0
+margin_right = 352.0
+margin_bottom = 158.0
+
 [connection signal="check_army_left" from="MainCommandCard" to="." method="_on_check_army_left"]
 [connection signal="check_army_right" from="MainCommandCard" to="." method="_on_check_army_right"]
 [connection signal="check_commander" from="MainCommandCard" to="." method="_on_check_commander"]
@@ -73,3 +82,6 @@ margin_bottom = 158.0
 [connection signal="hide_info" from="SupportActionBar" to="." method="_on_hide_info"]
 [connection signal="attack_target" from="MinionActionBar" to="." method="_on_attack_target"]
 [connection signal="cancel_action" from="MinionActionBar" to="." method="_on_cancel_action"]
+[connection signal="cancel_action" from="CommanderActionBar" to="." method="_on_cancel_action"]
+[connection signal="end_turn" from="CommanderActionBar" to="." method="_on_end_turn"]
+[connection signal="forfeit" from="CommanderActionBar" to="." method="_on_forfeit"]

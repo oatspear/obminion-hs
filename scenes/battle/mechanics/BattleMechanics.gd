@@ -9,8 +9,10 @@ extends Node
 signal action_error(msg)
 
 signal battle_started(battle_data)
-signal turn_started(player_index)
+signal battle_ended(victor_index)
 
+signal turn_started(player_index)
+signal turn_ended(player_index)
 
 signal resources_changed(player_index, current, maximum)
 signal minion_recruited(player_index, minion_data)
@@ -39,6 +41,7 @@ enum State {
     TURN_MAIN_PHASE,
     TURN_ATTACK_PHASE,
     TURN_RESOLVE_EFFECT,
+    TURN_END,
     BATTLE_END,
     END,
 }
@@ -52,6 +55,7 @@ var data: BattleData = BattleData.new()
 var _state: int = State.INITIAL
 var _ongoing_player_input: int = -1
 var _ongoing_target_mode: int = Global.TargetMode.NONE
+var _victor_index: int = -1
 
 ################################################################################
 # Interface
@@ -63,6 +67,20 @@ func start_battle() -> int:
         return Global.GameError.BATTLE_STARTED
     _state = State.BATTLE_SETUP
     set_process(true)
+    return Global.GameError.NONE
+
+
+func action_end_turn(player_index: int) -> int:
+    if not _player_can_act(player_index):
+        return Global.GameError.NOT_YOUR_TURN
+    _state = State.TURN_END
+    return Global.GameError.NONE
+
+
+func action_forfeit_game(player_index: int) -> int:
+    assert(data.players.size() == 2)
+    _victor_index = (player_index + 1) % 2
+    _state = State.BATTLE_END
     return Global.GameError.NONE
 
 
@@ -229,10 +247,12 @@ func _process(_delta: float):
             pass
         State.TURN_START:
             _turn_start_state()
+        State.TURN_END:
+            _turn_end_state()
         State.BATTLE_SETUP:
             _battle_setup_state()
         State.BATTLE_END:
-            pass
+            _battle_end_state()
         _:
             pass
 
@@ -266,3 +286,25 @@ func _turn_main_phase_state():
     # this could be used to run timers, or detect available actions, for example
     # client actions trigger the main processing and state transitions
     pass
+
+
+################################################################################
+# Turn End State
+################################################################################
+
+
+func _turn_end_state():
+    emit_signal("turn_ended", data.current_turn)
+    data.switch_turns()
+    _state = State.TURN_START
+
+
+################################################################################
+# Battle End State
+################################################################################
+
+
+func _battle_end_state():
+    emit_signal("battle_ended", _victor_index)
+    _state = State.END
+    set_process(false)
