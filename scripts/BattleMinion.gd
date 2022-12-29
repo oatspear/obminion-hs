@@ -14,6 +14,7 @@ var action_timer: int = 0
 
 # battle-specific variables
 var damage: int = 0  # taken
+var divine_shield: bool = false
 var _aura_power: int = 0
 var _aura_health: int = 0
 

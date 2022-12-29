@@ -120,11 +120,9 @@ func action_attack_target(
     event.target_index = target_index
     emit_signal("minion_attacked", event)
     # deal damage
-    target.damage += source.get_power()
-    source.damage += target.get_power()
-    _damage_dealt(enemy_index, target_index, source.get_power())
-    _damage_dealt(player_index, field_index, target.get_power())
-    if target.get_current_health() <= 0 or source.has_ability(Global.Abilities.POISON):
+    var a = _deal_damage(target, source.get_power())
+    var b = _deal_damage(source, target.get_power())
+    if target.get_current_health() <= 0 or (a > 0 and source.has_ability(Global.Abilities.POISON)):
         emit_signal("minion_died", enemy_index, target_index)
         p2.battlefield.remove(target_index)
         emit_signal("minion_destroyed", enemy_index, target_index)
@@ -136,7 +134,7 @@ func action_attack_target(
             emit_signal("minion_recruited", enemy_index, minion)
         print("Enemy graveyard", p2.graveyard)
         # TODO emit signal
-    if source.get_current_health() <= 0 or target.has_ability(Global.Abilities.POISON):
+    if source.get_current_health() <= 0 or (b > 0 and target.has_ability(Global.Abilities.POISON)):
         emit_signal("minion_died", player_index, field_index)
         p1.battlefield.remove(field_index)
         emit_signal("minion_destroyed", player_index, field_index)
@@ -188,7 +186,7 @@ func _deploy(player_index: int, army_index: int, field_index: int):
     emit_signal("resources_changed", player_index, p.resources, p.max_resources)
     p.deploy(army_index, field_index)
     var minion: BattleMinion = p.battlefield[field_index]
-    # minion.action_timer = 0 if minion.has_ability(Global.Abilities.HASTE) else DEFAULT_ACTION_TIMER
+    _apply_keywords(minion)
     var event = BattleEventDeploy.new()
     event.player_index = player_index
     event.army_index = army_index
@@ -202,12 +200,29 @@ func _deploy(player_index: int, army_index: int, field_index: int):
     _do_battlecry(minion)
 
 
-func _damage_dealt(player_index: int, field_index: int, damage: int):
+func _deal_damage(minion: BattleMinion, damage: int) -> int:
+    if damage <= 0:
+        return 0
+    if minion.divine_shield:
+        minion.divine_shield = false
+        _damage_dealt(minion, 0)
+        return 0
+    minion.damage += damage
+    _damage_dealt(minion, damage)
+    return damage
+
+
+func _damage_dealt(minion: BattleMinion, damage: int):
     var event = BattleEventDamage.new()
-    event.player_index = player_index
-    event.field_index = field_index
+    event.player_index = minion.instance.player_index
+    event.field_index = minion.instance.index
     event.damage = damage
     emit_signal("damage_dealt", event)
+
+
+func _apply_keywords(minion: BattleMinion):
+    # minion.action_timer = 0 if minion.has_ability(Global.Abilities.HASTE) else DEFAULT_ACTION_TIMER
+    minion.divine_shield = minion.has_ability(Global.Abilities.DIVINE_SHIELD)
 
 
 func _do_battlecry(minion: BattleMinion):
