@@ -145,7 +145,7 @@ func _on_server_minion_recruited(player_index: int, minion: MinionData):
 
 
 func _on_server_minion_stats_changed(minion: BattleMinion):
-    gui.set_active_minion(minion.player_index, minion.index, minion)
+    gui.set_active_minion(minion.instance.player_index, minion.instance.index, minion)
 
 
 func _on_server_request_select_target(player_index: int, target_mode: int):

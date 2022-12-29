@@ -215,11 +215,11 @@ func _do_battlecry(minion: BattleMinion):
     if not battlecry:
         return
 
-    var p: BattlePlayer = data.players[minion.player_index]
-    var e: BattlePlayer = data.players[(minion.player_index + 1) % 2]
+    var p: BattlePlayer = data.players[minion.instance.player_index]
+    var e: BattlePlayer = data.players[(minion.instance.player_index + 1) % 2]
 
     if battlecry & Global.Abilities.BUFF_ADJACENT_ALLY_POWER:
-        var i = minion.index
+        var i = minion.instance.index
         if i > 0:
             var other: BattleMinion = p.battlefield[i-1]
             other.apply_power_modifier(+1)
@@ -230,7 +230,7 @@ func _do_battlecry(minion: BattleMinion):
             emit_signal("minion_stats_changed", other)
 
     if battlecry & Global.Abilities.BUFF_ADJACENT_ALLY_HEALTH:
-        var i = minion.index
+        var i = minion.instance.index
         if i > 0:
             var other: BattleMinion = p.battlefield[i-1]
             other.apply_health_modifier(+1)

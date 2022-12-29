@@ -10,8 +10,6 @@ class_name BattleMinion
 var instance: MinionInstance setget set_minion_instance
 
 # indices and metadata
-var index: int = -1
-var player_index: int = -1
 var action_timer: int = 0
 
 # battle-specific variables

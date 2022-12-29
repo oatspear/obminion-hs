@@ -117,4 +117,4 @@ func _fix_battle_indices():
     for i in range(battlefield.size()):
         var minion: BattleMinion = battlefield[i]
         minion.instance.move_to_battlefield(i)
-        minion.player_index = index
+        minion.instance.player_index = index
