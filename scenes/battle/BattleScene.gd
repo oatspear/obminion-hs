@@ -42,12 +42,7 @@ func _default_battle_setup():
     p = server.data.players[ENEMY_INDEX]
     p.set_player_data(data)
 
-    var instance = MinionInstance.new()
-    instance.set_base_data(TARGET_DUMMY)
-    var minion = BattleMinion.new()
-    minion.set_minion_instance(instance)
-
-    p.add_active_minion(minion)
+    p.deploy(0, 0)
 
 
 func _render_initial_data():
