@@ -51,6 +51,7 @@ func add_minion_from_deck(deck_index: int) -> MinionInstance:
     var minion = MinionInstance.new()
     minion.set_base_data(base_data)
     minion.deck_index = deck_index
+    minion.original_player_index = index
     # minion.index and minion.player_index are handled below
     add_to_army(minion)
     return minion

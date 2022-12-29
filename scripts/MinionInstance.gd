@@ -12,6 +12,7 @@ var base_data: MinionData setget set_base_data
 # metadata
 var index: int = -1
 var player_index: int = -1
+var original_player_index: int = -1
 var deck_index: int = -1
 var board_location: int = Global.BoardLocation.NONE
 
