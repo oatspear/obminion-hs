@@ -39,6 +39,14 @@ enum CardType {
 }
 
 
+enum BoardLocation {
+    NONE = 0,
+    BASE,
+    BATTLEFIELD,
+    GRAVEYARD,
+}
+
+
 enum TargetMode {
     NONE,
     SELF,

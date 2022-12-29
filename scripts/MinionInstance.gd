@@ -13,6 +13,7 @@ var base_data: MinionData setget set_base_data
 var index: int = -1
 var player_index: int = -1
 var deck_index: int = -1
+var board_location: int = Global.BoardLocation.NONE
 
 # current/modified stats
 var name: String = "Minion"
@@ -94,6 +95,21 @@ func apply_power_modifier(amount: int) -> void:
 func apply_health_modifier(amount: int) -> void:
     _bonus_health += amount
     calculate_health()
+
+
+func move_to_army(army_index: int):
+    index = army_index
+    board_location = Global.BoardLocation.BASE
+
+
+func move_to_battlefield(field_index: int):
+    index = field_index
+    board_location = Global.BoardLocation.BATTLEFIELD
+
+
+func move_to_graveyard(grave_index: int):
+    index = grave_index
+    board_location = Global.BoardLocation.GRAVEYARD
 
 
 ################################################################################
