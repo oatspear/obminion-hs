@@ -85,8 +85,9 @@ func deploy(army_index: int, field_index: int):
 
 
 func add_to_graveyard(minion: MinionInstance) -> bool:
-    if len(graveyard) >= graveyard_size:
+    if graveyard.size() >= graveyard_size:
         return false
+    minion.move_to_graveyard(graveyard.size())
     graveyard.append(minion)
     return true
 
@@ -107,12 +108,12 @@ func rotate_graveyard_to_army():
 func _fix_army_indices():
     for i in range(army.size()):
         var minion: MinionInstance = army[i]
-        minion.index = i
+        minion.move_to_army(i)
         minion.player_index = index
 
 
 func _fix_battle_indices():
     for i in range(battlefield.size()):
         var minion: BattleMinion = battlefield[i]
-        minion.index = i
+        minion.instance.move_to_battlefield(i)
         minion.player_index = index
