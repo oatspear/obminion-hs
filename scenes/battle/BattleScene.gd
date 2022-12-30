@@ -159,40 +159,46 @@ func _on_server_request_select_target(player_index: int, target_mode: int):
 
 
 func _on_ui_action_attack_target(minion_index: int, target_index: int):
+    # gui.enter_observer_phase()
     var error = server.action_attack_target(PLAYER_INDEX, minion_index, ENEMY_INDEX, target_index)
+    gui.enter_main_phase()
     if error:
         gui.show_error(ERROR_MESSAGES[error])
-    else:
-        gui.enter_main_phase()
 
 
 func _on_ui_action_deploy_left(army_index: int):
+    # gui.enter_observer_phase()
     var error = server.action_deploy_left(PLAYER_INDEX, army_index)
+    gui.enter_main_phase()
     if error:
         gui.show_error(ERROR_MESSAGES[error])
 
 
 func _on_ui_action_deploy_right(army_index: int):
+    # gui.enter_observer_phase()
     var error = server.action_deploy_right(PLAYER_INDEX, army_index)
+    gui.enter_main_phase()
     if error:
         gui.show_error(ERROR_MESSAGES[error])
 
 
 func _on_ui_target_selected(index: int):
+    # gui.enter_observer_phase()
     var error = server.set_requested_target(index)
+    gui.enter_main_phase()
     if error:
         gui.show_error(ERROR_MESSAGES[error])
-    else:
-        gui.enter_main_phase()
 
 
 func _on_ui_action_end_turn():
+    gui.enter_observer_phase()
     var error = server.action_end_turn(PLAYER_INDEX)
     if error:
         gui.show_error(ERROR_MESSAGES[error])
 
 
 func _on_ui_action_forfeit():
+    gui.enter_observer_phase()
     var error = server.action_forfeit_game(PLAYER_INDEX)
     if error:
         gui.show_error(ERROR_MESSAGES[error])

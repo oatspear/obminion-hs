@@ -26,7 +26,7 @@ const STR_POPUP_TEXT_FORFEIT = "Forfeit the game?"
 const STR_POPUP_TITLE_ERROR = "Error"
 const STR_POPUP_TITLE_NOTICE = "Notice"
 
-enum State { INITIAL, MAIN, TARGET }
+enum State { OBSERVER, MAIN, TARGET }
 
 enum PopupType { NONE, END_TURN, FORFEIT }
 
@@ -35,7 +35,7 @@ enum PopupType { NONE, END_TURN, FORFEIT }
 # Variables
 ################################################################################
 
-var _state: int = State.INITIAL
+var _state: int = State.OBSERVER
 
 onready var enemy_panel = $BattleField/EnemyCommandPanel
 onready var action_panel = $BattleField/PlayerCommandPanel
@@ -113,6 +113,20 @@ func set_player_resources(current: int, maximum: int):
 
 func set_enemy_resources(current: int, maximum: int):
     nameplate_enemy.set_resources(current, maximum)
+
+
+func enter_observer_phase():
+    _state = State.OBSERVER
+    action_panel.enabled = false
+    minion_row_enemy.reset_minion_selection()
+    minion_row_enemy.reset_minion_highlights()
+    minion_row_player.reset_minion_selection()
+    minion_row_player.reset_minion_highlights()
+    action_panel.commander.set_highlighted(false)
+    enemy_panel.commander.set_highlighted(false)
+    _selection_targets = []
+    _active_minion = weakref(null)
+    action_panel.show_main_command_card()
 
 
 func enter_main_phase():
@@ -272,8 +286,7 @@ func _on_target_state_enemy_commander_selected():
 
 
 func _ready():
-    _state = State.INITIAL
-    action_panel.enabled = false
+    enter_observer_phase()
 
 
 func _on_ActionPanel_use_support(_index):
@@ -307,7 +320,6 @@ func _on_hide_card_info():
 
 func _on_deploy_minion(army_index: int, right_side: bool):
     _on_hide_card_info()
-    action_panel.show_main_command_card()
     if right_side:
         emit_signal("action_deploy_right", army_index)
     else:
@@ -376,7 +388,6 @@ func _on_enemy_commander_selected():
 
 
 func _on_popup_confirmed():
-    action_panel.show_main_command_card()
     match _popup_type:
         PopupType.END_TURN:
             emit_signal("action_end_turn")
