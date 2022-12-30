@@ -43,7 +43,8 @@ func reset():
 
 
 func replenish_resources():
-    resources = max_resources
+    if resources < max_resources:
+        resources = max_resources
 
 
 func add_minion_from_deck(deck_index: int) -> MinionInstance:

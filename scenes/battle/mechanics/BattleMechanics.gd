@@ -303,8 +303,11 @@ func _battle_setup_state():
 
 
 func _turn_start_state():
-    _state = State.TURN_MAIN_PHASE
     emit_signal("turn_started", data.current_turn)
+    var p: BattlePlayer = data.players[data.current_turn]
+    p.replenish_resources()
+    emit_signal("resources_changed", data.current_turn, p.resources, p.max_resources)
+    _state = State.TURN_MAIN_PHASE
 
 
 ################################################################################

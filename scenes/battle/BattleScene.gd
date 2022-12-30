@@ -95,6 +95,7 @@ func _on_server_turn_started(player_index: int):
         gui.enter_main_phase()
     else:
         # FIXME
+        yield(get_tree(), "idle_frame")
         server.action_end_turn(player_index)
 
 
