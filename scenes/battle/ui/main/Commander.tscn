@@ -1,14 +1,15 @@
-[gd_scene load_steps=4 format=2]
+[gd_scene load_steps=5 format=2]
 
 [ext_resource path="res://assets/icons/user.png" type="Texture" id=1]
 [ext_resource path="res://scenes/ui/labels/icon_value/Label.tscn" type="PackedScene" id=2]
 [ext_resource path="res://scenes/ui/SelectablePanel.tscn" type="PackedScene" id=3]
+[ext_resource path="res://scenes/battle/ui/main/Commander.gd" type="Script" id=4]
 
 [node name="Commander" instance=ExtResource( 3 )]
 margin_right = 128.0
 margin_bottom = 131.0
 rect_min_size = Vector2( 128, 128 )
-retain_selection = false
+script = ExtResource( 4 )
 
 [node name="Elements" type="VBoxContainer" parent="." index="0"]
 margin_left = 5.0
@@ -34,11 +35,13 @@ margin_right = 118.0
 margin_bottom = 120.0
 
 [node name="Power" parent="Elements/Stats" index="0" instance=ExtResource( 2 )]
+visible = false
 margin_right = 76.0
 size_flags_horizontal = 3
 value_type = 2
 
 [node name="Health" parent="Elements/Stats" index="1" instance=ExtResource( 2 )]
-margin_left = 80.0
 margin_right = 118.0
+size_flags_horizontal = 3
+alignment = 1
 value_type = 3
