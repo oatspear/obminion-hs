@@ -60,6 +60,16 @@ func reset_data():
     action_panel.reset_data()
 
 
+func set_player_commander(commander: BattleCommander):
+    var data = commander.as_dict()
+    action_panel.commander.set_commander_data(data)
+    action_panel.commander_action_bar.set_commander_data(data)
+
+
+func set_enemy_commander(commander: BattleCommander):
+    enemy_panel.commander.set_commander_data(commander.as_dict())
+
+
 func set_player_army(minions: Array):
     action_panel.army_action_bar.set_minions(minions)
 
