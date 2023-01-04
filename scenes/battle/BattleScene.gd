@@ -35,12 +35,16 @@ func _default_battle_setup():
     gui.reset_data()
 
     var data = PLAYER_DECK
-    var p = server.data.players[PLAYER_INDEX]
+    var p: BattlePlayer = server.data.players[PLAYER_INDEX]
     p.set_player_data(data)
+    p.commander = BattleCommander.new()
+    p.commander.health = 20
 
     data = ENEMY_DECK
     p = server.data.players[ENEMY_INDEX]
     p.set_player_data(data)
+    p.commander = BattleCommander.new()
+    p.commander.health = 20
 
     p.deploy(0, 0)
 
@@ -49,11 +53,13 @@ func _render_initial_data():
     var p = server.data.players[PLAYER_INDEX]
     gui.nameplate_player.set_player_name(p.name)
     gui.nameplate_player.set_resources(p.resources, p.max_resources)
+    gui.set_player_commander(p.commander)
     gui.set_player_army(p.army)
 
     p = server.data.players[ENEMY_INDEX]
     gui.nameplate_enemy.set_player_name(p.name)
     gui.nameplate_enemy.set_resources(p.resources, p.max_resources)
+    gui.set_enemy_commander(p.commander)
     for minion in p.battlefield:
         gui.spawn_enemy_minion(minion)
 
