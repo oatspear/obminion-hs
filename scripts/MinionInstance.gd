@@ -26,7 +26,7 @@ var power: int = 0 setget set_power
 
 var _base_health: int = 0
 var _bonus_health: int = 0
-var health: int = 0
+var health: int = 0 setget set_health
 
 var supply: int = 0
 var ability: int = 0
