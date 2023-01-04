@@ -21,8 +21,8 @@ onready var button_forfet = $Actions/Forfeit
 ################################################################################
 
 
-func set_minion_data(minion_data: Dictionary):
-    info_card.set_display_data(minion_data)
+func set_commander_data(commander_data: Dictionary):
+    info_card.set_display_data(commander_data)
 
 
 #func set_attack_enabled(button_enabled: bool):
