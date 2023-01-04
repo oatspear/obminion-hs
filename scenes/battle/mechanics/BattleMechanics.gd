@@ -21,6 +21,7 @@ signal minion_attacked(event)
 signal minion_died(player_index, field_index)
 signal minion_destroyed(player_index, field_index)
 signal minion_stats_changed(minion)
+signal commander_died(player_index)
 signal damage_dealt(event)
 signal request_select_target(player_index, target_mode)
 
@@ -109,44 +110,13 @@ func action_attack_target(
         return Global.GameError.NOT_YOUR_TURN
     var p1 = data.players[player_index]
     var p2 = data.players[enemy_index]
-    var source: BattleMinion = p1.battlefield[field_index]
-    var target: BattleMinion = p2.battlefield[target_index]
-    # TODO attack declaration event
-    # emit post attack event
-    var event = BattleEventAttack.new()
-    event.player_index = player_index
-    event.field_index = field_index
-    event.enemy_index = enemy_index
-    event.target_index = target_index
-    emit_signal("minion_attacked", event)
-    # deal damage
-    var a = _deal_damage(target, source.get_power())
-    var b = _deal_damage(source, target.get_power())
-    if target.get_current_health() <= 0 or (a > 0 and source.has_ability(Global.Abilities.POISON)):
-        emit_signal("minion_died", enemy_index, target_index)
-        p2.battlefield.remove(target_index)
-        emit_signal("minion_destroyed", enemy_index, target_index)
-        target.instance.reset()
-        while not p2.add_to_graveyard(target.instance):
-            print("Enemy graveyard is full")
-            var minion = p2.rotate_graveyard_to_army()
-            assert(minion != null)
-            emit_signal("minion_recruited", enemy_index, minion)
-        print("Enemy graveyard", p2.graveyard)
-        # TODO emit signal
-    if source.get_current_health() <= 0 or (b > 0 and target.has_ability(Global.Abilities.POISON)):
-        emit_signal("minion_died", player_index, field_index)
-        p1.battlefield.remove(field_index)
-        emit_signal("minion_destroyed", player_index, field_index)
-        source.instance.reset()
-        while not p1.add_to_graveyard(source.instance):
-            print("Player graveyard is full")
-            var minion = p1.rotate_graveyard_to_army()
-            assert(minion != null)
-            emit_signal("minion_recruited", player_index, minion.base_data)
-        print("Player graveyard", p1.graveyard)
-        # TODO emit signal
-    return Global.GameError.NONE
+    var attacker: BattleMinion = p1.battlefield[field_index]
+    if target_index >= 0:
+        var target: BattleMinion = p2.battlefield[target_index]
+        return _attack_minion(attacker, target)
+    else:
+        var target: BattleCommander = p2.commander
+        return _attack_commander(attacker, target)
 
 
 func set_requested_target(index: int):
@@ -200,6 +170,48 @@ func _deploy(player_index: int, army_index: int, field_index: int):
     _do_battlecry(minion)
 
 
+func _attack_minion(attacker: BattleMinion, target: BattleMinion) -> int:
+    # TODO attack declaration event
+    # emit post attack event
+    var event = BattleEventAttack.new()
+    event.player_index = attacker.instance.player_index
+    event.field_index = attacker.instance.index
+    event.enemy_index = target.instance.player_index
+    event.target_index = target.instance.index
+    emit_signal("minion_attacked", event)
+    # deal damage
+    var a = _deal_damage(target, attacker.get_power())
+    var b = _deal_damage(attacker, target.get_power())
+    _post_damage_logic(target, a, attacker)
+    _post_damage_logic(attacker, b, target)
+    return Global.GameError.NONE
+
+
+func _attack_commander(attacker: BattleMinion, target: BattleCommander) -> int:
+    # TODO attack declaration event
+    # emit post attack event
+    var event = BattleEventAttack.new()
+    event.player_index = attacker.instance.player_index
+    event.field_index = attacker.instance.index
+    event.enemy_index = target.player_index
+    event.target_index = -1
+    emit_signal("minion_attacked", event)
+    # deal damage
+    # var a = _deal_damage(target, source.get_power())
+    var damage = attacker.get_power()
+    target.damage += damage
+    event = BattleEventDamage.new()
+    event.player_index = target.player_index
+    event.field_index = -1
+    event.damage = damage
+    emit_signal("damage_dealt", event)
+    # var b = _deal_damage(attacker, target.get_power())
+    if target.get_current_health() <= 0:
+        emit_signal("commander_died", target.player_index)
+        emit_signal("battle_ended", attacker.instance.player_index)
+    return Global.GameError.NONE
+
+
 func _deal_damage(minion: BattleMinion, damage: int) -> int:
     if damage <= 0:
         return 0
@@ -210,6 +222,25 @@ func _deal_damage(minion: BattleMinion, damage: int) -> int:
     minion.damage += damage
     _damage_dealt(minion, damage)
     return damage
+
+
+func _post_damage_logic(minion: BattleMinion, damage: int, source: BattleMinion):
+    var poisonous: bool = damage > 0 and source.has_ability(Global.Abilities.POISON)
+    if minion.get_current_health() <= 0 or poisonous:
+        var player_index = minion.instance.player_index
+        var minion_index = minion.instance.index
+        emit_signal("minion_died", player_index, minion_index)
+        var player: BattlePlayer = data.players[player_index]
+        player.battlefield.remove(minion_index)
+        emit_signal("minion_destroyed", player_index, minion_index)
+        minion.instance.reset()
+        while not player.add_to_graveyard(minion.instance):
+            print("%s graveyard is full" % player.name)
+            var other = player.rotate_graveyard_to_army()
+            assert(other != null)
+            emit_signal("minion_recruited", player_index, other)
+        print("%s graveyard" % player.name, player.graveyard)
+        # TODO emit signal
 
 
 func _damage_dealt(minion: BattleMinion, damage: int):

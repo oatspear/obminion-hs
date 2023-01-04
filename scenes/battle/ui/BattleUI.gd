@@ -206,9 +206,14 @@ func animate_attack(
 
 
 func animate_damage(player_index: int, minion_index: int, damage: int):
-    var minion = _get_active_minion(player_index, minion_index)
-    print("%s took %d damage" % [minion.name, damage])
-    minion.dec_health(damage)
+    if minion_index < 0:
+        var commander = action_panel.commander if player_index == 0 else enemy_panel.commander
+        print("P%d commander took %d damage" % [player_index, damage])
+        commander.dec_health(damage)
+    else:
+        var minion = _get_active_minion(player_index, minion_index)
+        print("%s took %d damage" % [minion.name, damage])
+        minion.dec_health(damage)
 
 
 func animate_minion_death(player_index: int, field_index: int):
@@ -284,10 +289,15 @@ func _on_target_state_minion_selected(minion):
 
 
 func _on_target_state_enemy_commander_selected():
+    assert(enemy_panel.commander in _selection_targets)
     for target in _selection_targets:
         target.set_highlighted(false)
     print("Selected enemy commander as a target")
-    enter_main_phase()
+    var attacker = _active_minion.get_ref()
+    if attacker == null:
+        emit_signal("target_selected", -1)
+    else:
+        emit_signal("action_attack_target", attacker.index, -1)
 
 
 ################################################################################

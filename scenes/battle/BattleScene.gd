@@ -87,6 +87,7 @@ func _on_server_battle_started(data: BattleData):
 
 
 func _on_server_battle_ended(victor_index: int):
+    gui.enter_observer_phase()
     if victor_index < 0:
         print("[SERVER]: battle ended on a draw")
         gui.show_notice("The battle ended on a draw.")
