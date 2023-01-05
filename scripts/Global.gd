@@ -66,6 +66,7 @@ enum Abilities {
     HASTE                       = 0b_0000_0000_0000_0001,
     POISON                      = 0b_0000_0000_0000_0010,
     DIVINE_SHIELD               = 0b_0000_0000_0000_0100,
+    TAUNT                       = 0b_0000_0000_0001_0000,
     BUFF_ADJACENT_ALLY_POWER    = 0b_0000_0001_0000_0000,
     BUFF_ADJACENT_ALLY_HEALTH   = 0b_0000_0010_0000_0000,
 }

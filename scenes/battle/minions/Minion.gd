@@ -110,6 +110,11 @@ func refresh_stats():
         label_stats.set_bonus2(bonus)
 
 
+func has_taunt() -> bool:
+    var ability = minion_data.get("ability", 0)
+    return bool(ability & Global.Abilities.TAUNT)
+
+
 #func set_highlighted(highlight: bool):
 #    highlighted = highlight
 #    render()

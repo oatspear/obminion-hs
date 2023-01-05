@@ -159,14 +159,10 @@ func enter_main_phase():
 func enter_target_phase(mode: int):
     match mode:
         Global.TargetMode.ATTACK_TARGET:
-            if minion_row_enemy.get_minion_count() == 0:
-                print("There are no targets to attack.")
-            else:
-                _state = State.TARGET
-                assert(_active_minion.get_ref() in minion_row_player.minions)
-                _selection_targets = minion_row_enemy.minions.duplicate()
-                _selection_targets.append(enemy_panel.commander)
-                _target_state_enable_targets()
+            assert(_active_minion.get_ref() in minion_row_player.minions)
+            _state = State.TARGET
+            _selection_targets = _get_attack_targets()
+            _target_state_enable_targets()
         Global.TargetMode.FRIENDLY_MINION:
             assert(minion_row_player.get_minion_count() > 0)
             _state = State.TARGET
@@ -232,6 +228,19 @@ func _get_active_minion(player_index: int, minion_index: int) -> Control:
         return minion_row_player.minions[minion_index]
     else:
         return minion_row_enemy.minions[minion_index]
+
+
+func _get_attack_targets() -> Array:
+    var targets = []
+    # search for taunt minions
+    for minion in minion_row_enemy.minions:
+        if minion.has_taunt():
+            targets.append(minion)
+    if targets.size() > 0:
+        return targets
+    targets.append_array(minion_row_enemy.minions)
+    targets.append(enemy_panel.commander)
+    return targets
 
 
 ################################################################################
