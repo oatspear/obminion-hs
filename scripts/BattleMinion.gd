@@ -185,4 +185,6 @@ func as_dict() -> Dictionary:
         "shield": divine_shield,
         "poison": has_ability(Global.Abilities.POISON),
         "deathrattle": deathrattle,
+        "bonus_power": _bonus_power + _aura_power,
+        "bonus_health": _bonus_health + _aura_health,
     }
