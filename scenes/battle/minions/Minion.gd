@@ -93,6 +93,8 @@ func dec_health(amount: int):
 
 
 func _update_effects():
+    label_stats.set_bonus1(minion_data.get("bonus_power", 0))
+    label_stats.set_bonus2(minion_data.get("bonus_health", 0))
     effect_shield.visible = minion_data.get("shield", false)
     icon_poison.visible = minion_data.get("poison", false)
     var ability = minion_data.get("effect", 0)

@@ -2,11 +2,22 @@ tool
 extends HBoxContainer
 
 ################################################################################
+# Constants
+################################################################################
+
+const COLOR_NORMAL = Color.white
+const COLOR_BUFF = Color.green
+const COLOR_DEBUFF = Color.firebrick
+
+################################################################################
 # Variables
 ################################################################################
 
 export (int) var stat1: int = 10 setget set_stat1
 export (int) var stat2: int = 10 setget set_stat2
+
+export (int) var bonus1: int = 0 setget set_bonus1
+export (int) var bonus2: int = 0 setget set_bonus2
 
 onready var label1 = $Stat1
 onready var label2 = $Stat2
@@ -24,6 +35,24 @@ func set_stat1(value: int):
 func set_stat2(value: int):
     stat2 = value
     render()
+
+
+func set_bonus1(value: int):
+    if value > 0:
+        label1.self_modulate = COLOR_BUFF
+    elif value < 0:
+        label1.self_modulate = COLOR_DEBUFF
+    else:
+        label1.self_modulate = COLOR_NORMAL
+
+
+func set_bonus2(value: int):
+    if value > 0:
+        label2.self_modulate = COLOR_BUFF
+    elif value < 0:
+        label2.self_modulate = COLOR_DEBUFF
+    else:
+        label2.self_modulate = COLOR_NORMAL
 
 
 func render():
