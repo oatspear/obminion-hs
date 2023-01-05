@@ -214,6 +214,7 @@ func animate_damage(player_index: int, minion_index: int, damage: int):
         var minion = _get_active_minion(player_index, minion_index)
         print("%s took %d damage" % [minion.name, damage])
         minion.dec_health(damage)
+        minion.take_damage(damage)
 
 
 func animate_minion_death(player_index: int, field_index: int):

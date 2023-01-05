@@ -7,7 +7,7 @@ extends HBoxContainer
 
 const COLOR_NORMAL = Color.white
 const COLOR_BUFF = Color.green
-const COLOR_DEBUFF = Color.firebrick
+const COLOR_DEBUFF = Color.red
 
 ################################################################################
 # Variables

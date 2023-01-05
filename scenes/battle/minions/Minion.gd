@@ -50,14 +50,19 @@ func get_power() -> int:
 
 func set_power(value: int):
     label_stats.stat1 = value
+    label_stats.bonus1 = 0
 
 
-func inc_power(amount: int):
+func inc_power(amount: int, bonus: bool = false):
     label_stats.stat1 += amount
+    if bonus:
+        label_stats.bonus1 += amount
 
 
-func dec_power(amount: int):
+func dec_power(amount: int, bonus: bool = false):
     label_stats.stat1 -= amount
+    if bonus:
+        label_stats.bonus1 -= amount
 
 
 func get_health() -> int:
@@ -66,14 +71,43 @@ func get_health() -> int:
 
 func set_health(value: int):
     label_stats.stat2 = value
+    label_stats.bonus2 = 0
 
 
-func inc_health(amount: int):
+func inc_health(amount: int, bonus: bool = false):
     label_stats.stat2 += amount
+    if bonus:
+        label_stats.bonus2 += amount
 
 
-func dec_health(amount: int):
+func dec_health(amount: int, bonus: bool = false):
     label_stats.stat2 -= amount
+    if bonus:
+        label_stats.bonus2 -= amount
+
+
+func heal_damage(amount: int):
+    var damage: int = minion_data.get("damage", 0)
+    damage -= amount
+    minion_data["damage"] = damage if damage >= 0 else 0
+    refresh_stats()
+
+
+func take_damage(amount: int):
+    var damage: int = minion_data.get("damage", 0)
+    damage += amount
+    minion_data["damage"] = damage
+    refresh_stats()
+
+
+func refresh_stats():
+    label_stats.set_bonus1(minion_data.get("bonus_power", 0))
+    var bonus: int = minion_data.get("damage", 0)
+    if bonus > 0:
+        label_stats.set_bonus2(-bonus)
+    else:
+        bonus = minion_data.get("bonus_health", 0)
+        label_stats.set_bonus2(bonus)
 
 
 #func set_highlighted(highlight: bool):
@@ -93,8 +127,7 @@ func dec_health(amount: int):
 
 
 func _update_effects():
-    label_stats.set_bonus1(minion_data.get("bonus_power", 0))
-    label_stats.set_bonus2(minion_data.get("bonus_health", 0))
+    refresh_stats()
     effect_shield.visible = minion_data.get("shield", false)
     icon_poison.visible = minion_data.get("poison", false)
     var ability = minion_data.get("effect", 0)
