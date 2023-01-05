@@ -12,6 +12,7 @@ enum GameError {
     NOT_YOUR_TURN,
     NO_RESOURCES,
     BOARD_FULL,
+    MUST_TARGET_TAUNT,
 }
 
 

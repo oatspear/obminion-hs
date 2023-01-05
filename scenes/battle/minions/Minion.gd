@@ -111,7 +111,7 @@ func refresh_stats():
 
 
 func has_taunt() -> bool:
-    var ability = minion_data.get("ability", 0)
+    var ability = minion_data.get("effect", 0)
     return bool(ability & Global.Abilities.TAUNT)
 
 

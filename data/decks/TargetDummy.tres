@@ -1,7 +1,9 @@
-[gd_resource type="Resource" load_steps=3 format=2]
+[gd_resource type="Resource" load_steps=5 format=2]
 
 [ext_resource path="res://scripts/PlayerData.gd" type="Script" id=1]
 [ext_resource path="res://data/minions/TargetDummy.tres" type="Resource" id=2]
+[ext_resource path="res://data/minions/TauntDummy.tres" type="Resource" id=3]
+[ext_resource path="res://data/minions/PoisonDummy.tres" type="Resource" id=4]
 
 [resource]
 resource_local_to_scene = true
@@ -11,5 +13,5 @@ faction = "Dummies"
 resources = 5
 max_resources = 5
 graveyard_size = 2
-minions = [ ExtResource( 2 ), ExtResource( 2 ), ExtResource( 2 ), ExtResource( 2 ), ExtResource( 2 ), ExtResource( 2 ) ]
+minions = [ ExtResource( 4 ), ExtResource( 3 ), ExtResource( 2 ), ExtResource( 2 ), ExtResource( 2 ), ExtResource( 2 ) ]
 support = [  ]

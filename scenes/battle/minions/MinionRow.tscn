@@ -18,36 +18,30 @@ __meta__ = {
 [node name="Minion1" parent="." instance=ExtResource( 1 )]
 margin_left = 23.0
 margin_right = 71.0
-margin_bottom = 78.0
 
 [node name="Minion2" parent="." instance=ExtResource( 1 )]
 margin_left = 76.0
 margin_right = 124.0
-margin_bottom = 78.0
 index = 1
 
 [node name="Minion3" parent="." instance=ExtResource( 1 )]
 margin_left = 129.0
 margin_right = 177.0
-margin_bottom = 78.0
 index = 2
 
 [node name="Minion4" parent="." instance=ExtResource( 1 )]
 margin_left = 182.0
 margin_right = 230.0
-margin_bottom = 78.0
 index = 3
 
 [node name="Minion5" parent="." instance=ExtResource( 1 )]
 margin_left = 235.0
 margin_right = 283.0
-margin_bottom = 78.0
 index = 4
 
 [node name="Minion6" parent="." instance=ExtResource( 1 )]
 margin_left = 288.0
 margin_right = 336.0
-margin_bottom = 78.0
 index = 5
 
 [connection signal="deselected" from="Minion1" to="." method="_on_minion1_deselected"]

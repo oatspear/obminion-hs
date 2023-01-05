@@ -148,6 +148,7 @@ func enter_main_phase():
     minion_row_player.reset_minion_selection()
     minion_row_player.reset_minion_highlights()
     minion_row_player.enable_minion_selection(true)
+    enemy_panel.enable_commander_selection(false)
     action_panel.commander.set_highlighted(false)
     enemy_panel.commander.set_highlighted(false)
     # this may not be the best place for the lines below
@@ -276,6 +277,7 @@ func _on_main_state_enemy_commander_selected():
 func _target_state_enable_targets():
     # assume `_selection_targets` is already set
     # reset all selections
+    enemy_panel.disable_commander_selection()
     minion_row_enemy.disable_minion_selection()
     minion_row_player.disable_minion_selection()
     # highlight possible targets

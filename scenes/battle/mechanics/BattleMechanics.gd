@@ -171,6 +171,9 @@ func _deploy(player_index: int, army_index: int, field_index: int):
 
 func _attack_minion(attacker: BattleMinion, target: BattleMinion) -> int:
     # TODO attack declaration event
+    if _has_taunt_minions(target.player_index):
+        if not target.has_ability(Global.Abilities.TAUNT):
+            return Global.GameError.MUST_TARGET_TAUNT
     # emit post attack event
     var event = BattleEventAttack.new()
     event.player_index = attacker.player_index
@@ -188,6 +191,8 @@ func _attack_minion(attacker: BattleMinion, target: BattleMinion) -> int:
 
 func _attack_commander(attacker: BattleMinion, target: BattleCommander) -> int:
     # TODO attack declaration event
+    if _has_taunt_minions(target.player_index):
+        return Global.GameError.MUST_TARGET_TAUNT
     # emit post attack event
     var event = BattleEventAttack.new()
     event.player_index = attacker.player_index
@@ -286,6 +291,15 @@ func _do_battlecry(minion: BattleMinion):
             var other: BattleMinion = p.battlefield[i+1]
             other.apply_health_modifier(+1)
             emit_signal("minion_stats_changed", other)
+
+
+func _has_taunt_minions(player_index: int) -> bool:
+    var player: BattlePlayer = data.players[player_index]
+    for m in player.battlefield:
+        var minion: BattleMinion = m
+        if minion.has_ability(Global.Abilities.TAUNT):
+            return true
+    return false
 
 
 ################################################################################

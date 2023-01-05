@@ -17,6 +17,7 @@ const ERROR_MESSAGES = {
     Global.GameError.BATTLE_STARTED: "The battle has already started.",
     Global.GameError.NOT_YOUR_TURN: "It is not your turn.",
     Global.GameError.NO_RESOURCES: "Not enough resources.",
+    Global.GameError.MUST_TARGET_TAUNT: "A minion with Taunt is in the way.",
 }
 
 ################################################################################
@@ -48,6 +49,7 @@ func _default_battle_setup():
     p.commander.player_index = ENEMY_INDEX
     p.commander.health = 20
 
+    p.deploy(0, 0)
     p.deploy(0, 0)
 
 
