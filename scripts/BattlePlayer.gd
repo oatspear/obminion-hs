@@ -47,9 +47,9 @@ func replenish_resources():
         resources = max_resources
 
 
-func add_minion_from_deck(deck_index: int) -> MinionInstance:
+func add_minion_from_deck(deck_index: int) -> BattleMinion:
     var base_data: MinionData = player_data.minions[deck_index]
-    var minion = MinionInstance.new()
+    var minion = BattleMinion.new()
     minion.set_base_data(base_data)
     minion.deck_index = deck_index
     minion.original_player_index = index
@@ -58,7 +58,7 @@ func add_minion_from_deck(deck_index: int) -> MinionInstance:
     return minion
 
 
-func add_to_army(minion: MinionInstance) -> void:
+func add_to_army(minion: BattleMinion) -> void:
     # ensure that indices are consistent
     army.append(minion)
     _fix_army_indices()
@@ -77,16 +77,23 @@ func insert_active_minion(field_index: int, minion: BattleMinion) -> void:
 
 
 func deploy(army_index: int, field_index: int):
-    var instance: MinionInstance = army[army_index]
+    var minion: BattleMinion = army[army_index]
     army.remove(army_index)
+    _fix_army_indices()
     if field_index < 0 or field_index > battlefield.size():
         field_index = battlefield.size()
-    var minion = BattleMinion.new()
-    minion.set_minion_instance(instance)
     insert_active_minion(field_index, minion)
 
 
-func add_to_graveyard(minion: MinionInstance) -> bool:
+func remove_from_battlefield(field_index: int) -> BattleMinion:
+    assert(field_index >= 0 and field_index < battlefield.size())
+    var minion: BattleMinion = battlefield[field_index]
+    battlefield.remove(field_index)
+    _fix_battle_indices()
+    return minion
+
+
+func add_to_graveyard(minion: BattleMinion) -> bool:
     if graveyard.size() >= graveyard_size:
         return false
     minion.move_to_graveyard(graveyard.size())
@@ -96,7 +103,7 @@ func add_to_graveyard(minion: MinionInstance) -> bool:
 
 func rotate_graveyard_to_army():
     print("Rotate %s from graveyard" % (graveyard[0].name if graveyard else "nothing"))
-    var minion: MinionInstance = graveyard.pop_front()
+    var minion: BattleMinion = graveyard.pop_front()
     if minion != null:
         add_to_army(minion)
     return minion
@@ -109,7 +116,7 @@ func rotate_graveyard_to_army():
 
 func _fix_army_indices():
     for i in range(army.size()):
-        var minion: MinionInstance = army[i]
+        var minion: BattleMinion = army[i]
         minion.move_to_army(i)
         minion.player_index = index
 
@@ -117,5 +124,5 @@ func _fix_army_indices():
 func _fix_battle_indices():
     for i in range(battlefield.size()):
         var minion: BattleMinion = battlefield[i]
-        minion.instance.move_to_battlefield(i)
-        minion.instance.player_index = index
+        minion.move_to_battlefield(i)
+        minion.player_index = index

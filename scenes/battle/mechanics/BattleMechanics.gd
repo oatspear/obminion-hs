@@ -146,16 +146,15 @@ func _player_can_act(player_index: int) -> bool:
 
 
 func _deploy(player_index: int, army_index: int, field_index: int):
-    var p: BattlePlayer = data.players[player_index]
-    var instance: MinionInstance = p.army[army_index]
-    if p.resources < instance.supply:
+    var player: BattlePlayer = data.players[player_index]
+    var minion: BattleMinion = player.army[army_index]
+    if player.resources < minion.supply:
         return emit_signal("action_error", NO_RESOURCES)
-    if p.battlefield.size() >= MAX_ACTIVE_MINIONS:
+    if player.battlefield.size() >= MAX_ACTIVE_MINIONS:
         return emit_signal("action_error", MSG_BOARD_FULL)
-    p.resources -= instance.supply
-    emit_signal("resources_changed", player_index, p.resources, p.max_resources)
-    p.deploy(army_index, field_index)
-    var minion: BattleMinion = p.battlefield[field_index]
+    player.resources -= minion.supply
+    emit_signal("resources_changed", player_index, player.resources, player.max_resources)
+    player.deploy(army_index, field_index)
     _apply_keywords(minion)
     var event = BattleEventDeploy.new()
     event.player_index = player_index
@@ -174,14 +173,14 @@ func _attack_minion(attacker: BattleMinion, target: BattleMinion) -> int:
     # TODO attack declaration event
     # emit post attack event
     var event = BattleEventAttack.new()
-    event.player_index = attacker.instance.player_index
-    event.field_index = attacker.instance.index
-    event.enemy_index = target.instance.player_index
-    event.target_index = target.instance.index
+    event.player_index = attacker.player_index
+    event.field_index = attacker.index
+    event.enemy_index = target.player_index
+    event.target_index = target.index
     emit_signal("minion_attacked", event)
     # deal damage
-    var a = _deal_damage(target, attacker.get_power())
-    var b = _deal_damage(attacker, target.get_power())
+    var a = _deal_damage(target, attacker.power)
+    var b = _deal_damage(attacker, target.power)
     _post_damage_logic(target, a, attacker)
     _post_damage_logic(attacker, b, target)
     return Global.GameError.NONE
@@ -191,24 +190,24 @@ func _attack_commander(attacker: BattleMinion, target: BattleCommander) -> int:
     # TODO attack declaration event
     # emit post attack event
     var event = BattleEventAttack.new()
-    event.player_index = attacker.instance.player_index
-    event.field_index = attacker.instance.index
+    event.player_index = attacker.player_index
+    event.field_index = attacker.index
     event.enemy_index = target.player_index
     event.target_index = -1
     emit_signal("minion_attacked", event)
     # deal damage
-    # var a = _deal_damage(target, source.get_power())
-    var damage = attacker.get_power()
+    # var a = _deal_damage(target, source.power)
+    var damage = attacker.power
     target.damage += damage
     event = BattleEventDamage.new()
     event.player_index = target.player_index
     event.field_index = -1
     event.damage = damage
     emit_signal("damage_dealt", event)
-    # var b = _deal_damage(attacker, target.get_power())
+    # var b = _deal_damage(attacker, target.power)
     if target.get_current_health() <= 0:
         emit_signal("commander_died", target.player_index)
-        emit_signal("battle_ended", attacker.instance.player_index)
+        emit_signal("battle_ended", attacker.player_index)
     return Global.GameError.NONE
 
 
@@ -227,14 +226,15 @@ func _deal_damage(minion: BattleMinion, damage: int) -> int:
 func _post_damage_logic(minion: BattleMinion, damage: int, source: BattleMinion):
     var poisonous: bool = damage > 0 and source.has_ability(Global.Abilities.POISON)
     if minion.get_current_health() <= 0 or poisonous:
-        var player_index = minion.instance.player_index
-        var minion_index = minion.instance.index
+        var player_index = minion.player_index
+        var minion_index = minion.index
         emit_signal("minion_died", player_index, minion_index)
         var player: BattlePlayer = data.players[player_index]
-        player.battlefield.remove(minion_index)
+        var _minion = player.remove_from_battlefield(minion_index)
+        assert(minion == _minion)
         emit_signal("minion_destroyed", player_index, minion_index)
-        minion.instance.reset()
-        while not player.add_to_graveyard(minion.instance):
+        # minion.reset()
+        while not player.add_to_graveyard(minion):
             print("%s graveyard is full" % player.name)
             var other = player.rotate_graveyard_to_army()
             assert(other != null)
@@ -245,8 +245,8 @@ func _post_damage_logic(minion: BattleMinion, damage: int, source: BattleMinion)
 
 func _damage_dealt(minion: BattleMinion, damage: int):
     var event = BattleEventDamage.new()
-    event.player_index = minion.instance.player_index
-    event.field_index = minion.instance.index
+    event.player_index = minion.player_index
+    event.field_index = minion.index
     event.damage = damage
     emit_signal("damage_dealt", event)
 
@@ -257,15 +257,15 @@ func _apply_keywords(minion: BattleMinion):
 
 
 func _do_battlecry(minion: BattleMinion):
-    var battlecry = minion.instance.battlecry
+    var battlecry = minion.battlecry
     if not battlecry:
         return
 
-    var p: BattlePlayer = data.players[minion.instance.player_index]
-    var e: BattlePlayer = data.players[(minion.instance.player_index + 1) % 2]
+    var p: BattlePlayer = data.players[minion.player_index]
+    var e: BattlePlayer = data.players[(minion.player_index + 1) % 2]
 
     if battlecry & Global.Abilities.BUFF_ADJACENT_ALLY_POWER:
-        var i = minion.instance.index
+        var i = minion.index
         if i > 0:
             var other: BattleMinion = p.battlefield[i-1]
             other.apply_power_modifier(+1)
@@ -276,7 +276,7 @@ func _do_battlecry(minion: BattleMinion):
             emit_signal("minion_stats_changed", other)
 
     if battlecry & Global.Abilities.BUFF_ADJACENT_ALLY_HEALTH:
-        var i = minion.instance.index
+        var i = minion.index
         if i > 0:
             var other: BattleMinion = p.battlefield[i-1]
             other.apply_health_modifier(+1)

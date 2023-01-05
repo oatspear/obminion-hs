@@ -71,7 +71,7 @@ func action_attack_target(
         emit_signal("minion_died", enemy_index, target_index)
         p2.battlefield.remove(target_index)
         emit_signal("minion_destroyed", enemy_index, target_index)
-        while not p2.add_to_graveyard(target.instance):
+        while not p2.add_to_graveyard(target):
             print("Enemy graveyard is full")
             var minion = p2.rotate_graveyard_to_army()
             assert(minion != null)
@@ -83,7 +83,7 @@ func action_attack_target(
         p1.battlefield.remove(field_index)
         emit_signal("minion_destroyed", player_index, field_index)
         print("%s died" % source.base_data.name)
-        while not p1.add_to_graveyard(source.instance):
+        while not p1.add_to_graveyard(source):
             print("Player graveyard is full")
             var minion = p1.rotate_graveyard_to_army()
             assert(minion != null)
@@ -98,21 +98,19 @@ func action_attack_target(
 
 
 func _deploy(player_index: int, army_index: int, field_index: int):
-    var p: BattlePlayer = data.players[player_index]
-    var instance: MinionInstance = p.army[army_index]
-    if p.resources < instance.supply:
+    var player: BattlePlayer = data.players[player_index]
+    var minion: BattleMinion = player.army[army_index]
+    if player.resources < minion.supply:
         return emit_signal("action_error", NO_RESOURCES)
-    if len(p.battlefield) >= MAX_ACTIVE_MINIONS:
+    if len(player.battlefield) >= MAX_ACTIVE_MINIONS:
         return emit_signal("action_error", MSG_BOARD_FULL)
-    p.resources -= instance.supply
-    emit_signal("resources_changed", player_index, p.resources, p.max_resources)
-    p.army.remove(army_index)
-    if field_index < 0 or field_index > p.battlefield.size():
-        field_index = p.battlefield.size()
-    var minion = BattleMinion.new()
-    minion.set_minion_instance(instance)
-    minion.can_act = true
-    p.insert_active_minion(field_index, minion)
+    player.resources -= minion.supply
+    emit_signal("resources_changed", player_index, player.resources, player.max_resources)
+    player.army.remove(army_index)
+    if field_index < 0 or field_index > player.battlefield.size():
+        field_index = player.battlefield.size()
+    # minion.can_act = true
+    player.insert_active_minion(field_index, minion)
     var event = BattleEventDeploy.new()
     event.player_index = player_index
     event.army_index = army_index

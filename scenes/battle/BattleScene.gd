@@ -135,17 +135,20 @@ func _on_server_damage_dealt(event: BattleEventDamage):
 
 
 func _on_server_minion_died(player_index: int, field_index: int):
+    print("[SERVER]: minion died: (%d, %d)" % [player_index, field_index])
     gui.animate_minion_death(player_index, field_index)
 
 
 func _on_server_minion_destroyed(player_index: int, field_index: int):
+    print("[SERVER]: minion destroyed: (%d, %d)" % [player_index, field_index])
     if player_index == PLAYER_INDEX:
         gui.remove_from_player_field(field_index)
     else:
         gui.remove_from_enemy_field(field_index)
 
 
-func _on_server_minion_recruited(player_index: int, minion: MinionData):
+func _on_server_minion_recruited(player_index: int, minion: BattleMinion):
+    print("[SERVER]: minion recruited: (P%d) %s" % [player_index, minion.name])
     if player_index == PLAYER_INDEX:
         gui.add_to_player_army(minion)
     else:
@@ -153,7 +156,7 @@ func _on_server_minion_recruited(player_index: int, minion: MinionData):
 
 
 func _on_server_minion_stats_changed(minion: BattleMinion):
-    gui.set_active_minion(minion.instance.player_index, minion.instance.index, minion)
+    gui.set_active_minion(minion.player_index, minion.index, minion)
 
 
 func _on_server_request_select_target(player_index: int, target_mode: int):

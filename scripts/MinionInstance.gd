@@ -1,6 +1,6 @@
 extends Reference
 
-class_name MinionInstance
+# class_name MinionInstance
 
 ################################################################################
 # Variables

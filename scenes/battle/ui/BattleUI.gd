@@ -74,8 +74,8 @@ func set_player_army(minions: Array):
     action_panel.army_action_bar.set_minions(minions)
 
 
-func add_to_player_army(minion: MinionData):
-    action_panel.army_action_bar.add_data(minion)
+func add_to_player_army(minion: BattleMinion):
+    action_panel.army_action_bar.add_data(minion.as_minion_data())
 
 
 func remove_from_player_army(i: int):

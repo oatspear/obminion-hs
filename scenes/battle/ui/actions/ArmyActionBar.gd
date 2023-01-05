@@ -67,7 +67,7 @@ func set_minions(minions: Array):
 # warning-ignore:narrowing_conversion
     var n: int = min(tokens.size(), minions.size())
     for i in range(n):
-        var minion: MinionInstance = minions[i]
+        var minion: BattleMinion = minions[i]
         tokens[i].set_minion_data(minion.as_minion_data())
     for i in range(n, tokens.size()):
         tokens[i].set_minion_data(null)
