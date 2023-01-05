@@ -1,6 +1,12 @@
 extends "res://scenes/ui/SelectablePanel.gd"
 
 ################################################################################
+# Constants
+################################################################################
+
+const ABILITY_ICON_MASK = ~0 ^ Global.Abilities.POISON ^ Global.Abilities.DIVINE_SHIELD
+
+################################################################################
 # Variables
 ################################################################################
 
@@ -14,6 +20,9 @@ onready var portrait: TextureRect = $Elements/Portrait
 onready var label_stats = $Elements/Stats
 onready var animation = $Animation
 onready var effect_shield = $Effects/Shield
+onready var icon_poison = $Elements/Enhancements/Poison
+onready var icon_ability = $Elements/Enhancements/Ability
+onready var icon_deathrattle = $Elements/Enhancements/Deathrattle
 
 ################################################################################
 # Interface
@@ -85,6 +94,11 @@ func dec_health(amount: int):
 
 func _update_effects():
     effect_shield.visible = minion_data.get("shield", false)
+    icon_poison.visible = minion_data.get("poison", false)
+    var ability = minion_data.get("effect", 0)
+    var has_abilities = (ability & ABILITY_ICON_MASK) != 0
+    icon_ability.visible = has_abilities
+    icon_deathrattle.visible = minion_data.get("deathrattle", 0) != 0
 
 
 #func _set_style_normal():
