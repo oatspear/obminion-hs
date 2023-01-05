@@ -13,6 +13,7 @@ var can_act: bool = false
 onready var portrait: TextureRect = $Elements/Portrait
 onready var label_stats = $Elements/Stats
 onready var animation = $Animation
+onready var effect_shield = $Effects/Shield
 
 ################################################################################
 # Interface
@@ -27,6 +28,7 @@ func set_minion_data(data: Dictionary):
     minion_data = data
     set_power(minion_data.get("power", 0))
     set_health(minion_data.get("health", 0))
+    _update_effects()
 
 
 func reset_minion_data():
@@ -79,6 +81,10 @@ func dec_health(amount: int):
 ################################################################################
 # Helper Functions
 ################################################################################
+
+
+func _update_effects():
+    effect_shield.visible = minion_data.get("shield", false)
 
 
 #func _set_style_normal():

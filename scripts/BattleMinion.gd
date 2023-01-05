@@ -182,4 +182,5 @@ func as_dict() -> Dictionary:
         "resource": Global.ResourceType.RESOURCES,
         "effect": ability,
         "effect_text": base_data.ability_text,
+        "shield": divine_shield,
     }

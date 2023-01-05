@@ -156,6 +156,7 @@ func _on_server_minion_recruited(player_index: int, minion: BattleMinion):
 
 
 func _on_server_minion_stats_changed(minion: BattleMinion):
+    print("[SERVER]: minion stats changed: (P%d) %s" % [minion.player_index, minion.name])
     gui.set_active_minion(minion.player_index, minion.index, minion)
 
 

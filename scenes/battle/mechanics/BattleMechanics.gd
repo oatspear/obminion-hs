@@ -217,6 +217,7 @@ func _deal_damage(minion: BattleMinion, damage: int) -> int:
     if minion.divine_shield:
         minion.divine_shield = false
         _damage_dealt(minion, 0)
+        emit_signal("minion_stats_changed", minion)
         return 0
     minion.damage += damage
     _damage_dealt(minion, damage)
