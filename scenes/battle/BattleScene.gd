@@ -38,12 +38,14 @@ func _default_battle_setup():
     var p: BattlePlayer = server.data.players[PLAYER_INDEX]
     p.set_player_data(data)
     p.commander = BattleCommander.new()
+    p.commander.player_index = PLAYER_INDEX
     p.commander.health = 20
 
     data = ENEMY_DECK
     p = server.data.players[ENEMY_INDEX]
     p.set_player_data(data)
     p.commander = BattleCommander.new()
+    p.commander.player_index = ENEMY_INDEX
     p.commander.health = 20
 
     p.deploy(0, 0)
