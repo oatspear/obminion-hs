@@ -4,7 +4,12 @@ extends "res://scenes/ui/SelectablePanel.gd"
 # Constants
 ################################################################################
 
-const ABILITY_ICON_MASK = ~0 ^ Global.Abilities.POISON ^ Global.Abilities.DIVINE_SHIELD
+const ABILITY_ICON_MASK = (
+    ~0
+    ^ Global.Abilities.POISON
+    ^ Global.Abilities.DIVINE_SHIELD
+    ^ Global.Abilities.TAUNT
+)
 
 ################################################################################
 # Variables
@@ -21,6 +26,7 @@ onready var label_stats = $Elements/Stats
 onready var animation = $Animation
 onready var effect_shield = $Effects/Shield
 onready var icon_poison = $Elements/Enhancements/Poison
+onready var icon_taunt = $Elements/Enhancements/Taunt
 onready var icon_ability = $Elements/Enhancements/Ability
 onready var icon_deathrattle = $Elements/Enhancements/Deathrattle
 
@@ -135,10 +141,16 @@ func _update_effects():
     refresh_stats()
     effect_shield.visible = minion_data.get("shield", false)
     icon_poison.visible = minion_data.get("poison", false)
-    var ability = minion_data.get("effect", 0)
-    var has_abilities = (ability & ABILITY_ICON_MASK) != 0
-    icon_ability.visible = has_abilities
     icon_deathrattle.visible = minion_data.get("deathrattle", 0) != 0
+    icon_taunt.visible = has_taunt()
+    var n = 0
+    n += 1 if icon_poison.visible else 0
+    n += 1 if icon_deathrattle.visible else 0
+    n += 1 if icon_taunt.visible else 0
+    if n < 3:
+        var ability = minion_data.get("effect", 0)
+        var has_abilities = (ability & ABILITY_ICON_MASK) != 0
+        icon_ability.visible = has_abilities
 
 
 #func _set_style_normal():
