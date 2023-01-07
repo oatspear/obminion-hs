@@ -117,6 +117,11 @@ func _on_server_resources_changed(player_index: int, current: int, maximum: int)
         gui.set_enemy_resources(current, maximum)
 
 
+func _on_server_minion_readiness_changed(player_index: int, field_index: int, is_ready: bool):
+    print("[SERVER]: minion readiness changed: (P%d, M%d) %s" % [player_index, field_index, str(is_ready)])
+    gui.set_minion_readiness(player_index, field_index, is_ready)
+
+
 func _on_server_minion_deployed(event: BattleEventDeploy):
     if event.player_index == PLAYER_INDEX:
         gui.remove_from_player_army(event.army_index)

@@ -15,6 +15,7 @@ signal turn_started(player_index)
 signal turn_ended(player_index)
 
 signal resources_changed(player_index, current, maximum)
+signal minion_readiness_changed(player_index, field_index, is_ready)
 signal minion_recruited(player_index, minion_data)
 signal minion_deployed(event)
 signal minion_attacked(event)
@@ -258,7 +259,7 @@ func _damage_dealt(minion: BattleMinion, damage: int):
 
 
 func _apply_keywords(minion: BattleMinion):
-    # minion.action_timer = 0 if minion.has_ability(Global.Abilities.HASTE) else DEFAULT_ACTION_TIMER
+    minion.action_timer = 0 if minion.has_ability(Global.Abilities.HASTE) else DEFAULT_ACTION_TIMER
     minion.divine_shield = minion.has_ability(Global.Abilities.DIVINE_SHIELD)
 
 
@@ -350,9 +351,15 @@ func _battle_setup_state():
 
 func _turn_start_state():
     emit_signal("turn_started", data.current_turn)
-    var p: BattlePlayer = data.players[data.current_turn]
-    p.replenish_resources()
-    emit_signal("resources_changed", data.current_turn, p.resources, p.max_resources)
+    var player: BattlePlayer = data.players[data.current_turn]
+    # replenish player resources
+    player.replenish_resources()
+    emit_signal("resources_changed", data.current_turn, player.resources, player.max_resources)
+    # decrease minion action timer
+    for i in range(player.battlefield.size()):
+        var minion: BattleMinion = player.battlefield[i]
+        var is_ready = minion.decrease_action_timer()
+        emit_signal("minion_readiness_changed", player.index, minion.index, is_ready)
     _state = State.TURN_MAIN_PHASE
 
 

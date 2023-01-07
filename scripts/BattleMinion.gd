@@ -150,6 +150,14 @@ func move_to_graveyard(grave_index: int):
     reset_battle_variables()
 
 
+func decrease_action_timer() -> bool:
+    if action_timer <= 1:
+        action_timer = 0
+    else:
+        action_timer -= 1
+    return action_timer <= 0
+
+
 ################################################################################
 # Data Transformation Interface
 ################################################################################

@@ -115,6 +115,12 @@ func remove_from_enemy_field(i: int):
 func set_active_minion(player_index: int, minion_index: int, data: BattleMinion):
     var minion = _get_active_minion(player_index, minion_index)
     minion.set_minion_data(data.as_dict())
+    minion.can_act = data.action_timer <= 0
+
+
+func set_minion_readiness(player_index: int, minion_index: int, is_ready: bool):
+    var minion = _get_active_minion(player_index, minion_index)
+    minion.can_act = is_ready
 
 
 func set_player_resources(current: int, maximum: int):
