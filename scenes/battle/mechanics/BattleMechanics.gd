@@ -187,6 +187,8 @@ func _attack_minion(attacker: BattleMinion, target: BattleMinion) -> int:
     var b = _deal_damage(attacker, target.power)
     _post_damage_logic(target, a, attacker)
     _post_damage_logic(attacker, b, target)
+    attacker.action_timer = 1
+    _emit_minion_readiness(attacker)
     return Global.GameError.NONE
 
 
@@ -214,6 +216,9 @@ func _attack_commander(attacker: BattleMinion, target: BattleCommander) -> int:
     if target.get_current_health() <= 0:
         emit_signal("commander_died", target.player_index)
         emit_signal("battle_ended", attacker.player_index)
+    else:
+        attacker.action_timer = 1
+        _emit_minion_readiness(attacker)
     return Global.GameError.NONE
 
 
@@ -304,6 +309,16 @@ func _has_taunt_minions(player_index: int) -> bool:
 
 
 ################################################################################
+# Event Emitter Functions
+################################################################################
+
+
+func _emit_minion_readiness(minion: BattleMinion):
+    var is_ready = minion.action_timer <= 0
+    emit_signal("minion_readiness_changed", minion.player_index, minion.index, is_ready)
+
+
+################################################################################
 # Main Loop
 ################################################################################
 
@@ -358,8 +373,8 @@ func _turn_start_state():
     # decrease minion action timer
     for i in range(player.battlefield.size()):
         var minion: BattleMinion = player.battlefield[i]
-        var is_ready = minion.decrease_action_timer()
-        emit_signal("minion_readiness_changed", player.index, minion.index, is_ready)
+        minion.decrease_action_timer()
+        _emit_minion_readiness(minion)
     _state = State.TURN_MAIN_PHASE
 
 
