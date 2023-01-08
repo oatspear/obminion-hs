@@ -182,13 +182,13 @@ func _attack_minion(attacker: BattleMinion, target: BattleMinion) -> int:
     event.enemy_index = target.player_index
     event.target_index = target.index
     emit_signal("minion_attacked", event)
+    attacker.action_timer = 1
+    _emit_minion_readiness(attacker)
     # deal damage
     var a = _deal_damage(target, attacker.power)
     var b = _deal_damage(attacker, target.power)
     _post_damage_logic(target, a, attacker)
     _post_damage_logic(attacker, b, target)
-    attacker.action_timer = 1
-    _emit_minion_readiness(attacker)
     return Global.GameError.NONE
 
 
@@ -203,6 +203,8 @@ func _attack_commander(attacker: BattleMinion, target: BattleCommander) -> int:
     event.enemy_index = target.player_index
     event.target_index = -1
     emit_signal("minion_attacked", event)
+    attacker.action_timer = 1
+    _emit_minion_readiness(attacker)
     # deal damage
     # var a = _deal_damage(target, source.power)
     var damage = attacker.power
@@ -216,9 +218,6 @@ func _attack_commander(attacker: BattleMinion, target: BattleCommander) -> int:
     if target.get_current_health() <= 0:
         emit_signal("commander_died", target.player_index)
         emit_signal("battle_ended", attacker.player_index)
-    else:
-        attacker.action_timer = 1
-        _emit_minion_readiness(attacker)
     return Global.GameError.NONE
 
 
